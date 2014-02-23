@@ -7,8 +7,6 @@
 .. slug: miguels-flask-mega-tutorial
 -->
 
-###Miguel's flask mega tutorial
-
 [Link](http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
 
 
