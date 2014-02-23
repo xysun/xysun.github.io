@@ -1,7 +1,7 @@
 <!-- 
 .. link: 
 .. description: 
-.. tags: 
+.. tags: Code
 .. date: 2014/02/23 17:01:52
 .. title: Miguel's flask mega tutorial
 .. slug: miguels-flask-mega-tutorial
