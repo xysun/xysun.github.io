@@ -11,3 +11,10 @@
 * Coder | Trail-runner | Piano & Violin player | Reader
 * The title of this blog is inspired by [a stand up show](http://www.youtube.com/watch?v=K4mH6E0hMbI) from Simon Amstell. 
 * [GitHub](https://github.com/xysun)
+
+- - -
+### A self reminder
+
+* Spend time reading docs.
+* Code slowly. Think, then code. 
+* No matter how high you are, stop coding after a few hours. Otherwise you'll be happily creating crap without even knowing. 

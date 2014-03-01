@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Sun, 23 Feb 2014 17:57:18 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Miguel's flask mega tutorial</title><link>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</link><description>&lt;p&gt;&lt;a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world"&gt;Link&lt;/a&gt;&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Mon, 24 Feb 2014 23:27:46 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>2013</title><link>https://xysun.github.io/posts/2013.html</link><description>&lt;p&gt;今天年终奖到账, 交了离职信, 基本就和过去一年说再见了. &lt;/p&gt;
+&lt;p&gt;2013年是我的本命年, 真的是曲折起伏波澜壮阔. 从年初工作压力大不顺心一直到4月跌到谷底一度有轻生念头，到拿到了HackerSchool的录取去纽约玩儿了三个月，期间写代码功力见长但也并不是一帆风顺，回到香港后慢慢地把自己的路子从金融扭到工程，而今再过一个月我所有的工资就将来自于Python, 同时我和其他3个小伙伴一起成立了Women Who Code HK. 这些事情都是4月前做梦也想不到的。&lt;/p&gt;
+&lt;h4&gt;全年目标回顾&lt;/h4&gt;
+&lt;h4&gt;HackerSchool给了我什么&lt;/h4&gt;
+&lt;h4&gt;我为什么离开DB&lt;/h4&gt;
+&lt;h4&gt;新年&lt;/h4&gt;</description><guid>https://xysun.github.io/posts/2013.html</guid><pubDate>Mon, 24 Feb 2014 23:18:25 GMT</pubDate></item><item><title>A simple balance puzzle in Unity</title><link>https://xysun.github.io/posts/a-simple-balance-puzzle-in-unity.html</link><description>&lt;p&gt;In this post I describe how to create a simple balance puzzle in Unity 2D.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Background&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Create an empty game object as the container object for all background textiles. Make sure to import (drag from Assets --&amp;gt; Game objects) in the layer order! i.e. create the lowest photoshop layer first. &lt;/p&gt;
+&lt;p&gt;Then create a new Unity layer called "Background" and assign the layer to the container object. &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Drag-and-drop&lt;/li&gt;
+&lt;/ul&gt;</description><guid>https://xysun.github.io/posts/a-simple-balance-puzzle-in-unity.html</guid><pubDate>Sun, 23 Feb 2014 22:43:56 GMT</pubDate></item><item><title>Miguel's flask mega tutorial</title><link>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</link><description>&lt;p&gt;&lt;a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world"&gt;Link&lt;/a&gt;&lt;/p&gt;
 &lt;h5&gt;Notes&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;flask:&lt;ul&gt;

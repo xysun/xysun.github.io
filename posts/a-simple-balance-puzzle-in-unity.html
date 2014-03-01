@@ -5,9 +5,9 @@
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="I strove for none, for none was worth my strife.">
+    <meta name="description" content="">
     <meta name="author" content="Xiayun Sun">
-    <title>Posts about Code | Do Nothing</title>
+    <title>A simple balance puzzle in Unity | Do Nothing</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -20,7 +20,8 @@
             <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 
     
-        <link rel="alternate" type="application/rss+xml" title="RSS for tag Code" href="code.xml">
+
+
 
     
 </head>
@@ -43,7 +44,7 @@
                 <li><a href="../index.html">Home</a>
                 </li><li><a href="../stories/about.html">About</a>
                 </li><li><a href="../archive.html">Archives</a>
-                </li><li><a href="index.html">Tags</a>
+                </li><li><a href="../categories/index.html">Tags</a>
                 </li><li><a href="../rss.xml">RSS</a>
 
         </li></ul>
@@ -52,6 +53,10 @@
             
             
                 
+    <li>
+    <a href="a-simple-balance-puzzle-in-unity.md" id="sourcelink">Source</a>
+    </li>
+
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -63,16 +68,63 @@
         <!--Body content-->
         <div class="row">
             
-        <!--Body content-->
-        <div class="postbox">
-        <h1>Posts about Code</h1>
-            <a href="code.xml">RSS</a>
-        <br>
-        <ul class="unstyled">
-            <li><a href="../posts/miguels-flask-mega-tutorial.html">[2014-02-23 17:01] Miguel's flask mega tutorial</a>
-        </li></ul>
-        </div>
-        <!--End of body content-->
+    <div class="postbox">
+    
+    <h1>A simple balance puzzle in Unity</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published" datetime="2014-02-23T22:43:56">2014-02-23 22:43</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/code.html"><span class="badge badge-info">code</span></a>
+
+    </small>
+    <hr>
+    <p>In this post I describe how to create a simple balance puzzle in Unity 2D.</p>
+<ul>
+<li>Layers and layer sorting: </li>
+</ul>
+<p>Create an empty game object as the container object for all background textiles. Make sure to import (drag from Assets --&gt; Game objects) in the layer order! i.e. create the lowest photoshop layer first. </p>
+<p>Then create a new Unity layer called "Background" and assign the layer to the container object. </p>
+<ul>
+<li>Drag-and-drop</li>
+</ul>
+<p><code>OnMouseDown</code> and <code>OnMouseUp</code> are only effective for an object with a collider or a GUIText object.</p>
+<p>create prefab: drag a GameObject to Project window.</p>
+<p>Add a collider as terrain to enable gravity (one of the two objects must have rigidbody component)
+set is Trigger to false</p>
+<p>Drag console to project view</p>
+    
+    <ul class="pager">
+    </ul>
+
+        
+        
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="nikolademo";
+            var disqus_url="https://xysun.github.io/posts/a-simple-balance-puzzle-in-unity.html";
+        var disqus_title="A simple balance puzzle in Unity";
+        var disqus_identifier="cache/posts/a-simple-balance-puzzle-in-unity.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    
+
+    </div>
 
         </div>
         <!--End of body content-->
