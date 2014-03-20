@@ -5,9 +5,9 @@
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="I strove for none, for none was worth my strife.">
+    <meta name="description" content="">
     <meta name="author" content="Xiayun Sun">
-    <title>Tags | Do Nothing</title>
+    <title>Install LLVM OCaml bindings (and toplevel) | Do Nothing</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -20,7 +20,9 @@
             <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 
     
-    
+
+
+
     
 </head>
 <body>
@@ -42,7 +44,7 @@
                 <li><a href="../index.html">Home</a>
                 </li><li><a href="../stories/about.html">About</a>
                 </li><li><a href="../archive.html">Archives</a>
-                </li><li class="active"><a href="#">Tags</a>
+                </li><li><a href="../categories/index.html">Tags</a>
                 </li><li><a href="../rss.xml">RSS</a>
 
         </li></ul>
@@ -51,6 +53,10 @@
             
             
                 
+    <li>
+    <a href="install-llvm-ocaml-bindings-and-toplevel.md" id="sourcelink">Source</a>
+    </li>
+
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -62,12 +68,58 @@
         <!--Body content-->
         <div class="row">
             
-    <h1>Tags</h1>
-        <ul class="list-unstyled bricks">
-            <li><a class="reference" href="chinese.html">chinese</a></li>
-            <li><a class="reference" href="code.html">Code</a></li>
-            <li><a class="reference" href="weekly.html">Weekly</a></li>
-        </ul>
+    <div class="postbox">
+    
+    <h1>Install LLVM OCaml bindings (and toplevel)</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published" datetime="2014-03-06T23:27:24">2014-03-06 23:27</time>
+        
+
+        
+
+    </small>
+    <hr>
+    <p>LLVM configuration: <code>--with-ocaml-libdir =</code>ocamlc -where``</p>
+<p>Compile: <code>ocamlc -cc g++ llvm.cma test.ml -o test</code></p>
+<p>UTop: </p>
+<ul>
+<li>
+<p><code>let () = UTop_main.main ()</code></p>
+</li>
+<li>
+<p><code>ocamlfind ocamlmktop -o llvmutop -thread -linkpkg -package utop llvm.cma myutop_main.ml -cc g++</code></p>
+</li>
+</ul>
+    
+    <ul class="pager">
+    </ul>
+
+        
+        
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="nikolademo";
+            var disqus_url="https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html";
+        var disqus_title="Install LLVM OCaml bindings (and toplevel)";
+        var disqus_identifier="cache/posts/install-llvm-ocaml-bindings-and-toplevel.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    
+
+    </div>
 
         </div>
         <!--End of body content-->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Code)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/code.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Thu, 20 Mar 2014 20:36:17 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt; -- 20140320&lt;/h4&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Weekly)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/weekly.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Thu, 20 Mar 2014 20:36:17 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt; -- 20140320&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Extended unpacking&lt;/li&gt;
 &lt;/ul&gt;
@@ -70,72 +70,4 @@
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="s"&gt;''&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item><item><title>Miguel's flask mega tutorial</title><link>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</link><description>&lt;p&gt;&lt;a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world"&gt;Link&lt;/a&gt;&lt;/p&gt;
-&lt;h5&gt;Notes&lt;/h5&gt;
-&lt;ul&gt;
-&lt;li&gt;flask:&lt;ul&gt;
-&lt;li&gt;Use &lt;code&gt;url_for&lt;/code&gt; to build and reference URLs&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;app.before_request&lt;/code&gt;, &lt;code&gt;app.after_request&lt;/code&gt; (&lt;code&gt;after_request&lt;/code&gt; can be used to measure database query performance)&lt;/li&gt;
-&lt;li&gt;Rotating file handler&lt;/li&gt;
-&lt;li&gt;Don't use &lt;code&gt;window.history.back&lt;/code&gt; in forms&lt;/li&gt;
-&lt;li&gt;Move logic away from &lt;code&gt;views&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Better return query objects than query results&lt;/li&gt;
-&lt;li&gt;Pagination (&lt;code&gt;yield_per&lt;/code&gt; in sqlalchemy)&lt;/li&gt;
-&lt;li&gt;Unit test: &lt;ul&gt;
-&lt;li&gt;use a different test database&lt;/li&gt;
-&lt;li&gt;regression testing: write a test for every new bug&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Debugging: &lt;code&gt;pdb.set_trace()&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Jinja:&lt;ul&gt;
-&lt;li&gt;Global variables/utilities like &lt;code&gt;config&lt;/code&gt;, &lt;code&gt;g&lt;/code&gt;, &lt;code&gt;session&lt;/code&gt;, &lt;code&gt;url_for&lt;/code&gt; are available in Jinja templates&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;render_template&lt;/code&gt; can be used in rendering HTML email templates&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Useful plugins: &lt;code&gt;coverage&lt;/code&gt;, &lt;code&gt;cProfile&lt;/code&gt;, werkzeug profiler&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h5&gt;Code snippets&lt;/h5&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;pass variable in URL:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;python
-@app.route('/index/&amp;lt;int:page&amp;gt;')
-def turnto(page):&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;use &lt;code&gt;include&lt;/code&gt; in control statements in Jinja:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;{% for post in posts %}
-    {% include "post.html" %}
-{% endfor %}&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;rollback when error occurred:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;python
-@app.errorhandler(500)
-def err500():
-    dbsession.rollback()&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Python's fake mail server: &lt;code&gt;python -m smtpd -n -c DebuggingServer localhost:1025&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Asynchoronous decorator:&lt;/p&gt;
-&lt;p&gt;```python
-from threading import Thread
-from functools import wraps&lt;/p&gt;
-&lt;p&gt;def async(f):
-    @wraps(f)
-    def wrapper(&lt;em&gt;args, &lt;/em&gt;*kwargs):
-        thr = Thread(target = f, args = args, kwargs = kwargs)
-        thr.start()
-    return wrapper
-```&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Expose new global variables in Jinja:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;python
-app.jinja_env.globals['momentjs'] = momentjs&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</guid><pubDate>Sun, 23 Feb 2014 17:01:52 GMT</pubDate></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item></channel></rss>
