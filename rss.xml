@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Thu, 20 Mar 2014 20:36:17 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt; -- 20140320&lt;/h4&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Thu, 20 Mar 2014 22:50:02 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Extended unpacking&lt;/li&gt;
 &lt;/ul&gt;
@@ -70,7 +70,13 @@
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="s"&gt;''&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item><item><title>2013</title><link>https://xysun.github.io/posts/2013.html</link><description>&lt;p&gt;年终奖到账, 交了离职信, 真正就和过去一年说再见了. &lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h4&gt;Simple URL encryption&lt;/h4&gt;
+&lt;p&gt;Idea from &lt;a href="http://stackoverflow.com/questions/4431922/link-encryption-with-django-and-python"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Append a KEY string (with an easy delimitor) to the ID field, then use &lt;code&gt;base64.urlsafe_b64encode&lt;/code&gt; and &lt;code&gt;base64.urlsafe_b64decode&lt;/code&gt;&lt;/p&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item><item><title>2013</title><link>https://xysun.github.io/posts/2013.html</link><description>&lt;p&gt;年终奖到账, 交了离职信, 真正就和过去一年说再见了. &lt;/p&gt;
 &lt;p&gt;2013年是我的本命年, 真的是曲折起伏波澜壮阔. 从年初工作压力大不顺心一直到4月跌到谷底，到拿到了HackerSchool的录取去纽约玩儿了三个月，期间写代码功力见长但也并不是一帆风顺，回到香港后慢慢地把自己的路子从金融扭到工程，而今再过一个月我所有的工资就将来自于Python, 同时我和其他3个小伙伴一起成立了Women Who Code HK, 手里还有几个项目在参与. 这些事情都是4月前做梦也想不到的。&lt;/p&gt;
 &lt;h4&gt;全年目标回顾&lt;/h4&gt;
 &lt;ul&gt;

@@ -15,6 +15,8 @@
 - - -
 ### A self reminder
 
-* Spend time reading docs.
+* Spend time reading docs, slowly.
 * Code slowly. Think, then code. 
-* No matter how high you are, stop coding after a few hours. Otherwise you'll be happily creating crap without even knowing. 
+
+- - - 
+This is my [DigitalOcean referral link](https://www.digitalocean.com/?refcode=52476c7ad3e1)

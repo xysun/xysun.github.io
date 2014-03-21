@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Code)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/code.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Thu, 20 Mar 2014 20:36:17 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt; -- 20140320&lt;/h4&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Code)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/code.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Thu, 20 Mar 2014 22:50:02 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Extended unpacking&lt;/li&gt;
 &lt;/ul&gt;
@@ -70,7 +70,13 @@
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="s"&gt;''&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item><item><title>Miguel's flask mega tutorial</title><link>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</link><description>&lt;p&gt;&lt;a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world"&gt;Link&lt;/a&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h4&gt;Simple URL encryption&lt;/h4&gt;
+&lt;p&gt;Idea from &lt;a href="http://stackoverflow.com/questions/4431922/link-encryption-with-django-and-python"&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Append a KEY string (with an easy delimitor) to the ID field, then use &lt;code&gt;base64.urlsafe_b64encode&lt;/code&gt; and &lt;code&gt;base64.urlsafe_b64decode&lt;/code&gt;&lt;/p&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item><item><title>Miguel's flask mega tutorial</title><link>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</link><description>&lt;p&gt;&lt;a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world"&gt;Link&lt;/a&gt;&lt;/p&gt;
 &lt;h5&gt;Notes&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;flask:&lt;ul&gt;
