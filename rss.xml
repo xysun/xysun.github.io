@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Thu, 20 Mar 2014 22:50:02 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Sat, 22 Mar 2014 22:57:15 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Extended unpacking&lt;/li&gt;
 &lt;/ul&gt;
@@ -74,9 +74,38 @@
 
 
 &lt;hr&gt;
-&lt;h4&gt;Simple URL encryption&lt;/h4&gt;
-&lt;p&gt;Idea from &lt;a href="http://stackoverflow.com/questions/4431922/link-encryption-with-django-and-python"&gt;here&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Append a KEY string (with an easy delimitor) to the ID field, then use &lt;code&gt;base64.urlsafe_b64encode&lt;/code&gt; and &lt;code&gt;base64.urlsafe_b64decode&lt;/code&gt;&lt;/p&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item><item><title>2013</title><link>https://xysun.github.io/posts/2013.html</link><description>&lt;p&gt;年终奖到账, 交了离职信, 真正就和过去一年说再见了. &lt;/p&gt;
+&lt;h4&gt;&lt;a href="http://stackoverflow.com/questions/4431922/link-encryption-with-django-and-python"&gt;Simple URL encryption&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Append a KEY string (with an easy delimitor) to the ID field, then use &lt;code&gt;base64.urlsafe_b64encode&lt;/code&gt; and &lt;code&gt;base64.urlsafe_b64decode&lt;/code&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4&gt;&lt;a href="https://github.com/mjhea0/flaskr-tdd"&gt;flaskr-tdd&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;TDD: &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;write a test&lt;/li&gt;
+&lt;li&gt;run the test (it should fail)&lt;/li&gt;
+&lt;li&gt;write just enough code to pass the test&lt;/li&gt;
+&lt;li&gt;refactor&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Flask test client&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;tester&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;test_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tester&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'/'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content_type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"html/text"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;# response.data include all html text&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="http://flask.pocoo.org/docs/patterns/flashing/"&gt;Flask flash system&lt;/a&gt;: &lt;code&gt;get_flashed_messages&lt;/code&gt; --&amp;gt; may be useful for client-side validation&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;url_for('static', filename = 'style.css')&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item><item><title>2013</title><link>https://xysun.github.io/posts/2013.html</link><description>&lt;p&gt;年终奖到账, 交了离职信, 真正就和过去一年说再见了. &lt;/p&gt;
 &lt;p&gt;2013年是我的本命年, 真的是曲折起伏波澜壮阔. 从年初工作压力大不顺心一直到4月跌到谷底，到拿到了HackerSchool的录取去纽约玩儿了三个月，期间写代码功力见长但也并不是一帆风顺，回到香港后慢慢地把自己的路子从金融扭到工程，而今再过一个月我所有的工资就将来自于Python, 同时我和其他3个小伙伴一起成立了Women Who Code HK, 手里还有几个项目在参与. 这些事情都是4月前做梦也想不到的。&lt;/p&gt;
 &lt;h4&gt;全年目标回顾&lt;/h4&gt;
 &lt;ul&gt;

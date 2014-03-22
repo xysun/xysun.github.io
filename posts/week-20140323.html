@@ -159,9 +159,38 @@
 
 
 <hr>
-<h4>Simple URL encryption</h4>
-<p>Idea from <a href="http://stackoverflow.com/questions/4431922/link-encryption-with-django-and-python">here</a></p>
+<h4><a href="http://stackoverflow.com/questions/4431922/link-encryption-with-django-and-python">Simple URL encryption</a></h4>
 <p>Append a KEY string (with an easy delimitor) to the ID field, then use <code>base64.urlsafe_b64encode</code> and <code>base64.urlsafe_b64decode</code></p>
+<hr>
+<h4><a href="https://github.com/mjhea0/flaskr-tdd">flaskr-tdd</a></h4>
+<ul>
+<li>
+<p>TDD: </p>
+<ol>
+<li>write a test</li>
+<li>run the test (it should fail)</li>
+<li>write just enough code to pass the test</li>
+<li>refactor</li>
+</ol>
+</li>
+<li>
+<p>Flask test client</p>
+</li>
+</ul>
+<div class="code"><pre><span class="n">tester</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">tester</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">"html/text"</span><span class="p">)</span>
+<span class="c"># response.data include all html text</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p><a href="http://flask.pocoo.org/docs/patterns/flashing/">Flask flash system</a>: <code>get_flashed_messages</code> --&gt; may be useful for client-side validation</p>
+</li>
+<li>
+<p><code>url_for('static', filename = 'style.css')</code></p>
+</li>
+</ul>
     
     <ul class="pager">
         <li class="previous">
