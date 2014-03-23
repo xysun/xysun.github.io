@@ -175,6 +175,31 @@
 <p><code>url_for('static', filename = 'style.css')</code></p>
 </li>
 </ul>
+<hr>
+<h4>Install tagbar on vim</h4>
+<ul>
+<li>create .vim/ if not exist</li>
+<li>Install exuberant ctags</li>
+<li>Install tagbar</li>
+</ul>
+<div class="code"><pre><span class="nb">cd</span> ~/.vim
+git clone git://github.com/majutsushi/tagbar
+mv tagbar/* .  <span class="c"># must be directly under .vim/</span>
+sudo rm -r tagbar/
+<span class="nb">cd </span>doc/
+vim tagbar.txt
+:helptags .
+<span class="c"># quit vim</span>
+</pre></div>
+
+
+<ul>
+<li>edit <code>.vimrc</code> (below is mine): </li>
+</ul>
+<div class="code"><pre><span class="k">let</span> <span class="n">g</span><span class="p">:</span><span class="n">tagbar_ctags_bin</span><span class="o">=</span><span class="s1">'/usr/local/bin/ctags'</span>
+<span class="k">let</span> <span class="n">g</span><span class="p">:</span><span class="n">tagbar_width</span><span class="o">=</span><span class="mi">40</span>
+<span class="nx">noremap</span> <span class="o">&lt;</span><span class="nx">silent</span><span class="o">&gt;</span> <span class="nb">tb</span> <span class="p">:</span><span class="nx">TagbarOpen</span> <span class="nx">fj</span> <span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+</pre></div>
             
         
     <p>
