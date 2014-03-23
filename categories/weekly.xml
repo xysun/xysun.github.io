@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Weekly)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/weekly.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Sun, 23 Mar 2014 22:09:41 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Weekly)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/weekly.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Sun, 23 Mar 2014 22:14:22 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Extended unpacking&lt;/li&gt;
 &lt;/ul&gt;
@@ -107,7 +107,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h4&gt;Install tagbar on vim&lt;/h4&gt;
+&lt;h4&gt;&lt;a href="http://majutsushi.github.io/tagbar/"&gt;Install tagbar on vim&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;create .vim/ if not exist&lt;/li&gt;
 &lt;li&gt;Install exuberant ctags&lt;/li&gt;
@@ -127,7 +127,20 @@ vim tagbar.txt
 &lt;ul&gt;
 &lt;li&gt;edit &lt;code&gt;.vimrc&lt;/code&gt; (below is mine): &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;tagbar_ctags_bin&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'/usr/local/bin/ctags'&lt;/span&gt;
-&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;tagbar_width&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;40&lt;/span&gt;
-&lt;span class="nx"&gt;noremap&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;silent&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;tb&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nx"&gt;TagbarOpen&lt;/span&gt; &lt;span class="nx"&gt;fj&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;CR&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nb"&gt;let &lt;/span&gt;g:tagbar_ctags_bin&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'/usr/local/bin/ctags'&lt;/span&gt; &lt;span class="c"&gt;# change to ctags bin path, this is on MacOS&lt;/span&gt;
+&lt;span class="nb"&gt;let &lt;/span&gt;g:tagbar_width&lt;span class="o"&gt;=&lt;/span&gt;40
+noremap &amp;lt;silent&amp;gt; tb :TagbarOpen fj &amp;lt;CR&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;useful key shortcuts:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="code"&gt;&lt;pre&gt;tb: open tagbar &lt;span class="c"&gt;# my key binding&lt;/span&gt;
+p: go to tag, stay in tagbar
+&amp;lt;enter&amp;gt;: go to tag
+o: toggle fold
+*: open all &lt;span class="nv"&gt;fold&lt;/span&gt;
+&lt;span class="o"&gt;=&lt;/span&gt;: collapse all fold
+?: keymap &lt;span class="nb"&gt;help&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item></channel></rss>

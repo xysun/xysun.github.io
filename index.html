@@ -176,7 +176,7 @@
 </li>
 </ul>
 <hr>
-<h4>Install tagbar on vim</h4>
+<h4><a href="http://majutsushi.github.io/tagbar/">Install tagbar on vim</a></h4>
 <ul>
 <li>create .vim/ if not exist</li>
 <li>Install exuberant ctags</li>
@@ -196,9 +196,22 @@ vim tagbar.txt
 <ul>
 <li>edit <code>.vimrc</code> (below is mine): </li>
 </ul>
-<div class="code"><pre><span class="k">let</span> <span class="n">g</span><span class="p">:</span><span class="n">tagbar_ctags_bin</span><span class="o">=</span><span class="s1">'/usr/local/bin/ctags'</span>
-<span class="k">let</span> <span class="n">g</span><span class="p">:</span><span class="n">tagbar_width</span><span class="o">=</span><span class="mi">40</span>
-<span class="nx">noremap</span> <span class="o">&lt;</span><span class="nx">silent</span><span class="o">&gt;</span> <span class="nb">tb</span> <span class="p">:</span><span class="nx">TagbarOpen</span> <span class="nx">fj</span> <span class="o">&lt;</span><span class="nx">CR</span><span class="o">&gt;</span>
+<div class="code"><pre><span class="nb">let </span>g:tagbar_ctags_bin<span class="o">=</span><span class="s1">'/usr/local/bin/ctags'</span> <span class="c"># change to ctags bin path, this is on MacOS</span>
+<span class="nb">let </span>g:tagbar_width<span class="o">=</span>40
+noremap &lt;silent&gt; tb :TagbarOpen fj &lt;CR&gt;
+</pre></div>
+
+
+<ul>
+<li>useful key shortcuts:</li>
+</ul>
+<div class="code"><pre>tb: open tagbar <span class="c"># my key binding</span>
+p: go to tag, stay in tagbar
+&lt;enter&gt;: go to tag
+o: toggle fold
+*: open all <span class="nv">fold</span>
+<span class="o">=</span>: collapse all fold
+?: keymap <span class="nb">help</span>
 </pre></div>
             
         
