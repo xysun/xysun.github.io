@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Xiayun Sun">
-    <title>Weekly 20140330 | Do Nothing</title>
+    <title>Week 20140406 | Do Nothing</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -54,7 +54,7 @@
             
                 
     <li>
-    <a href="week-20140330.md" id="sourcelink">Source</a>
+    <a href="week-20140406.md" id="sourcelink">Source</a>
     </li>
 
         </ul>
@@ -70,78 +70,56 @@
             
     <div class="postbox">
     
-    <h1>Weekly 20140330</h1>
+    <h1>Week 20140406</h1>
 
     <hr>
     <small>
-        Posted: <time class="published" datetime="2014-03-24T21:09:02">2014-03-24 21:09</time>
+        Posted: <time class="published" datetime="2014-03-31T13:32:10">2014-03-31 13:32</time>
         
 
         
           |  More posts about
-            <a class="tag" href="../categories/weekly.html"><span class="badge badge-info">Weekly</span></a>
             <a class="tag" href="../categories/code.html"><span class="badge badge-info">Code</span></a>
+            <a class="tag" href="../categories/weekly.html"><span class="badge badge-info">Weekly</span></a>
 
     </small>
     <hr>
-    <h4><a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041">Surely You're joking, Mr. Feynman!</a></h4>
-<blockquote>
-<p>Learn what the rest of the world is like. The variety is worthwhile.</p>
-<p>"I could do that, but I won't" -- which is just another way of saying that you can't. </p>
-<p>You don't have to be responsible for the world that you're in.</p>
-<p>You have no responsibility to live up to what other people think you ought to accomplish. </p>
-</blockquote>
-<hr>
-<h4><a href="http://courses.cs.washington.edu/courses/cse341/13sp/videos/unit1/">Dan Grossman</a></h4>
+    <h4>Dan Grossman</h4>
 <ul>
-<li>expression: syntax, type-checking, evaluate</li>
-<li>REPL: Read, Evaluate, Print, Loop; do not type <code>use</code> without restarting REPL</li>
-<li>syntax: <ul>
-<li>negation: <code>~5</code></li>
-<li>division: <code>div</code></li>
+<li>functions over lists are usually recursive: empty list; non-empty list (<code>hd</code>, <code>tl</code>) </li>
+<li>let expression: <code>let...in...end</code></li>
+<li>Do a recursive computation, store in (local binding)</li>
+<li>Option: <code>isSome</code>, <code>valOf</code></li>
+<li>Bool comparisons: <code>andalso</code>, <code>orelse</code>, <code>not</code></li>
+<li><code>real</code> is not an equality type (subject to round errors)</li>
+<li>no mutation --&gt; no need to worry about alias or copies --&gt; implementation more efficient &amp; better security</li>
 </ul>
-</li>
-<li>after expression evaluated, the expression producing the result is irrelevant --&gt; do not reuse <code>use</code> in sml</li>
-<li>access pair/tuple: <code>#1 e</code></li>
-<li>naming: <ul>
-<li><code>pair</code> &lt;--&gt; <code>pr</code></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h4><a href="http://c.learncodethehardway.org/book/">Learn C the hard way</a></h4>
+<h4><a href="https://www.youtube.com/watch?v=fYlnfvKVDoM">Brandon Rhodes Pycon talk</a></h4>
 <ul>
-<li><a href="http://c.learncodethehardway.org/book/ex13.html">switch statement</a>: <ul>
-<li><code>return 1</code> --&gt; tell OS there's an error</li>
-<li>only integers allowed (eg. char)</li>
+<li><a href="http://duartes.org/gustavo/blog/post/what-your-computer-does-while-you-wait/">Gustavo Duarte -- what your computer does while you wait</a></li>
+<li><a href="http://danluu.com/3c-conflict/">Dan Luu -- how misaligning data can increase performance 12x</a></li>
+<li>Python store general purpose data structures (eg. tuple) as array of addresses</li>
+<li><code>append</code> on a list adds extra spaces -- amortization</li>
+<li>list is fast for tail operations: <code>append</code>, <code>pop</code>. Not <code>pop(0)</code>, <code>insert(0)</code></li>
+<li><code>dict</code> is an array with keys stored at integer indexes according to hash value: <ul>
+<li>hash -- key address -- value address</li>
+<li>PyCon 2010 "The mighty dictionary"</li>
+<li>can build compound keys with tuple</li>
 </ul>
 </li>
-<li><a href="http://c.learncodethehardway.org/book/ex14.html">use functions</a><ul>
-<li>forward declaration: use function before defining them</li>
-</ul>
-</li>
-<li><a href="http://c.learncodethehardway.org/book/ex15.html">pointers</a></li>
+<li>set: dictionary with no keys</li>
+<li><code>deque</code>, <code>heapq</code></li>
+<li>2013 PyCon, the clean architecture in Python</li>
 </ul>
 <hr>
 <h4>Miscellaneous</h4>
 <ul>
-<li>
-<p>I wrote a small <a href="https://gist.github.com/xysun/9837480">utility</a> to manage my "My Clippings.txt" from Kindle. This script will create a separate note for each book. </p>
-</li>
-<li>
-<p><a href="http://defunkt.io/gist/">gist</a> is an awesome command line tool for gist. </p>
-</li>
-<li>
-<p>use <code>rlwrap sml</code> to enable history rollback through arrow keys</p>
-</li>
+<li><a href="https://www.rescuetime.com/">rescue time</a> is a neat productivity tool.</li>
 </ul>
     
     <ul class="pager">
         <li class="previous">
-            <a href="week-20140323.html">← Previous post</a>
-        </li>
-        <li class="next">
-            <a href="week-20140406.html">Next post →</a>
+            <a href="week-20140330.html">← Previous post</a>
         </li>
     </ul>
 
@@ -150,9 +128,9 @@
         <div id="disqus_thread"></div>
         <script type="text/javascript">
         var disqus_shortname ="nikolademo";
-            var disqus_url="https://xysun.github.io/posts/week-20140330.html";
-        var disqus_title="Weekly 20140330";
-        var disqus_identifier="cache/posts/week-20140330.html";
+            var disqus_url="https://xysun.github.io/posts/week-20140406.html";
+        var disqus_title="Week 20140406";
+        var disqus_identifier="cache/posts/week-20140406.html";
         var disqus_config = function () {
             this.language = "en";
         };

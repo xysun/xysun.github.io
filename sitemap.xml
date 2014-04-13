@@ -36,7 +36,7 @@
  </url>
  <url>
   <loc>https://xysun.github.io/categories/code.html</loc>
-  <lastmod>2014-03-30</lastmod>
+  <lastmod>2014-04-14</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -46,7 +46,7 @@
  </url>
  <url>
   <loc>https://xysun.github.io/categories/weekly.html</loc>
-  <lastmod>2014-03-30</lastmod>
+  <lastmod>2014-04-14</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -61,7 +61,7 @@
  </url>
  <url>
   <loc>https://xysun.github.io/index.html</loc>
-  <lastmod>2014-03-30</lastmod>
+  <lastmod>2014-04-14</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -91,7 +91,12 @@
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140330.html</loc>
-  <lastmod>2014-03-30</lastmod>
+  <lastmod>2014-04-14</lastmod>
+  <priority>0.5000</priority>
+ </url>
+ <url>
+  <loc>https://xysun.github.io/posts/week-20140406.html</loc>
+  <lastmod>2014-04-14</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
