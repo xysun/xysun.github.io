@@ -36,7 +36,7 @@
  </url>
  <url>
   <loc>https://xysun.github.io/categories/code.html</loc>
-  <lastmod>2014-04-14</lastmod>
+  <lastmod>2014-04-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -61,7 +61,7 @@
  </url>
  <url>
   <loc>https://xysun.github.io/index.html</loc>
-  <lastmod>2014-04-14</lastmod>
+  <lastmod>2014-04-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -76,32 +76,37 @@
  </url>
  <url>
   <loc>https://xysun.github.io/posts/2013.html</loc>
-  <lastmod>2014-03-20</lastmod>
+  <lastmod>2014-04-19</lastmod>
+  <priority>0.5000</priority>
+ </url>
+ <url>
+  <loc>https://xysun.github.io/posts/app-jamming-2014.html</loc>
+  <lastmod>2014-04-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</loc>
-  <lastmod>2014-03-20</lastmod>
+  <lastmod>2014-04-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140323.html</loc>
-  <lastmod>2014-03-28</lastmod>
+  <lastmod>2014-04-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140330.html</loc>
-  <lastmod>2014-04-14</lastmod>
+  <lastmod>2014-04-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140406.html</loc>
-  <lastmod>2014-04-14</lastmod>
+  <lastmod>2014-04-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
   <loc>https://xysun.github.io/stories/about.html</loc>
-  <lastmod>2014-03-21</lastmod>
+  <lastmod>2014-04-19</lastmod>
   <priority>0.5000</priority>
  </url>
 </urlset>

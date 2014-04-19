@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Xiayun Sun">
-    <title>Week 20140406 | Do Nothing</title>
+    <title>App Jamming 2014 | Do Nothing</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -54,7 +54,7 @@
             
                 
     <li>
-    <a href="week-20140406.md" id="sourcelink">Source</a>
+    <a href="app-jamming-2014.md" id="sourcelink">Source</a>
     </li>
 
         </ul>
@@ -70,60 +70,56 @@
             
     <div class="postbox">
     
-    <h1>Week 20140406</h1>
+    <h1>App Jamming 2014</h1>
 
     <hr>
     <small>
-        Posted: <time class="published" datetime="2014-03-31T13:32:10">2014-03-31 13:32</time>
+        Posted: <time class="published" datetime="2014-04-19T23:00:23">2014-04-19 23:00</time>
         
 
         
           |  More posts about
             <a class="tag" href="../categories/code.html"><span class="badge badge-info">Code</span></a>
-            <a class="tag" href="../categories/weekly.html"><span class="badge badge-info">Weekly</span></a>
 
     </small>
     <hr>
-    <h4>Dan Grossman</h4>
+    <h4>App Jamming 2014</h4>
+<p>I was at my friend Michelle's app jamming 2014 event yesterday as a mentor. This is my first such experience and I thought I'd make a note, mostly because it was fun, partly because I really need to pick up blogging again.</p>
+<p>(I'll post pictures once I get them)</p>
+<p>App jamming is an annual event where we teach teenage girls (mostly age 11-15) to code with the help of <a href="http://ai2.appinventor.mit.edu/">MIT App inventor</a>. This year is the second year and around 50 girls signed up. </p>
+<p>Most girls have never written a line of code before. Because of this I was a bit reserved about the idea of writing an app, since in my mind writing an app is not necessary the best introduction to programming. But it turned out alright, and in hindsight, I think making an app has its unique advantages: </p>
 <ul>
-<li>functions over lists are usually recursive: empty list; non-empty list (<code>hd</code>, <code>tl</code>) </li>
-<li>let expression: <code>let...in...end</code></li>
-<li>Do a recursive computation, store in (local binding)</li>
-<li>Option: <code>isSome</code>, <code>valOf</code></li>
-<li>Bool comparisons: <code>andalso</code>, <code>orelse</code>, <code>not</code></li>
-<li><code>real</code> is not an equality type (subject to round errors)</li>
-<li>no mutation --&gt; no need to worry about alias or copies --&gt; implementation more efficient &amp; better security</li>
-<li>Done <a href="https://github.com/xysun/armory/tree/master/ProgrammingLanguages">HW1</a></li>
-</ul>
-<h4><a href="https://www.youtube.com/watch?v=fYlnfvKVDoM">Brandon Rhodes Pycon talk</a></h4>
-<ul>
-<li><a href="http://duartes.org/gustavo/blog/post/what-your-computer-does-while-you-wait/">Gustavo Duarte -- what your computer does while you wait</a></li>
-<li><a href="http://danluu.com/3c-conflict/">Dan Luu -- how misaligning data can increase performance 12x</a></li>
-<li>Python store general purpose data structures (eg. tuple) as array of addresses</li>
-<li><code>append</code> on a list adds extra spaces -- amortization</li>
-<li>list is fast for tail operations: <code>append</code>, <code>pop</code>. Not <code>pop(0)</code>, <code>insert(0)</code></li>
-<li><code>dict</code> is an array with keys stored at integer indexes according to hash value: <ul>
-<li>hash -- key address -- value address</li>
-<li>PyCon 2010 "The mighty dictionary"</li>
-<li>can build compound keys with tuple</li>
-</ul>
+<li>
+<p>Better interaction, with UI</p>
+<p>MIT app inventor is awesome in that the build process is very simple and elegant -- just scan a QR code and the app would run on an Android phone. </p>
+<p>Kids were over the moon when they made the first app, "HelloPurr", where you can pat a cat and it will "meow". The room was filled with "meow"s and I don't think a traditional "Hello world" would have the same effect. (When I wrote my Hello world I emailed the .exe to my parents only to find out they were disappointed, my mom was like, "I thought there would be music!")</p>
 </li>
-<li>set: dictionary with no keys</li>
-<li><code>deque</code>, <code>heapq</code></li>
-<li>2013 PyCon, the clean architecture in Python</li>
+<li>
+<p>Programming with blocks</p>
+<p>The app inventor uses the same idea behind <a href="http://scratch.mit.edu/">Scratch</a>, also from MIT, where you write programs by dragging logic blocks. While I am still a bit suspicious on whether this will foster the right logic thinking, it is indeed a straightforward-yet-not-scaring introduction of programming, since you don't need a text editor at all. </p>
+</li>
+</ul>
+<p>Along the way I've noticed a few interesting things:</p>
+<ul>
+<li>Most kids' favorite app is instagram! I've never ever used instagram. Gesus I feel so old. </li>
+<li>
+<p>Most kids' want to be invisible if they could have one superpower. </p>
+<p>I...never...thought about that. I only wished I could have more time than others (there was an episode in Doraemon where Nobi can stop the world's time and go to do whatever he wants and restarts world's time again. I remember watching this and thinking, I really really want to do the same. </p>
+<p>Is it because parents nowadays are way too harsh on their kids? </p>
+</li>
+<li>
+<p>Unfortunately, they also have amazingly short attention spans. </p>
+<p>I think it is partly due to the iPad-dominated world right now. I try to help on this as much as possible, by never giving answers straight away but rather guide them through the thinking process ("How do you want to make the ants move? What would happen when the hand crashes with the ant? And what's the right function to do that? Do you think <code>collide</code> is a good choice? Why?") But I don't think it helps much, especially during such short time. </p>
+</li>
 </ul>
 <hr>
-<h4>Miscellaneous</h4>
-<ul>
-<li><a href="https://www.rescuetime.com/">rescue time</a> is a neat productivity tool.</li>
-</ul>
+<p>Overall it was fun. Kids were a bit quiet in the very first beginning but jumping around soon after they made the kitten meow. There was a moment during the lunch break, where we accidentally realized that while all the mentors were chatting in the lunch area, all the kids were at their table, focused on their app. That was beautiful and precious. </p>
+<p>As Michelle put it, we are working hard at bringing more girls (also with the newly founded <a href="http://womenwhocodehk.com/">Women Who Code HK</a>) into programming because we no longer want to be outliers in this industry. And so far things look promising. </p>
+<p>(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )</p>
     
     <ul class="pager">
         <li class="previous">
-            <a href="week-20140330.html">← Previous post</a>
-        </li>
-        <li class="next">
-            <a href="app-jamming-2014.html">Next post →</a>
+            <a href="week-20140406.html">← Previous post</a>
         </li>
     </ul>
 
@@ -132,9 +128,9 @@
         <div id="disqus_thread"></div>
         <script type="text/javascript">
         var disqus_shortname ="nikolademo";
-            var disqus_url="https://xysun.github.io/posts/week-20140406.html";
-        var disqus_title="Week 20140406";
-        var disqus_identifier="cache/posts/week-20140406.html";
+            var disqus_url="https://xysun.github.io/posts/app-jamming-2014.html";
+        var disqus_title="App Jamming 2014";
+        var disqus_identifier="cache/posts/app-jamming-2014.html";
         var disqus_config = function () {
             this.language = "en";
         };
