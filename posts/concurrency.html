@@ -5,9 +5,9 @@
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="I strove for none, for none was worth my strife.">
+    <meta name="description" content="">
     <meta name="author" content="Xiayun Sun">
-    <title>Posts about Code | Do Nothing</title>
+    <title>Concurrency | Do Nothing</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -20,7 +20,8 @@
             <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 
     
-        <link rel="alternate" type="application/rss+xml" title="RSS for tag Code" href="code.xml">
+
+
 
     
 </head>
@@ -43,7 +44,7 @@
                 <li><a href="../index.html">Home</a>
                 </li><li><a href="../stories/about.html">About</a>
                 </li><li><a href="../archive.html">Archives</a>
-                </li><li><a href="index.html">Tags</a>
+                </li><li><a href="../categories/index.html">Tags</a>
                 </li><li><a href="../rss.xml">RSS</a>
 
         </li></ul>
@@ -52,6 +53,10 @@
             
             
                 
+    <li>
+    <a href="concurrency.md" id="sourcelink">Source</a>
+    </li>
+
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -63,21 +68,59 @@
         <!--Body content-->
         <div class="row">
             
-        <!--Body content-->
-        <div class="postbox">
-        <h1>Posts about Code</h1>
-            <a href="code.xml">RSS</a>
-        <br>
-        <ul class="unstyled">
-            <li><a href="../posts/app-jamming-2014.html">[2014-04-19 23:00] App Jamming 2014</a>
-            </li><li><a href="../posts/week-20140420.html">[2014-04-14 21:41] Week 20140420</a>
-            </li><li><a href="../posts/week-20140406.html">[2014-03-31 13:32] Week 20140406</a>
-            </li><li><a href="../posts/week-20140330.html">[2014-03-24 21:09] Weekly 20140330</a>
-            </li><li><a href="../posts/week-20140323.html">[2014-03-20 19:52] Weekly 20140323</a>
-            </li><li><a href="../posts/miguels-flask-mega-tutorial.html">[2014-02-23 17:01] Miguel's flask mega tutorial</a>
-        </li></ul>
-        </div>
-        <!--End of body content-->
+    <div class="postbox">
+    
+    <h1>Concurrency</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published" datetime="2014-05-01T17:34:42">2014-05-01 17:34</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/code.html"><span class="badge badge-info">Code</span></a>
+            <a class="tag" href="../categories/ocaml.html"><span class="badge badge-info">OCaml</span></a>
+
+    </small>
+    <hr>
+    <h4>OCaml:</h4>
+<ul>
+<li>
+<p><code>async</code> module: </p>
+<p>the idea of <code>Deferred.t</code> and maintain a scheduler
+<code>Deferred.bind</code>: <code>'a Deferred.t</code> -&gt; ('a -&gt; 'b Deferred.t) -&gt; 'b Deferred.t<code>;</code>&gt;&gt;=<code></code>Return<code>:</code>'a -&gt; 'a Deferred.t<code></code>Deferred.map<code>:</code>'a Deferred.t<code>-&gt; ('a -&gt; 'b) -&gt; 'b Deferred.t</code>; <code>&gt;&gt;|</code>; "monad"
+Utop will wait for deferred to be determined</p>
+</li>
+</ul>
+    
+    <ul class="pager">
+    </ul>
+
+        
+        
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="nikolademo";
+            var disqus_url="https://xysun.github.io/posts/concurrency.html";
+        var disqus_title="Concurrency";
+        var disqus_identifier="cache/posts/concurrency.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    
+
+    </div>
 
         </div>
         <!--End of body content-->

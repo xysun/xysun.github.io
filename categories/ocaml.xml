@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (OCaml)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/ocaml.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Thu, 01 May 2014 21:32:40 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Concurrency</title><link>https://xysun.github.io/posts/concurrency.html</link><description>&lt;h4&gt;OCaml:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;async&lt;/code&gt; module: &lt;/p&gt;
+&lt;p&gt;the idea of &lt;code&gt;Deferred.t&lt;/code&gt; and maintain a scheduler
+&lt;code&gt;Deferred.bind&lt;/code&gt;: &lt;code&gt;'a Deferred.t&lt;/code&gt; -&amp;gt; ('a -&amp;gt; 'b Deferred.t) -&amp;gt; 'b Deferred.t&lt;code&gt;;&lt;/code&gt;&amp;gt;&amp;gt;=&lt;code&gt;&lt;/code&gt;Return&lt;code&gt;:&lt;/code&gt;'a -&amp;gt; 'a Deferred.t&lt;code&gt;&lt;/code&gt;Deferred.map&lt;code&gt;:&lt;/code&gt;'a Deferred.t&lt;code&gt;-&amp;gt; ('a -&amp;gt; 'b) -&amp;gt; 'b Deferred.t&lt;/code&gt;; &lt;code&gt;&amp;gt;&amp;gt;|&lt;/code&gt;; "monad"
+Utop will wait for deferred to be determined&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description><category>Code</category><category>OCaml</category><guid>https://xysun.github.io/posts/concurrency.html</guid><pubDate>Thu, 01 May 2014 17:34:42 GMT</pubDate></item></channel></rss>
