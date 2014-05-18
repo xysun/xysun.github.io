@@ -26,12 +26,12 @@
  </url>
  <url>
   <loc>https://xysun.github.io/categories/</loc>
-  <lastmod>2014-05-18</lastmod>
+  <lastmod>2014-05-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/chinese.html</loc>
-  <lastmod>2014-05-18</lastmod>
+  <lastmod>2014-05-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -46,7 +46,7 @@
  </url>
  <url>
   <loc>https://xysun.github.io/categories/index.html</loc>
-  <lastmod>2014-05-18</lastmod>
+  <lastmod>2014-05-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -55,8 +55,13 @@
   <priority>0.5000</priority>
  </url>
  <url>
+  <loc>https://xysun.github.io/categories/tricks.html</loc>
+  <lastmod>2014-05-19</lastmod>
+  <priority>0.5000</priority>
+ </url>
+ <url>
   <loc>https://xysun.github.io/categories/weekly.html</loc>
-  <lastmod>2014-05-18</lastmod>
+  <lastmod>2014-05-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>
@@ -92,6 +97,11 @@
  <url>
   <loc>https://xysun.github.io/posts/app-jamming-2014.html</loc>
   <lastmod>2014-05-18</lastmod>
+  <priority>0.5000</priority>
+ </url>
+ <url>
+  <loc>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</loc>
+  <lastmod>2014-05-19</lastmod>
   <priority>0.5000</priority>
  </url>
  <url>

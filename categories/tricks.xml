@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Tricks)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/tricks.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Mon, 19 May 2014 00:26:06 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to insert images into posts in Nikola</title><link>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</link><description>&lt;p&gt;Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's &lt;a href="http://getnikola.com/handbook.html"&gt;official docs&lt;/a&gt;(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.&lt;/p&gt;
+&lt;p&gt;The simple trick is based on the fact that Nikola will automatically copy all contents under &lt;code&gt;files/&lt;/code&gt; folder to &lt;code&gt;output/&lt;/code&gt; folder when you run &lt;code&gt;nikola build&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;So here are the steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create a subdirectory in &lt;code&gt;files/&lt;/code&gt;. Say &lt;code&gt;regex_pic/&lt;/code&gt; (where I put my images for the previous post on &lt;a href="http://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html"&gt;parsing regex&lt;/a&gt;) -- this is more about better practice, since I don't like to clutter my &lt;code&gt;output/&lt;/code&gt; folder. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Put your images into that folder. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In your post, use regular markdown syntax to reference those images. For example: &lt;code&gt;![simple image1](/regex_pic/simple1.jpg)&lt;/code&gt; will insert &lt;code&gt;regex_pic/simple1.jpg&lt;/code&gt;. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;nikola build&lt;/code&gt;. Done.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</description><category>Tricks</category><category>Code</category><guid>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</guid><pubDate>Mon, 19 May 2014 00:19:35 GMT</pubDate></item></channel></rss>

@@ -63,6 +63,36 @@
         <div class="row">
             
         <div class="postbox">
+        <h1><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html">How to insert images into posts in Nikola</a>
+        <small>  
+             Posted: <time class="published" datetime="2014-05-19T00:19:35">2014-05-19 00:19</time>
+        </small></h1>
+        <hr>
+        <p>Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's <a href="http://getnikola.com/handbook.html">official docs</a>(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.</p>
+<p>The simple trick is based on the fact that Nikola will automatically copy all contents under <code>files/</code> folder to <code>output/</code> folder when you run <code>nikola build</code>.</p>
+<p>So here are the steps:</p>
+<ol>
+<li>
+<p>Create a subdirectory in <code>files/</code>. Say <code>regex_pic/</code> (where I put my images for the previous post on <a href="http://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">parsing regex</a>) -- this is more about better practice, since I don't like to clutter my <code>output/</code> folder. </p>
+</li>
+<li>
+<p>Put your images into that folder. </p>
+</li>
+<li>
+<p>In your post, use regular markdown syntax to reference those images. For example: <code>![simple image1](/regex_pic/simple1.jpg)</code> will insert <code>regex_pic/simple1.jpg</code>. </p>
+</li>
+<li>
+<p><code>nikola build</code>. Done.</p>
+</li>
+</ol>
+            
+        
+    <p>
+        <a href="posts/how-to-insert-pictures-into-posts-in-nikola.html#disqus_thread" data-disqus-identifier="cache/posts/how-to-insert-pictures-into-posts-in-nikola.html">Comments</a>
+
+
+        </p></div>
+        <div class="postbox">
         <h1><a href="posts/regex-parsing-thompsons-algorithm.html">Regex parsing: Thompson's algorithm</a>
         <small>  
              Posted: <time class="published" datetime="2014-05-18T22:26:11">2014-05-18 22:26</time>

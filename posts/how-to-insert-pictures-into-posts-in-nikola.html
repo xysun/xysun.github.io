@@ -5,9 +5,9 @@
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="I strove for none, for none was worth my strife.">
+    <meta name="description" content="">
     <meta name="author" content="Xiayun Sun">
-    <title>Tags | Do Nothing</title>
+    <title>How to insert images into posts in Nikola | Do Nothing</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -20,7 +20,9 @@
             <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 
     
-    
+
+
+
     
 </head>
 <body>
@@ -42,7 +44,7 @@
                 <li><a href="../index.html">Home</a>
                 </li><li><a href="../stories/about.html">About</a>
                 </li><li><a href="../archive.html">Archives</a>
-                </li><li class="active"><a href="#">Tags</a>
+                </li><li><a href="../categories/index.html">Tags</a>
                 </li><li><a href="../rss.xml">RSS</a>
 
         </li></ul>
@@ -51,6 +53,10 @@
             
             
                 
+    <li>
+    <a href="how-to-insert-pictures-into-posts-in-nikola.md" id="sourcelink">Source</a>
+    </li>
+
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -62,13 +68,70 @@
         <!--Body content-->
         <div class="row">
             
-    <h1>Tags</h1>
-        <ul class="list-unstyled bricks">
-            <li><a class="reference" href="chinese.html">chinese</a></li>
-            <li><a class="reference" href="code.html">Code</a></li>
-            <li><a class="reference" href="tricks.html">Tricks</a></li>
-            <li><a class="reference" href="weekly.html">Weekly</a></li>
-        </ul>
+    <div class="postbox">
+    
+    <h1>How to insert images into posts in Nikola</h1>
+
+    <hr>
+    <small>
+        Posted: <time class="published" datetime="2014-05-19T00:19:35">2014-05-19 00:19</time>
+        
+
+        
+          |  More posts about
+            <a class="tag" href="../categories/tricks.html"><span class="badge badge-info">Tricks</span></a>
+            <a class="tag" href="../categories/code.html"><span class="badge badge-info">Code</span></a>
+
+    </small>
+    <hr>
+    <p>Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's <a href="http://getnikola.com/handbook.html">official docs</a>(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.</p>
+<p>The simple trick is based on the fact that Nikola will automatically copy all contents under <code>files/</code> folder to <code>output/</code> folder when you run <code>nikola build</code>.</p>
+<p>So here are the steps:</p>
+<ol>
+<li>
+<p>Create a subdirectory in <code>files/</code>. Say <code>regex_pic/</code> (where I put my images for the previous post on <a href="http://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">parsing regex</a>) -- this is more about better practice, since I don't like to clutter my <code>output/</code> folder. </p>
+</li>
+<li>
+<p>Put your images into that folder. </p>
+</li>
+<li>
+<p>In your post, use regular markdown syntax to reference those images. For example: <code>![simple image1](/regex_pic/simple1.jpg)</code> will insert <code>regex_pic/simple1.jpg</code>. </p>
+</li>
+<li>
+<p><code>nikola build</code>. Done.</p>
+</li>
+</ol>
+    
+    <ul class="pager">
+        <li class="previous">
+            <a href="regex-parsing-thompsons-algorithm.html">← Previous post</a>
+        </li>
+    </ul>
+
+        
+        
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+        var disqus_shortname ="nikolademo";
+            var disqus_url="https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html";
+        var disqus_title="How to insert images into posts in Nikola";
+        var disqus_identifier="cache/posts/how-to-insert-pictures-into-posts-in-nikola.html";
+        var disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+    
+
+    </div>
 
         </div>
         <!--End of body content-->
