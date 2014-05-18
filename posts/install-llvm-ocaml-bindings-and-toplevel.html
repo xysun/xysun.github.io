@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Xiayun Sun">
-    <title>Install LLVM OCaml bindings (and toplevel) | Do Nothing</title>
+    <title>Install LLVM OCaml bindings (and UTop) | Do Nothing</title>
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -43,7 +43,6 @@
             
                 <li><a href="../index.html">Home</a>
                 </li><li><a href="../stories/about.html">About</a>
-                </li><li><a href="../archive.html">Archives</a>
                 </li><li><a href="../categories/index.html">Tags</a>
                 </li><li><a href="../rss.xml">RSS</a>
 
@@ -70,30 +69,54 @@
             
     <div class="postbox">
     
-    <h1>Install LLVM OCaml bindings (and toplevel)</h1>
+    <h1>Install LLVM OCaml bindings (and UTop)</h1>
 
     <hr>
     <small>
-        Posted: <time class="published" datetime="2014-03-06T23:27:24">2014-03-06 23:27</time>
+        Posted: <time class="published" datetime="2014-05-06T23:27:24">2014-05-06 23:27</time>
         
 
         
+          |  More posts about
+            <a class="tag" href="../categories/code.html"><span class="badge badge-info">Code</span></a>
+            <a class="tag" href="../categories/tricks.html"><span class="badge badge-info">Tricks</span></a>
 
     </small>
     <hr>
-    <p>LLVM configuration: <code>--with-ocaml-libdir =</code>ocamlc -where``</p>
-<p>Compile: <code>ocamlc -cc g++ llvm.cma test.ml -o test</code></p>
-<p>UTop: </p>
+    <p>I put on a <a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings">Stackoverflow answer here</a></p>
+<ol>
+<li>
+<p>Build LLVM with configuration: <code>--with-ocaml-libdir =</code>ocamlc -where``</p>
+</li>
+<li>
+<p>To compile LLVM codes: <code>ocamlc -cc g++ llvm.cma test.ml -o test</code></p>
+</li>
+<li>
+<p>To make UTop work: </p>
 <ul>
 <li>
-<p><code>let () = UTop_main.main ()</code></p>
+<p>create a <code>myutop_main.ml</code> file with: <code>let () = UTop_main.main ()</code></p>
 </li>
 <li>
-<p><code>ocamlfind ocamlmktop -o llvmutop -thread -linkpkg -package utop llvm.cma myutop_main.ml -cc g++</code></p>
+<p>create a custom <code>llvmutop</code>: <code>ocamlfind ocamlmktop -o llvmutop -thread -linkpkg -package utop llvm.cma myutop_main.ml -cc g++</code></p>
 </li>
 </ul>
+</li>
+<li>
+<p>If you just want OCaml's build-in toplevel:</p>
+<ul>
+<li><code>ocamlmktop -o llvmtop llvm.cma -cc g++</code></li>
+</ul>
+</li>
+</ol>
     
     <ul class="pager">
+        <li class="previous">
+            <a href="week-20140504.html">← Previous post</a>
+        </li>
+        <li class="next">
+            <a href="regex-parsing-thompsons-algorithm.html">Next post →</a>
+        </li>
     </ul>
 
         
@@ -102,7 +125,7 @@
         <script type="text/javascript">
         var disqus_shortname ="nikolademo";
             var disqus_url="https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html";
-        var disqus_title="Install LLVM OCaml bindings (and toplevel)";
+        var disqus_title="Install LLVM OCaml bindings (and UTop)";
         var disqus_identifier="cache/posts/install-llvm-ocaml-bindings-and-toplevel.html";
         var disqus_config = function () {
             this.language = "en";

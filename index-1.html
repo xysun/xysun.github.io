@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="I strove for none, for none was worth my strife.">
     <meta name="author" content="Xiayun Sun">
-    <title>Archive | Do Nothing</title>
+    <title>Do Nothing (old posts page 1) | Do Nothing</title>
     
             <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/rst.css" rel="stylesheet" type="text/css">
@@ -61,14 +61,104 @@
         <!--Body content-->
         <div class="row">
             
-        <!--Body content-->
         <div class="postbox">
-        <h1>Archive</h1>
-        <ul class="list-unstyled">
-            <li><a href="2014/index.html">2014</a>
-        </li></ul>
-        </div>
-        <!--End of body content-->
+        <h1><a href="posts/miguels-flask-mega-tutorial.html">Miguel's flask mega tutorial</a>
+        <small>  
+             Posted: <time class="published" datetime="2014-02-23T17:01:52">2014-02-23 17:01</time>
+        </small></h1>
+        <hr>
+        <p><a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">Link</a></p>
+<h5>Notes</h5>
+<ul>
+<li>flask:<ul>
+<li>Use <code>url_for</code> to build and reference URLs</li>
+<li><code>app.before_request</code>, <code>app.after_request</code> (<code>after_request</code> can be used to measure database query performance)</li>
+<li>Rotating file handler</li>
+<li>Don't use <code>window.history.back</code> in forms</li>
+<li>Move logic away from <code>views</code></li>
+<li>Better return query objects than query results</li>
+<li>Pagination (<code>yield_per</code> in sqlalchemy)</li>
+<li>Unit test: <ul>
+<li>use a different test database</li>
+<li>regression testing: write a test for every new bug</li>
+</ul>
+</li>
+<li>Debugging: <code>pdb.set_trace()</code></li>
+</ul>
+</li>
+<li>Jinja:<ul>
+<li>Global variables/utilities like <code>config</code>, <code>g</code>, <code>session</code>, <code>url_for</code> are available in Jinja templates</li>
+<li><code>render_template</code> can be used in rendering HTML email templates</li>
+</ul>
+</li>
+<li>Useful plugins: <code>coverage</code>, <code>cProfile</code>, werkzeug profiler</li>
+</ul>
+<h5>Code snippets</h5>
+<ul>
+<li>
+<p>pass variable in URL:</p>
+<p><code>python
+@app.route('/index/&lt;int:page&gt;')
+def turnto(page):</code></p>
+</li>
+<li>
+<p>use <code>include</code> in control statements in Jinja:</p>
+<p><code>{% for post in posts %}
+    {% include "post.html" %}
+{% endfor %}</code></p>
+</li>
+<li>
+<p>rollback when error occurred:</p>
+<p><code>python
+@app.errorhandler(500)
+def err500():
+    dbsession.rollback()</code></p>
+</li>
+<li>
+<p>Python's fake mail server: <code>python -m smtpd -n -c DebuggingServer localhost:1025</code></p>
+</li>
+<li>
+<p>Asynchoronous decorator:</p>
+<p>```python
+from threading import Thread
+from functools import wraps</p>
+<p>def async(f):
+    @wraps(f)
+    def wrapper(<em>args, </em>*kwargs):
+        thr = Thread(target = f, args = args, kwargs = kwargs)
+        thr.start()
+    return wrapper
+```</p>
+</li>
+<li>
+<p>Expose new global variables in Jinja:</p>
+<p><code>python
+app.jinja_env.globals['momentjs'] = momentjs</code></p>
+</li>
+</ul>
+            
+        
+    <p>
+        <a href="posts/miguels-flask-mega-tutorial.html#disqus_thread" data-disqus-identifier="cache/posts/miguels-flask-mega-tutorial.html">Comments</a>
+
+
+        </p></div>
+    
+<div>
+<ul class="pager">
+    <li class="previous">
+        <a href="index.html">← Newer posts</a>
+    </li>
+</ul>
+</div>
+
+    
+        
+       <script type="text/javascript">var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.type="text/javascript";a.src="http://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("HEAD")[0]||document.getElementsByTagName("BODY")[0]).appendChild(a)}());</script>
+
+
+	
+
 
         </div>
         <!--End of body content-->

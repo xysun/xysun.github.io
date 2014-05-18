@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Mon, 19 May 2014 00:26:06 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to insert images into posts in Nikola</title><link>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</link><description>&lt;p&gt;Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's &lt;a href="http://getnikola.com/handbook.html"&gt;official docs&lt;/a&gt;(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Mon, 19 May 2014 00:37:19 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to insert images into posts in Nikola</title><link>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</link><description>&lt;p&gt;Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's &lt;a href="http://getnikola.com/handbook.html"&gt;official docs&lt;/a&gt;(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.&lt;/p&gt;
 &lt;p&gt;The simple trick is based on the fact that Nikola will automatically copy all contents under &lt;code&gt;files/&lt;/code&gt; folder to &lt;code&gt;output/&lt;/code&gt; folder when you run &lt;code&gt;nikola build&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;So here are the steps:&lt;/p&gt;
 &lt;ol&gt;
@@ -121,7 +121,32 @@
 &lt;p&gt;&lt;img alt="performance 1" src="https://xysun.github.io/regex_pic/plot_normal.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;However, when tested with those pathological inputs, Thompson's algorithm is a clear win, specifically Python will hang when &lt;code&gt;n&lt;/code&gt; is over 25. Notice the time scale is in seconds rather than in milliseconds in the previous plot. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="performance 2" src="https://xysun.github.io/regex_pic/plot_path.jpg"&gt;&lt;/p&gt;
-&lt;p&gt;Russ Cox wrote about &lt;a href="http://swtch.com/~rsc/regexp/regexp1.html"&gt;history behind regex implementation&lt;/a&gt; (last section).&lt;/p&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</guid><pubDate>Sun, 18 May 2014 22:26:11 GMT</pubDate></item><item><title>Week 20140504</title><link>https://xysun.github.io/posts/week-20140504.html</link><description>&lt;h4&gt;&lt;a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures"&gt;Dan Grossman&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Russ Cox wrote about &lt;a href="http://swtch.com/~rsc/regexp/regexp1.html"&gt;history behind regex implementation&lt;/a&gt; (last section).&lt;/p&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</guid><pubDate>Sun, 18 May 2014 22:26:11 GMT</pubDate></item><item><title>Install LLVM OCaml bindings (and UTop)</title><link>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</link><description>&lt;p&gt;I put on a &lt;a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings"&gt;Stackoverflow answer here&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Build LLVM with configuration: &lt;code&gt;--with-ocaml-libdir =&lt;/code&gt;ocamlc -where``&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To compile LLVM codes: &lt;code&gt;ocamlc -cc g++ llvm.cma test.ml -o test&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To make UTop work: &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;create a &lt;code&gt;myutop_main.ml&lt;/code&gt; file with: &lt;code&gt;let () = UTop_main.main ()&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;create a custom &lt;code&gt;llvmutop&lt;/code&gt;: &lt;code&gt;ocamlfind ocamlmktop -o llvmutop -thread -linkpkg -package utop llvm.cma myutop_main.ml -cc g++&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you just want OCaml's build-in toplevel:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ocamlmktop -o llvmtop llvm.cma -cc g++&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</guid><pubDate>Tue, 06 May 2014 23:27:24 GMT</pubDate></item><item><title>Week 20140504</title><link>https://xysun.github.io/posts/week-20140504.html</link><description>&lt;h4&gt;&lt;a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures"&gt;Dan Grossman&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Syntax, semantics, idioms, libraries, tools&lt;/li&gt;
 &lt;li&gt;records: &lt;code&gt;#field_name record_name&lt;/code&gt;&lt;/li&gt;
@@ -521,72 +546,4 @@ o: toggle fold
 &lt;p&gt;今年是毕业参加工作的第三年。如果第一年是初入职场的兴奋，第二年是轻车熟路，第三年就是临界点了。这一年是目前为止最辛苦的一年，也是收获最大的一年，我很高兴付出都有回报，而梦想依然在路上。&lt;/p&gt;
 &lt;p&gt;当然了，要成为"本年龄段本性别里最好的程序员", 要实现给航天飞机和电影写代码的理想，要一项项勾掉"人生100个目标"那张单子，我才刚走过起点呢。&lt;/p&gt;
 &lt;p&gt;Always remember the future comes one day a time.&lt;/p&gt;
-&lt;p&gt;永远记住，未来是一天天来到的。&lt;/p&gt;</description><category>chinese</category><guid>https://xysun.github.io/posts/2013.html</guid><pubDate>Mon, 24 Feb 2014 23:18:25 GMT</pubDate></item><item><title>Miguel's flask mega tutorial</title><link>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</link><description>&lt;p&gt;&lt;a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world"&gt;Link&lt;/a&gt;&lt;/p&gt;
-&lt;h5&gt;Notes&lt;/h5&gt;
-&lt;ul&gt;
-&lt;li&gt;flask:&lt;ul&gt;
-&lt;li&gt;Use &lt;code&gt;url_for&lt;/code&gt; to build and reference URLs&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;app.before_request&lt;/code&gt;, &lt;code&gt;app.after_request&lt;/code&gt; (&lt;code&gt;after_request&lt;/code&gt; can be used to measure database query performance)&lt;/li&gt;
-&lt;li&gt;Rotating file handler&lt;/li&gt;
-&lt;li&gt;Don't use &lt;code&gt;window.history.back&lt;/code&gt; in forms&lt;/li&gt;
-&lt;li&gt;Move logic away from &lt;code&gt;views&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Better return query objects than query results&lt;/li&gt;
-&lt;li&gt;Pagination (&lt;code&gt;yield_per&lt;/code&gt; in sqlalchemy)&lt;/li&gt;
-&lt;li&gt;Unit test: &lt;ul&gt;
-&lt;li&gt;use a different test database&lt;/li&gt;
-&lt;li&gt;regression testing: write a test for every new bug&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Debugging: &lt;code&gt;pdb.set_trace()&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Jinja:&lt;ul&gt;
-&lt;li&gt;Global variables/utilities like &lt;code&gt;config&lt;/code&gt;, &lt;code&gt;g&lt;/code&gt;, &lt;code&gt;session&lt;/code&gt;, &lt;code&gt;url_for&lt;/code&gt; are available in Jinja templates&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;render_template&lt;/code&gt; can be used in rendering HTML email templates&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Useful plugins: &lt;code&gt;coverage&lt;/code&gt;, &lt;code&gt;cProfile&lt;/code&gt;, werkzeug profiler&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h5&gt;Code snippets&lt;/h5&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;pass variable in URL:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;python
-@app.route('/index/&amp;lt;int:page&amp;gt;')
-def turnto(page):&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;use &lt;code&gt;include&lt;/code&gt; in control statements in Jinja:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;{% for post in posts %}
-    {% include "post.html" %}
-{% endfor %}&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;rollback when error occurred:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;python
-@app.errorhandler(500)
-def err500():
-    dbsession.rollback()&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Python's fake mail server: &lt;code&gt;python -m smtpd -n -c DebuggingServer localhost:1025&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Asynchoronous decorator:&lt;/p&gt;
-&lt;p&gt;```python
-from threading import Thread
-from functools import wraps&lt;/p&gt;
-&lt;p&gt;def async(f):
-    @wraps(f)
-    def wrapper(&lt;em&gt;args, &lt;/em&gt;*kwargs):
-        thr = Thread(target = f, args = args, kwargs = kwargs)
-        thr.start()
-    return wrapper
-```&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Expose new global variables in Jinja:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;python
-app.jinja_env.globals['momentjs'] = momentjs&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</guid><pubDate>Sun, 23 Feb 2014 17:01:52 GMT</pubDate></item></channel></rss>
+&lt;p&gt;永远记住，未来是一天天来到的。&lt;/p&gt;</description><category>chinese</category><guid>https://xysun.github.io/posts/2013.html</guid><pubDate>Mon, 24 Feb 2014 23:18:25 GMT</pubDate></item></channel></rss>
