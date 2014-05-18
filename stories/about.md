@@ -9,7 +9,7 @@
 
 * Dreamer. Minimalist
 * Coder | Trail-runner | Piano & Violin player | Reader
-* The title of this blog is inspired by [a stand up show](http://www.youtube.com/watch?v=K4mH6E0hMbI) from Simon Amstell. 
+* The title of this blog is inspired by [a stand up show](https://www.youtube.com/watch?v=k5djel73Pdc) from Simon Amstell. 
 * [GitHub](https://github.com/xysun)
 
 - - -
