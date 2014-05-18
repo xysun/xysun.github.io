@@ -88,10 +88,10 @@
 <h3>Theory</h3>
 <p>The central idea behind a regex engine is non-deterministic automata, NFA. While the name is scary, it is just a state machine which can transit to other state machines on certain characters or nothing (which is called an "epsilon transition")</p>
 <p>For example, below is an NFA for the simple concatenation regex <code>ab</code>: </p>
-<p><img alt="simple regex1" src="../regex_pic/simple1.png"></p>
+<p><img alt="simple regex1" src="../regex_pic/simple1.jpg"></p>
 <p><code>s0</code> is the start state. It can accept one character 'a' and transform to state <code>s1</code>. Similarly <code>s1</code> can only accept one character 'b' and transfer to state <code>s2</code>. <code>s2</code> is the final state, if we have exhausted the input string and the current state is a final state, the pattern matching is successful. </p>
 <p>Below is a slightly more complicated example, matching <code>a?a</code>: </p>
-<p><img alt="simple regex2" src="../regex_pic/simple2.png"></p>
+<p><img alt="simple regex2" src="../regex_pic/simple2.jpg"></p>
 <p>Here the transition with an epsilon means a state can transform into the next state without any input. Therefore this combined NFA matches both <code>aa</code> and <code>a</code>, i.e. <code>a?a</code>. </p>
 <p>To build a regex engine is just to build an NFA corresponding to the input regex pattern, which can be done similarly as parsing arithmetic expressions, i.e. push individual NFAs for individual characters onto a stack, upon seeing an operator, eg star/question mark/alternation/concatenation, pop NFAs from the stack, connecting the popped NFAs to form a new NFA and push back onto the stack again. </p>
 <p>I recommend these two excellent articles on NFA. <a href="http://perl.plover.com/Regex/article.html">1. How Regexes Work </a> <a href="http://swtch.com/~rsc/regexp/regexp1.html">2. Regular Expression Matching Can be Simple and Fast</a></p>

@@ -17,13 +17,13 @@ The central idea behind a regex engine is non-deterministic automata, NFA. While
 
 For example, below is an NFA for the simple concatenation regex `ab`: 
 
-![simple regex1](/regex_pic/simple1.png)
+![simple regex1](/regex_pic/simple1.jpg)
 
 `s0` is the start state. It can accept one character 'a' and transform to state `s1`. Similarly `s1` can only accept one character 'b' and transfer to state `s2`. `s2` is the final state, if we have exhausted the input string and the current state is a final state, the pattern matching is successful. 
 
 Below is a slightly more complicated example, matching `a?a`: 
 
-![simple regex2](/regex_pic/simple2.png)
+![simple regex2](/regex_pic/simple2.jpg)
 
 Here the transition with an epsilon means a state can transform into the next state without any input. Therefore this combined NFA matches both `aa` and `a`, i.e. `a?a`. 
 
