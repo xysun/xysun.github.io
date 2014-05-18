@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Draft)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/draft.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Sun, 18 May 2014 23:40:44 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Week 20140511</title><link>https://xysun.github.io/posts/week-20140511.html</link><description>&lt;h4&gt;&lt;a href="http://courses.cs.washington.edu/courses/cse341/13sp/videos/unit3/"&gt;Dan Grossman&lt;/a&gt;&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;function closure: function can use bindings from outside the definition&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4&gt;[Data structure and algorithm analysis in C]&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;linked list usage: polynomials, radix sort&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;typedef struct node *node_ptr;
+struct node {
+    int element;
+    node_ptr next;
+};
+typedef node_ptr LIST;
+typedef node_ptr position;&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description><category>Draft</category><guid>https://xysun.github.io/posts/week-20140511.html</guid><pubDate>Wed, 07 May 2014 23:26:28 GMT</pubDate></item></channel></rss>
