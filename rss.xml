@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Mon, 19 May 2014 00:37:19 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to insert images into posts in Nikola</title><link>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</link><description>&lt;p&gt;Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's &lt;a href="http://getnikola.com/handbook.html"&gt;official docs&lt;/a&gt;(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.&lt;/p&gt;
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><language>en</language><lastBuildDate>Tue, 30 Sep 2014 22:31:04 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Running automated selenium tests on Debian server</title><link>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;In the startup I work we use &lt;a href="http://www.seleniumhq.org/"&gt;selenium&lt;/a&gt; for automated web testing. Previously the testing flow involves manually open the selenium plugin in firefox, set the environment-specific variables and click the "Play entire test suite" button. Recently I migrated the task to a Debian server which frees us from manual work and enables us to do much more, eg. test scheduling, integrating to the deployment process, etc. &lt;/p&gt;
+&lt;p&gt;Below is my notes on achieving this.&lt;/p&gt;
+&lt;h4&gt;Running selenium headless&lt;/h4&gt;
+&lt;p&gt;Selenium normally requires a display. On a Linux server, I use &lt;a href="http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml"&gt;xvfb&lt;/a&gt; to simulate the display. The command is:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;xvfb-run --server-num&lt;span class="o"&gt;=&lt;/span&gt;10 &amp;lt;python commands here&amp;gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;eg:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;xvfb-run --server-num&lt;span class="o"&gt;=&lt;/span&gt;10 python -m unittest discover --pattern&lt;span class="o"&gt;=&lt;/span&gt;*.py
+&lt;/pre&gt;
+
+
+&lt;p&gt;I have also found out that the method &lt;code&gt;driver.find_element_by_link_text&lt;/code&gt; often fails with the message "cannot scroll into view". I have tried the fix with &lt;code&gt;maximize_window&lt;/code&gt; and &lt;code&gt;window.scrollTo(x, y)&lt;/code&gt; but with no luck. In the end I have to replace some of the clicks with &lt;code&gt;driver.get(url)&lt;/code&gt; calls. &lt;/p&gt;
+&lt;h4&gt;POST request in logged in session&lt;/h4&gt;
+&lt;p&gt;Selenium does not support POST request naturally (if it does please let me know!), this is a bit of headache when some jquery POST calls need to be tested within a logged in session. &lt;/p&gt;
+&lt;p&gt;Luckily we use cookies to verify logged in sessions and thus can have the super awesome &lt;a href="http://docs.python-requests.org/en/latest/"&gt;requests&lt;/a&gt; library to the rescue.&lt;/p&gt;
+&lt;p&gt;The tricky part(I am not sure if it is a universal case) is that when I login through POST request to our authenticate service, the returned cookie cannot be found in the &lt;code&gt;request.cookies&lt;/code&gt;, rather it is part of the &lt;code&gt;r.request.headers['Cookie']&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;So for example to test the &lt;code&gt;like&lt;/code&gt; button in a post (something similar to the facebook &lt;code&gt;like&lt;/code&gt; button):&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;# step1 login&lt;/span&gt;
+&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;authen_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'username'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'password'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+
+&lt;span class="c"&gt;# get cookie from headers &lt;/span&gt;
+&lt;span class="c"&gt;# note r.request.headers['Cookie'] is a comma separated string&lt;/span&gt;
+&lt;span class="c"&gt;# eg: name1=val1; name2=val2&lt;/span&gt;
+&lt;span class="n"&gt;cookie_str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'Cookie'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;cookies&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;cookie_str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;';'&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;cname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'='&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;cval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'='&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;cookies&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;cname&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cval&lt;/span&gt;
+
+&lt;span class="c"&gt;# step2 test other functions with the obtained cookie&lt;/span&gt;
+&lt;span class="c"&gt;# eg. a "like" POST function here&lt;/span&gt;
+&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'domain.com/service/likefeed'&lt;/span&gt;
+&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'feedid'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;feedid&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cookies&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cookies&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# step3 use selenium to test frontend effect, eg. a thumbs up symbol&lt;/span&gt;
+&lt;span class="c"&gt;# selenium webdriver functions here&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h4&gt;Supporting different environments&lt;/h4&gt;
+&lt;p&gt;We have 3 sets of development environments (demo --&amp;gt; pilot --&amp;gt; production). To switch among these 3 seamlessly, I created a &lt;code&gt;config.ini&lt;/code&gt; file writing down the environment-specific variables (eg. base URL, test account login, test post contents, etc.) for each environment, and pass this config (using the excellent &lt;a href="https://pypi.python.org/pypi/configobj"&gt;configobj&lt;/a&gt; module) when initializing each test suite:&lt;/p&gt;
+&lt;p&gt;So I have a utility function like below:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;#utils.py&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;configobj&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ConfigObj&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;read_env&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ConfigObj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'config.ini'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;'_baseurl'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;'_account'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;'_passwd'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Then in each test suite script I add a customized &lt;code&gt;__init__&lt;/code&gt; call that will initialize properties to respective values according to the passed environment, these values can then be used in later testing functions:&lt;/p&gt;
+&lt;p&gt;For example:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;# test_suite_1.py&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;utils&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;read_env&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestSuite1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TestSuite1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'test_case_1'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;base_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;account&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;passwd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;read_env&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;en&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Then I have a master file controlling the complete test run:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;# run.py&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;test_suite_1&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TestSuite1&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;suite&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestSuite&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;suite&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addTest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TestSuite1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c"&gt;# initialize with specific env&lt;/span&gt;
+
+    &lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TextTestRunner&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;suite&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;To make things easier I also add a bash alias in &lt;code&gt;.bash_aliases&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nb"&gt;alias &lt;/span&gt;&lt;span class="nv"&gt;mftest&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'xvfb-run --server-num=10 python /path/to/tests/run.py'&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;In this way the complete test process can be kicked off by simply running &lt;code&gt;mftest &amp;lt;env&amp;gt;&lt;/code&gt; where &lt;code&gt;&amp;lt;env&amp;gt;&lt;/code&gt; can be either &lt;code&gt;demo&lt;/code&gt; or &lt;code&gt;pilot&lt;/code&gt; or &lt;code&gt;prod&lt;/code&gt;, and the program will pick up the right config.&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><category>selenium</category><guid>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</guid><pubDate>Sun, 21 Sep 2014 13:11:27 GMT</pubDate></item><item><title>How to insert images into posts in Nikola</title><link>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's &lt;a href="http://getnikola.com/handbook.html"&gt;official docs&lt;/a&gt;(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.&lt;/p&gt;
 &lt;p&gt;The simple trick is based on the fact that Nikola will automatically copy all contents under &lt;code&gt;files/&lt;/code&gt; folder to &lt;code&gt;output/&lt;/code&gt; folder when you run &lt;code&gt;nikola build&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;So here are the steps:&lt;/p&gt;
 &lt;ol&gt;
@@ -15,7 +104,7 @@
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;nikola build&lt;/code&gt;. Done.&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</description><category>Tricks</category><category>Code</category><guid>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</guid><pubDate>Mon, 19 May 2014 00:19:35 GMT</pubDate></item><item><title>Regex parsing: Thompson's algorithm</title><link>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</link><description>&lt;p&gt;This is a repost of my previous blog article at the old domain. &lt;/p&gt;
+&lt;/ol&gt;&lt;/div&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</guid><pubDate>Mon, 19 May 2014 00:19:35 GMT</pubDate></item><item><title>Regex parsing: Thompson's algorithm</title><link>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;This is a repost of my previous blog article at the old domain. &lt;/p&gt;
 &lt;p&gt;Source code can be found &lt;a href="https://github.com/xysun/regex"&gt;here&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;Theory&lt;/h3&gt;
 &lt;p&gt;The central idea behind a regex engine is non-deterministic automata, NFA. While the name is scary, it is just a state machine which can transit to other state machines on certain characters or nothing (which is called an "epsilon transition")&lt;/p&gt;
@@ -33,7 +122,7 @@
 &lt;p&gt;This means Thompson's algorithm will significantly perform better over some pathological input patterns such as &lt;code&gt;a?a?a?aaa&lt;/code&gt; matching &lt;code&gt;aaa&lt;/code&gt;, since time complexity is exponential for backtracking algorithm and only linear for Thompson's algorithm.&lt;/p&gt;
 &lt;h3&gt;Code&lt;/h3&gt;
 &lt;p&gt;First step is to convert an input string into post-fix tokens, and add concatenation in the right place. A simple lexer and recursive-descent parser is used for this stage, following the grammar below (for detailed lexing and parsing code please refer to the source code):&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;Grammar&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;regex&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;Grammar&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;regex&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
 
 &lt;span class="n"&gt;regex&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;exp&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;
 
@@ -51,31 +140,31 @@
 
 &lt;span class="n"&gt;primary&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;exp&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
          &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt;              &lt;span class="n"&gt;literal&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;A very simple class is enough to simulate an NFA:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;State&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;State&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;epsilon&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="c"&gt;# epsilon-closure&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;transitions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt; &lt;span class="c"&gt;# a dictionary of char --&amp;gt; state&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt; &lt;span class="c"&gt;# is it the ending state?&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Next we read one token at a time, perform relevant NFA transformations and push the transformed NFA onto a stack. For example, when seeing a CONCAT token, pop two NFAs from the stack, chain these two NFAs together and create a new CONCAT NFA, and push the new NFA onto the stack again. When all the tokens are consumed, there should be only one  NFA left on the stack. Details on how to construct NFAs can be found either from the two articles cited above, or from the book &lt;a href="http://www.amazon.com/Compilers-Principles-Techniques-Tools-Edition/dp/0321486811"&gt;Compilers: Principles Techniques and Tools&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;A &lt;code&gt;handler&lt;/code&gt; class is used for this step, the class has a dictionary of different handlers for each type of tokens. &lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Handler&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Handler&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;handlers&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'CHAR'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;handle_char&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'CONCAT'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;handle_concat&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                          &lt;span class="s"&gt;'ALT'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;handle_alt&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'STAR'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;handle_rep&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                          &lt;span class="s"&gt;'PLUS'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;handle_rep&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'QMARK'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;handle_qmark&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;These steps above form the exposed &lt;code&gt;compile&lt;/code&gt; function, which turns an input regex string into an NFA machine. &lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;parse&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Lexer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Parser&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Token&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;State&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;NFA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Handler&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;parse&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Lexer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Parser&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Token&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;State&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;NFA&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Handler&lt;/span&gt;
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;debug&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 
@@ -92,11 +181,11 @@
 
     &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nfa_stack&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="c"&gt;# check there is only one final NFA on the stack&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;nfa_stack&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; 
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;p&gt;Next we can feed the constructed NFA a string and check whether it is accepted or not. The &lt;code&gt;match&lt;/code&gt; function uses two &lt;code&gt;sets&lt;/code&gt; to hold &lt;code&gt;current_state&lt;/code&gt; and &lt;code&gt;next_state&lt;/code&gt;, make each &lt;code&gt;char&lt;/code&gt; transitions and epsilon transitions and check if any ending state is arrived:&lt;/p&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
        &lt;span class="n"&gt;current_states&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addstate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;current_states&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# addstate makes epsilon transitions&lt;/span&gt;
 
@@ -113,7 +202,7 @@
            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_end&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;h3&gt;Performance&lt;/h3&gt;
@@ -121,7 +210,7 @@
 &lt;p&gt;&lt;img alt="performance 1" src="https://xysun.github.io/regex_pic/plot_normal.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;However, when tested with those pathological inputs, Thompson's algorithm is a clear win, specifically Python will hang when &lt;code&gt;n&lt;/code&gt; is over 25. Notice the time scale is in seconds rather than in milliseconds in the previous plot. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="performance 2" src="https://xysun.github.io/regex_pic/plot_path.jpg"&gt;&lt;/p&gt;
-&lt;p&gt;Russ Cox wrote about &lt;a href="http://swtch.com/~rsc/regexp/regexp1.html"&gt;history behind regex implementation&lt;/a&gt; (last section).&lt;/p&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</guid><pubDate>Sun, 18 May 2014 22:26:11 GMT</pubDate></item><item><title>Install LLVM OCaml bindings (and UTop)</title><link>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</link><description>&lt;p&gt;I put on a &lt;a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings"&gt;Stackoverflow answer here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Russ Cox wrote about &lt;a href="http://swtch.com/~rsc/regexp/regexp1.html"&gt;history behind regex implementation&lt;/a&gt; (last section).&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</guid><pubDate>Sun, 18 May 2014 22:26:11 GMT</pubDate></item><item><title>Install LLVM OCaml bindings (and UTop)</title><link>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;I put on a &lt;a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings"&gt;Stackoverflow answer here&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Build LLVM with configuration: &lt;code&gt;--with-ocaml-libdir =&lt;/code&gt;ocamlc -where``&lt;/p&gt;
@@ -146,7 +235,7 @@
 &lt;li&gt;&lt;code&gt;ocamlmktop -o llvmtop llvm.cma -cc g++&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</guid><pubDate>Tue, 06 May 2014 23:27:24 GMT</pubDate></item><item><title>Week 20140504</title><link>https://xysun.github.io/posts/week-20140504.html</link><description>&lt;h4&gt;&lt;a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures"&gt;Dan Grossman&lt;/a&gt;&lt;/h4&gt;
+&lt;/ol&gt;&lt;/div&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</guid><pubDate>Tue, 06 May 2014 23:27:24 GMT</pubDate></item><item><title>Week 20140504</title><link>https://xysun.github.io/posts/week-20140504.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures"&gt;Dan Grossman&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Syntax, semantics, idioms, libraries, tools&lt;/li&gt;
 &lt;li&gt;records: &lt;code&gt;#field_name record_name&lt;/code&gt;&lt;/li&gt;
@@ -174,7 +263,7 @@
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h4&gt;&lt;a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem"&gt;Max sub-array problem&lt;/a&gt;&lt;/h4&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;max_sub_array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;max_sub_array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;max_ending_here&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;max_so_far&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="n"&gt;begin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;begin_temp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
@@ -191,7 +280,7 @@
             &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
 
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;max_so_far&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Weekly</category><category>Code</category><guid>https://xysun.github.io/posts/week-20140504.html</guid><pubDate>Thu, 01 May 2014 22:24:37 GMT</pubDate></item><item><title>App Jamming 2014</title><link>https://xysun.github.io/posts/app-jamming-2014.html</link><description>&lt;h4&gt;App Jamming 2014&lt;/h4&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140504.html</guid><pubDate>Thu, 01 May 2014 22:24:37 GMT</pubDate></item><item><title>App Jamming 2014</title><link>https://xysun.github.io/posts/app-jamming-2014.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;App Jamming 2014&lt;/h4&gt;
 &lt;p&gt;I was at my friend Michelle's app jamming 2014 event yesterday as a mentor. This is my first such experience and I thought I'd make a note, mostly because it was fun, partly because I really need to pick up blogging again.&lt;/p&gt;
 &lt;p&gt;(I'll post pictures once I get them)&lt;/p&gt;
 &lt;p&gt;App jamming is an annual event where we teach teenage girls (mostly age 11-15) to code with the help of &lt;a href="http://ai2.appinventor.mit.edu/"&gt;MIT App inventor&lt;/a&gt;. This year is the second year and around 50 girls signed up. &lt;/p&gt;
@@ -223,7 +312,7 @@
 &lt;hr&gt;
 &lt;p&gt;Overall it was fun. Kids were a bit quiet in the very first beginning but jumping around soon after they made the kitten meow. There was a moment during the lunch break, where we accidentally realized that while all the mentors were chatting in the lunch area, all the kids were at their table, focused on their app. That was beautiful and precious. &lt;/p&gt;
 &lt;p&gt;As Michelle put it, we are working hard at bringing more girls (also with the newly founded &lt;a href="http://womenwhocodehk.com/"&gt;Women Who Code HK&lt;/a&gt;) into programming because we no longer want to be outliers in this industry. And so far things look promising. &lt;/p&gt;
-&lt;p&gt;(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )&lt;/p&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/app-jamming-2014.html</guid><pubDate>Sat, 19 Apr 2014 23:00:23 GMT</pubDate></item><item><title>Week 20140420</title><link>https://xysun.github.io/posts/week-20140420.html</link><description>&lt;h4&gt;&lt;a href="https://www.youtube.com/watch?v=St9cL47_1GI"&gt;Advanced technique for web functional testing&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/app-jamming-2014.html</guid><pubDate>Sat, 19 Apr 2014 23:00:23 GMT</pubDate></item><item><title>Week 20140420</title><link>https://xysun.github.io/posts/week-20140420.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="https://www.youtube.com/watch?v=St9cL47_1GI"&gt;Advanced technique for web functional testing&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;test responsive: &lt;code&gt;self.driver.set_window_size&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Needle -- test by comparing screenshots&lt;/li&gt;
@@ -249,7 +338,7 @@
 &lt;p&gt;opam: "fork" failed: Cannot allocate memory.&lt;/p&gt;
 &lt;p&gt;It is due to lack of RAM memory. The solution is to create a swap file. I followed the instructions &lt;a href="http://wiki.paparazziuav.org/wiki/GettingTheGCSRunningonAGumstixBoard"&gt;here&lt;/a&gt;, note to compile &lt;code&gt;core&lt;/code&gt; a 512MB swap is not enough, I ended up creating a 1G swap. DigitalOcean also has a nice article on &lt;a href="https://www.digitalocean.com/community/articles/how-to-add-swap-on-ubuntu-12-04"&gt;creating swap files&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140420.html</guid><pubDate>Mon, 14 Apr 2014 21:41:33 GMT</pubDate></item><item><title>Week 20140406</title><link>https://xysun.github.io/posts/week-20140406.html</link><description>&lt;h4&gt;Dan Grossman&lt;/h4&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140420.html</guid><pubDate>Mon, 14 Apr 2014 21:41:33 GMT</pubDate></item><item><title>Week 20140406</title><link>https://xysun.github.io/posts/week-20140406.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;Dan Grossman&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;functions over lists are usually recursive: empty list; non-empty list (&lt;code&gt;hd&lt;/code&gt;, &lt;code&gt;tl&lt;/code&gt;) &lt;/li&gt;
 &lt;li&gt;let expression: &lt;code&gt;let...in...end&lt;/code&gt;&lt;/li&gt;
@@ -281,7 +370,7 @@
 &lt;h4&gt;Miscellaneous&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.rescuetime.com/"&gt;rescue time&lt;/a&gt; is a neat productivity tool.&lt;/li&gt;
-&lt;/ul&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140406.html</guid><pubDate>Mon, 31 Mar 2014 13:32:10 GMT</pubDate></item><item><title>Weekly 20140330</title><link>https://xysun.github.io/posts/week-20140330.html</link><description>&lt;h4&gt;&lt;a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041"&gt;Surely You're joking, Mr. Feynman!&lt;/a&gt;&lt;/h4&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140406.html</guid><pubDate>Mon, 31 Mar 2014 13:32:10 GMT</pubDate></item><item><title>Weekly 20140330</title><link>https://xysun.github.io/posts/week-20140330.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041"&gt;Surely You're joking, Mr. Feynman!&lt;/a&gt;&lt;/h4&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Learn what the rest of the world is like. The variety is worthwhile.&lt;/p&gt;
 &lt;p&gt;"I could do that, but I won't" -- which is just another way of saying that you can't. &lt;/p&gt;
@@ -331,78 +420,78 @@
 &lt;li&gt;
 &lt;p&gt;use &lt;code&gt;rlwrap sml&lt;/code&gt; to enable history rollback through arrow keys&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><category>Weekly</category><category>Code</category><guid>https://xysun.github.io/posts/week-20140330.html</guid><pubDate>Mon, 24 Mar 2014 21:09:02 GMT</pubDate></item><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140330.html</guid><pubDate>Mon, 24 Mar 2014 21:09:02 GMT</pubDate></item><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Extended unpacking&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;List slices with negative step&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;[::&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Name slices (&lt;code&gt;slice(start, end, slice)&lt;/code&gt;)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;LASTTHREE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;slice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;LASTTHREE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;slice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;LASTTHREE&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Dictionary comprehension&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Named tuples&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Point&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;namedtuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'Point'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'x'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'y'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Point&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;namedtuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'Point'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'x'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'y'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;
 &lt;span class="mi"&gt;13&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Use capital letter for set variables&lt;/li&gt;
 &lt;li&gt;Counter&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Counter&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Counter&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Counter&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
 &lt;span class="n"&gt;Counter&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;most_common&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;collections.deque&lt;/code&gt; Double-ended queue&lt;/li&gt;
 &lt;li&gt;default dict&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="mi"&gt;0&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="s"&gt;''&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;hr&gt;
@@ -424,10 +513,10 @@
 &lt;p&gt;Flask test client&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;tester&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;test_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;tester&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;test_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tester&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'/'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content_type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"html/text"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="c"&gt;# response.data include all html text&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
@@ -445,7 +534,7 @@
 &lt;li&gt;Install exuberant ctags&lt;/li&gt;
 &lt;li&gt;Install tagbar&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/.vim
+&lt;pre class="code literal-block"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/.vim
 git clone git://github.com/majutsushi/tagbar
 mv tagbar/* .  &lt;span class="c"&gt;# must be directly under .vim/&lt;/span&gt;
 sudo rm -r tagbar/
@@ -453,97 +542,26 @@ sudo rm -r tagbar/
 vim tagbar.txt
 :helptags .
 &lt;span class="c"&gt;# quit vim&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;edit &lt;code&gt;.vimrc&lt;/code&gt; (below is mine): &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nb"&gt;let &lt;/span&gt;g:tagbar_ctags_bin&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'/usr/local/bin/ctags'&lt;/span&gt; &lt;span class="c"&gt;# change to ctags bin path, this is on MacOS&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nb"&gt;let &lt;/span&gt;g:tagbar_ctags_bin&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'/usr/local/bin/ctags'&lt;/span&gt; &lt;span class="c"&gt;# change to ctags bin path, this is on MacOS&lt;/span&gt;
 &lt;span class="nb"&gt;let &lt;/span&gt;g:tagbar_width&lt;span class="o"&gt;=&lt;/span&gt;40
 noremap &amp;lt;silent&amp;gt; tb :TagbarOpen fj &amp;lt;CR&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;useful key shortcuts:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;tb: open tagbar &lt;span class="c"&gt;# my key binding&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;tb: open tagbar &lt;span class="c"&gt;# my key binding&lt;/span&gt;
 p: go to tag, stay in tagbar
 &amp;lt;enter&amp;gt;: go to tag
 o: toggle fold
 *: open all &lt;span class="nv"&gt;fold&lt;/span&gt;
 &lt;span class="o"&gt;=&lt;/span&gt;: collapse all fold
 ?: keymap &lt;span class="nb"&gt;help&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item><item><title>2013</title><link>https://xysun.github.io/posts/2013.html</link><description>&lt;p&gt;年终奖到账, 交了离职信, 真正就和过去一年说再见了. &lt;/p&gt;
-&lt;p&gt;2013年是我的本命年, 真的是曲折起伏波澜壮阔. 从年初工作压力大不顺心一直到4月跌到谷底，到拿到了HackerSchool的录取去纽约玩儿了三个月，期间写代码功力见长但也并不是一帆风顺，回到香港后慢慢地把自己的路子从金融扭到工程，而今再过一个月我所有的工资就将来自于Python, 同时我和其他3个小伙伴一起成立了Women Who Code HK, 手里还有几个项目在参与. 这些事情都是4月前做梦也想不到的。&lt;/p&gt;
-&lt;h4&gt;全年目标回顾&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;读书：10本计算机，12本非计算机(6本虚构6本非虚构，包括多于2本中文书)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;完成程度：读了8本计算机，1本虚构(福尔摩斯), 2本非虚构(Mastery, 中国近代史)
-计算机书读得多了别的书精力就少了...&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;编程方面: &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;阅读一个开源项目代码 --&amp;gt; 小项目读了不少，大项目没有。这也是今年打算加强的。&lt;/li&gt;
-&lt;li&gt;1万行代码 --&amp;gt; 完成。数了数大概是1.5万行，Python和OCaml一半一半。今年到目前为止已经写了3千行了....&lt;/li&gt;
-&lt;li&gt;在GitHub上被打星星/有fork --&amp;gt; 完成。目前一共8颗星。不过纽约回来后忙得没有再启动新的个人项目。是时候立项了。&lt;/li&gt;
-&lt;li&gt;活跃在一个邮件列表(mailing list)/社团(community) --&amp;gt; 失败&lt;/li&gt;
-&lt;li&gt;用代码赚钱--&amp;gt; 完成&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;生活方面: &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;旅游: --&amp;gt; 去了新西兰和纽约&lt;/li&gt;
-&lt;li&gt;存钱: --&amp;gt; 多谢年终奖，即使停薪三个月依然完成目标。&lt;/li&gt;
-&lt;li&gt;换一份工作 --&amp;gt; 完成&lt;/li&gt;
-&lt;li&gt;小提琴500小时，进乐团 --&amp;gt; 失败。花在小提琴上面的时间少了。不过生活的重心本来也转移了。&lt;/li&gt;
-&lt;li&gt;学会游泳 --&amp;gt; 连续第二年失败....&lt;/li&gt;
-&lt;li&gt;跑100次步 --&amp;gt; 跑步33次200公里，爬山2次40公里，徒手锻炼23次。和去年相比大幅下滑。&lt;/li&gt;
-&lt;li&gt;双休日10点前起床 --&amp;gt; 纽约前失败了10次。纽约后全部做到，因为实在是太忙了，有时候想睡懒觉在床上用手机看下邮件就默默爬起来洗澡干活去了....&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;年度目标总结&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;1年前写这份目标的时候还一边写一边笑话自己自不量力。回过头来看真的是梦想有多大可能性就有多大。譬如我曾经觉得编程方面我一个都实现不了，结果回过头来看编程方面竟然完成率几乎100%。这要是回到1年前告诉那时的自己都不会相信的吧。&lt;/p&gt;
-&lt;h4&gt;HackerSchool给了我什么&lt;/h4&gt;
-&lt;p&gt;如果写一个HackerSchool之后我做了些什么会是一个牛逼闪闪的单子: &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;换了工作&lt;/li&gt;
-&lt;li&gt;同时给某个初创企业写Python后台&lt;/li&gt;
-&lt;li&gt;成立了Women Who Code HK&lt;/li&gt;
-&lt;li&gt;参与了一些国际化的开源项目，经常半夜和不同时区的小伙伴们一起开会。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;但这些都是表象，我清楚背后HackerSchool真正给我的是这些：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;无与伦比的人脉。认识了一群也许是未来十几年甚至几十年美国和一些其他地区程序界的中坚力量。&lt;/li&gt;
-&lt;li&gt;养成了良好的编程和讨论习惯。保持了好奇心。&lt;/li&gt;
-&lt;li&gt;学会分享。&lt;/li&gt;
-&lt;li&gt;不再害怕面对觉得太学术太难的问题。&lt;/li&gt;
-&lt;li&gt;以及最重要的，学会去做一个无论多么牛逼闪闪都依然善良耐心的正人君子。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这些得着是对无论以后做什么都有益的。&lt;/p&gt;
-&lt;h4&gt;我为什么离开DB&lt;/h4&gt;
-&lt;p&gt;基本就是这几个原因: &lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;市场风险不是我的长期理想职业方向, 如果还在金融业的话我希望自己转到前台做交易员。而新的工作离这个目标更接近。&lt;/li&gt;
-&lt;li&gt;三年下来觉得我已经像个吸饱了水的海绵学习曲线已经放平了，每天的工作都在自己的comfort zone里面并没有太大挑战。我承认小队长的工作看起来比较有趣，但我是否愿意继续混十几年做到他这个地方呢？我觉得这十几年花在别的地方成就会更大。&lt;/li&gt;
-&lt;li&gt;在这个团队做得不是很开心，说狠一点就是经常被猪一样的队友噎死。&lt;/li&gt;
-&lt;li&gt;我最怕的是以后变成那些人到中年没有别的本事只能在后台混日子还感觉良好的大多数人。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;递信之后意外地得到了许多老大级别人物的挽留(亚洲区市场风险老大形容我是one of the brightest youngsters I've ever worked with -- 我共事过的最聪明的年轻人之一)，经常被各种MD叫到小屋子里去谈话，这至少也证明了三年里我的工作得到了肯定。这样离开也没有遗憾了。&lt;/p&gt;
-&lt;p&gt;也收到了一些所谓counter-offer, 但是敝行给出的职位我都不是很满意，我最想去的衍生品交易没有空位，然后给在纽约认识的前瑞银某MD写了个邮件，他回过来说: &lt;/p&gt;
-&lt;p&gt;It's been pointed out recently that "do what you love" is obnoxious as a general philosophy, because the vast majority of the world doesn't have that option. But if you do have the option, then it's a no-brainer.&lt;/p&gt;
-&lt;p&gt;(有人指出"要做你热爱的事情"是无稽之谈因为这个世界上的多数人都没有这个选择。然而如果你真的有这个选项，根本不用犹豫。)&lt;/p&gt;
-&lt;p&gt;然后前两天晚上又和前教授新老板吃了个晚饭，一起聊未来的技术发展聊得很开心。&lt;/p&gt;
-&lt;p&gt;所以就这样决定了吧。我总是说30岁前我不打算正经赚钱，我在德银也算攒到了第一笔金，是时候趁还输得起的年纪去别的地方闯一闯了。&lt;/p&gt;
-&lt;h4&gt;总结&lt;/h4&gt;
-&lt;p&gt;今年是毕业参加工作的第三年。如果第一年是初入职场的兴奋，第二年是轻车熟路，第三年就是临界点了。这一年是目前为止最辛苦的一年，也是收获最大的一年，我很高兴付出都有回报，而梦想依然在路上。&lt;/p&gt;
-&lt;p&gt;当然了，要成为"本年龄段本性别里最好的程序员", 要实现给航天飞机和电影写代码的理想，要一项项勾掉"人生100个目标"那张单子，我才刚走过起点呢。&lt;/p&gt;
-&lt;p&gt;Always remember the future comes one day a time.&lt;/p&gt;
-&lt;p&gt;永远记住，未来是一天天来到的。&lt;/p&gt;</description><category>chinese</category><guid>https://xysun.github.io/posts/2013.html</guid><pubDate>Mon, 24 Feb 2014 23:18:25 GMT</pubDate></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140323.html</guid><pubDate>Thu, 20 Mar 2014 19:52:36 GMT</pubDate></item></channel></rss>

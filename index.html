@@ -1,73 +1,223 @@
-<!DOCTYPE html><html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+    <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="I strove for none, for none was worth my strife.">
-    <meta name="author" content="Xiayun Sun">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Do Nothing | Do Nothing</title>
+
     
             <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/rst.css" rel="stylesheet" type="text/css">
         <link href="assets/css/code.css" rel="stylesheet" type="text/css">
         <link href="assets/css/colorbox.css" rel="stylesheet" type="text/css">
         <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 
     
+            <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+
+      <link rel="canonical" href="https://xysun.github.io/index.html">
+
+
+
+        <link rel="next" href="index-1.html" type="text/html">
+
     
+        <!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]-->
+
     
+
+
+
+
 </head>
 <body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
 <!-- Menubar -->
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href=".">Do Nothing</a>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-            
-                <li class="active"><a href="#">Home</a>
-                </li><li><a href="stories/about.html">About</a>
-                </li><li><a href="categories/index.html">Tags</a>
-                </li><li><a href="rss.xml">RSS</a>
+    <div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://xysun.github.io">
 
-        </li></ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            
-            
+                <span id="blog-title">Do Nothing</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
                 
-        </ul>
-    </div><!-- /.navbar-collapse -->
+                <li class="active">
+<a href="#">Home</a>
+                </li>
+<li>
+<a href="stories/about.html">About</a>
+                </li>
+<li>
+<a href="categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="rss.xml">RSS</a>
+
+                
+            </li>
+</ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                    
+                
+            </ul>
+        </div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
 </nav>
 
 <!-- End of Menubar -->
 
-<div class="container">
+<div class="container" id="content">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
             
-        <div class="postbox">
-        <h1><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html">How to insert images into posts in Nikola</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-05-19T00:19:35">2014-05-19 00:19</time>
-        </small></h1>
-        <hr>
-        <p>Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's <a href="http://getnikola.com/handbook.html">official docs</a>(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.</p>
+            
+<div class="postindex">
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/selenium-auto-tests-on-server.html" class="u-url">Running automated selenium tests on Debian server</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/selenium-auto-tests-on-server.html" rel="bookmark"><time class="published dt-published" datetime="2014-09-21T13:11:27+00:00" itemprop="datePublished" title="Publication date">2014-09-21 13:11</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/selenium-auto-tests-on-server.html#disqus_thread" data-disqus-identifier="cache/posts/selenium-auto-tests-on-server.html">Comments</a>
+
+
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<p>In the startup I work we use <a href="http://www.seleniumhq.org/">selenium</a> for automated web testing. Previously the testing flow involves manually open the selenium plugin in firefox, set the environment-specific variables and click the "Play entire test suite" button. Recently I migrated the task to a Debian server which frees us from manual work and enables us to do much more, eg. test scheduling, integrating to the deployment process, etc. </p>
+<p>Below is my notes on achieving this.</p>
+<h4>Running selenium headless</h4>
+<p>Selenium normally requires a display. On a Linux server, I use <a href="http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml">xvfb</a> to simulate the display. The command is:</p>
+<pre class="code literal-block">xvfb-run --server-num<span class="o">=</span>10 &lt;python commands here&gt;
+</pre>
+
+
+<p>eg:</p>
+<pre class="code literal-block">xvfb-run --server-num<span class="o">=</span>10 python -m unittest discover --pattern<span class="o">=</span>*.py
+</pre>
+
+
+<p>I have also found out that the method <code>driver.find_element_by_link_text</code> often fails with the message "cannot scroll into view". I have tried the fix with <code>maximize_window</code> and <code>window.scrollTo(x, y)</code> but with no luck. In the end I have to replace some of the clicks with <code>driver.get(url)</code> calls. </p>
+<h4>POST request in logged in session</h4>
+<p>Selenium does not support POST request naturally (if it does please let me know!), this is a bit of headache when some jquery POST calls need to be tested within a logged in session. </p>
+<p>Luckily we use cookies to verify logged in sessions and thus can have the super awesome <a href="http://docs.python-requests.org/en/latest/">requests</a> library to the rescue.</p>
+<p>The tricky part(I am not sure if it is a universal case) is that when I login through POST request to our authenticate service, the returned cookie cannot be found in the <code>request.cookies</code>, rather it is part of the <code>r.request.headers['Cookie']</code>. </p>
+<p>So for example to test the <code>like</code> button in a post (something similar to the facebook <code>like</code> button):</p>
+<pre class="code literal-block"><span class="c"># step1 login</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">authen_url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'username'</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s">'password'</span><span class="p">:</span> <span class="n">password</span><span class="p">})</span>
+
+<span class="c"># get cookie from headers </span>
+<span class="c"># note r.request.headers['Cookie'] is a comma separated string</span>
+<span class="c"># eg: name1=val1; name2=val2</span>
+<span class="n">cookie_str</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'Cookie'</span><span class="p">]</span>
+<span class="n">cookies</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cookie_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">';'</span><span class="p">):</span>
+    <span class="n">cname</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'='</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cval</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'='</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cookies</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span> <span class="o">=</span> <span class="n">cval</span>
+
+<span class="c"># step2 test other functions with the obtained cookie</span>
+<span class="c"># eg. a "like" POST function here</span>
+<span class="n">u</span> <span class="o">=</span> <span class="s">'domain.com/service/likefeed'</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'feedid'</span><span class="p">:</span><span class="n">feedid</span><span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">,</span> <span class="n">cookies</span> <span class="o">=</span> <span class="n">cookies</span><span class="p">)</span>
+
+<span class="c"># step3 use selenium to test frontend effect, eg. a thumbs up symbol</span>
+<span class="c"># selenium webdriver functions here</span>
+</pre>
+
+
+<h4>Supporting different environments</h4>
+<p>We have 3 sets of development environments (demo --&gt; pilot --&gt; production). To switch among these 3 seamlessly, I created a <code>config.ini</code> file writing down the environment-specific variables (eg. base URL, test account login, test post contents, etc.) for each environment, and pass this config (using the excellent <a href="https://pypi.python.org/pypi/configobj">configobj</a> module) when initializing each test suite:</p>
+<p>So I have a utility function like below:</p>
+<pre class="code literal-block"><span class="c">#utils.py</span>
+
+<span class="kn">from</span> <span class="nn">configobj</span> <span class="kn">import</span> <span class="n">ConfigObj</span>
+
+<span class="k">def</span> <span class="nf">read_env</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="s">'config.ini'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">env</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="n">env</span> <span class="o">+</span> <span class="s">'_baseurl'</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">env</span> <span class="o">+</span> <span class="s">'_account'</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">env</span> <span class="o">+</span> <span class="s">'_passwd'</span><span class="p">]</span>
+</pre>
+
+
+<p>Then in each test suite script I add a customized <code>__init__</code> call that will initialize properties to respective values according to the passed environment, these values can then be used in later testing functions:</p>
+<p>For example:</p>
+<pre class="code literal-block"><span class="c"># test_suite_1.py</span>
+
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">read_env</span>
+
+<span class="k">class</span> <span class="nc">TestSuite1</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TestSuite1</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="s">'test_case_1'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="n">read_env</span><span class="p">(</span><span class="n">en</span><span class="p">)</span>
+</pre>
+
+
+<p>Then I have a master file controlling the complete test run:</p>
+<pre class="code literal-block"><span class="c"># run.py</span>
+
+<span class="kn">from</span> <span class="nn">test_suite_1</span> <span class="kn">import</span> <span class="n">TestSuite1</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestSuite</span><span class="p">()</span>
+
+    <span class="n">suite</span><span class="o">.</span><span class="n">addTest</span><span class="p">(</span><span class="n">TestSuite1</span><span class="p">(</span><span class="n">env</span><span class="p">))</span> <span class="c"># initialize with specific env</span>
+
+    <span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">suite</span><span class="p">)</span>
+</pre>
+
+
+<p>To make things easier I also add a bash alias in <code>.bash_aliases</code>:</p>
+<pre class="code literal-block"><span class="nb">alias </span><span class="nv">mftest</span> <span class="o">=</span> <span class="s1">'xvfb-run --server-num=10 python /path/to/tests/run.py'</span>
+</pre>
+
+
+<p>In this way the complete test process can be kicked off by simply running <code>mftest &lt;env&gt;</code> where <code>&lt;env&gt;</code> can be either <code>demo</code> or <code>pilot</code> or <code>prod</code>, and the program will pick up the right config.</p>
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" class="u-url">How to insert images into posts in Nikola</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-19T00:19:35+00:00" itemprop="datePublished" title="Publication date">2014-05-19 00:19</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/how-to-insert-pictures-into-posts-in-nikola.html#disqus_thread" data-disqus-identifier="cache/posts/how-to-insert-pictures-into-posts-in-nikola.html">Comments</a>
+
+
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<p>Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's <a href="http://getnikola.com/handbook.html">official docs</a>(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.</p>
 <p>The simple trick is based on the fact that Nikola will automatically copy all contents under <code>files/</code> folder to <code>output/</code> folder when you run <code>nikola build</code>.</p>
 <p>So here are the steps:</p>
 <ol>
@@ -84,20 +234,26 @@
 <p><code>nikola build</code>. Done.</p>
 </li>
 </ol>
-            
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/regex-parsing-thompsons-algorithm.html" class="u-url">Regex parsing: Thompson's algorithm</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/regex-parsing-thompsons-algorithm.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-18T22:26:11+00:00" itemprop="datePublished" title="Publication date">2014-05-18 22:26</time></a></p>
+                <p class="commentline">
         
-    <p>
-        <a href="posts/how-to-insert-pictures-into-posts-in-nikola.html#disqus_thread" data-disqus-identifier="cache/posts/how-to-insert-pictures-into-posts-in-nikola.html">Comments</a>
+    <a href="posts/regex-parsing-thompsons-algorithm.html#disqus_thread" data-disqus-identifier="cache/posts/regex-parsing-thompsons-algorithm.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/regex-parsing-thompsons-algorithm.html">Regex parsing: Thompson's algorithm</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-05-18T22:26:11">2014-05-18 22:26</time>
-        </small></h1>
-        <hr>
-        <p>This is a repost of my previous blog article at the old domain. </p>
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<p>This is a repost of my previous blog article at the old domain. </p>
 <p>Source code can be found <a href="https://github.com/xysun/regex">here</a></p>
 <h3>Theory</h3>
 <p>The central idea behind a regex engine is non-deterministic automata, NFA. While the name is scary, it is just a state machine which can transit to other state machines on certain characters or nothing (which is called an "epsilon transition")</p>
@@ -115,7 +271,7 @@
 <p>This means Thompson's algorithm will significantly perform better over some pathological input patterns such as <code>a?a?a?aaa</code> matching <code>aaa</code>, since time complexity is exponential for backtracking algorithm and only linear for Thompson's algorithm.</p>
 <h3>Code</h3>
 <p>First step is to convert an input string into post-fix tokens, and add concatenation in the right place. A simple lexer and recursive-descent parser is used for this stage, following the grammar below (for detailed lexing and parsing code please refer to the source code):</p>
-<div class="code"><pre><span class="n">Grammar</span> <span class="k">for</span> <span class="n">regex</span><span class="o">:</span>
+<pre class="code literal-block"><span class="n">Grammar</span> <span class="k">for</span> <span class="n">regex</span><span class="o">:</span>
 
 <span class="n">regex</span> <span class="o">=</span> <span class="n">exp</span> <span class="err">$</span>
 
@@ -133,31 +289,31 @@
 
 <span class="n">primary</span>  <span class="o">=</span> <span class="err">\</span><span class="p">(</span> <span class="n">exp</span> <span class="err">\</span><span class="p">)</span>
          <span class="o">|</span> <span class="kt">char</span>              <span class="n">literal</span> <span class="p">{</span><span class="n">push</span> <span class="kt">char</span><span class="p">}</span>
-</pre></div>
+</pre>
 
 
 <p>A very simple class is enough to simulate an NFA:</p>
-<div class="code"><pre><span class="k">class</span> <span class="nc">State</span><span class="p">:</span>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">State</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># epsilon-closure</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># a dictionary of char --&gt; state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_end</span> <span class="o">=</span> <span class="bp">False</span> <span class="c"># is it the ending state?</span>
-</pre></div>
+</pre>
 
 
 <p>Next we read one token at a time, perform relevant NFA transformations and push the transformed NFA onto a stack. For example, when seeing a CONCAT token, pop two NFAs from the stack, chain these two NFAs together and create a new CONCAT NFA, and push the new NFA onto the stack again. When all the tokens are consumed, there should be only one  NFA left on the stack. Details on how to construct NFAs can be found either from the two articles cited above, or from the book <a href="http://www.amazon.com/Compilers-Principles-Techniques-Tools-Edition/dp/0321486811">Compilers: Principles Techniques and Tools</a></p>
 <p>A <code>handler</code> class is used for this step, the class has a dictionary of different handlers for each type of tokens. </p>
-<div class="code"><pre><span class="k">class</span> <span class="nc">Handler</span><span class="p">:</span>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">Handler</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'CHAR'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_char</span><span class="p">,</span> <span class="s">'CONCAT'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_concat</span><span class="p">,</span>
                          <span class="s">'ALT'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_alt</span><span class="p">,</span> <span class="s">'STAR'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_rep</span><span class="p">,</span>
                          <span class="s">'PLUS'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_rep</span><span class="p">,</span> <span class="s">'QMARK'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_qmark</span><span class="p">}</span>
-</pre></div>
+</pre>
 
 
 <p>These steps above form the exposed <code>compile</code> function, which turns an input regex string into an NFA machine. </p>
-<div class="code"><pre><span class="kn">from</span> <span class="nn">parse</span> <span class="kn">import</span> <span class="n">Lexer</span><span class="p">,</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">Token</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">Handler</span>
+<pre class="code literal-block"><span class="kn">from</span> <span class="nn">parse</span> <span class="kn">import</span> <span class="n">Lexer</span><span class="p">,</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">Token</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">Handler</span>
 
 <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">debug</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
 
@@ -174,11 +330,11 @@
 
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">nfa_stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="c"># check there is only one final NFA on the stack</span>
     <span class="k">return</span> <span class="n">nfa_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> 
-</pre></div>
+</pre>
 
 
 <p>Next we can feed the constructed NFA a string and check whether it is accepted or not. The <code>match</code> function uses two <code>sets</code> to hold <code>current_state</code> and <code>next_state</code>, make each <code>char</code> transitions and epsilon transitions and check if any ending state is arrived:</p>
-<div class="code"><pre><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
+<pre class="code literal-block"><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
        <span class="n">current_states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">addstate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">current_states</span><span class="p">)</span> <span class="c"># addstate makes epsilon transitions</span>
 
@@ -195,7 +351,7 @@
            <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">is_end</span><span class="p">:</span>
                <span class="k">return</span> <span class="bp">True</span>
        <span class="k">return</span> <span class="bp">False</span>
-</pre></div>
+</pre>
 
 
 <h3>Performance</h3>
@@ -204,20 +360,26 @@
 <p>However, when tested with those pathological inputs, Thompson's algorithm is a clear win, specifically Python will hang when <code>n</code> is over 25. Notice the time scale is in seconds rather than in milliseconds in the previous plot. </p>
 <p><img alt="performance 2" src="regex_pic/plot_path.jpg"></p>
 <p>Russ Cox wrote about <a href="http://swtch.com/~rsc/regexp/regexp1.html">history behind regex implementation</a> (last section).</p>
-            
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" class="u-url">Install LLVM OCaml bindings (and UTop)</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-06T23:27:24+00:00" itemprop="datePublished" title="Publication date">2014-05-06 23:27</time></a></p>
+                <p class="commentline">
         
-    <p>
-        <a href="posts/regex-parsing-thompsons-algorithm.html#disqus_thread" data-disqus-identifier="cache/posts/regex-parsing-thompsons-algorithm.html">Comments</a>
+    <a href="posts/install-llvm-ocaml-bindings-and-toplevel.html#disqus_thread" data-disqus-identifier="cache/posts/install-llvm-ocaml-bindings-and-toplevel.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html">Install LLVM OCaml bindings (and UTop)</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-05-06T23:27:24">2014-05-06 23:27</time>
-        </small></h1>
-        <hr>
-        <p>I put on a <a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings">Stackoverflow answer here</a></p>
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<p>I put on a <a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings">Stackoverflow answer here</a></p>
 <ol>
 <li>
 <p>Build LLVM with configuration: <code>--with-ocaml-libdir =</code>ocamlc -where``</p>
@@ -243,32 +405,47 @@
 </ul>
 </li>
 </ol>
-            
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/week-20140504.html" class="u-url">Week 20140504</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/week-20140504.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-01T22:24:37+00:00" itemprop="datePublished" title="Publication date">2014-05-01 22:24</time></a></p>
+                <p class="commentline">
         
-    <p>
-        <a href="posts/install-llvm-ocaml-bindings-and-toplevel.html#disqus_thread" data-disqus-identifier="cache/posts/install-llvm-ocaml-bindings-and-toplevel.html">Comments</a>
+    <a href="posts/week-20140504.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140504.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/week-20140504.html">Week 20140504</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-05-01T22:24:37">2014-05-01 22:24</time>
-        </small></h1>
-        <hr>
-        <h4><a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures">Dan Grossman</a></h4>
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<h4><a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures">Dan Grossman</a></h4>
 <ul>
 <li>Syntax, semantics, idioms, libraries, tools</li>
-<li>records: <code>#field_name record_name</code></li>
+<li>records: <code>#field_name record_name</code>
+</li>
 <li>tuples are syntax sugers of records (field_name = 1, 2, 3...)</li>
-<li><code>datatype</code> bindings: <code>Constant of int | Add of expr * expr</code></li>
-<li>pattern matching: <code>case x of =&gt;</code></li>
+<li>
+<code>datatype</code> bindings: <code>Constant of int | Add of expr * expr</code>
+</li>
+<li>pattern matching: <code>case x of =&gt;</code>
+</li>
 <li>one-of (Option); each-of (Records)</li>
-<li>type synonym: <code>type name = t</code>. <code>type card = suit * rank</code></li>
-<li>polymorphic datatype: <code>datatype 'a option = NONE | SOME of 'a</code></li>
-<li><code>val p = e</code>. <code>p</code> --&gt; patterns</li>
+<li>type synonym: <code>type name = t</code>. <code>type card = suit * rank</code>
+</li>
+<li>polymorphic datatype: <code>datatype 'a option = NONE | SOME of 'a</code>
+</li>
+<li>
+<code>val p = e</code>. <code>p</code> --&gt; patterns</li>
 <li><code>fun f p = e</code></li>
-<li><code>exception</code>, <code>raise</code></li>
+<li>
+<code>exception</code>, <code>raise</code>
+</li>
 <li><code>e1 handle exn =&gt; e2</code></li>
 <li>tail optimization: remove caller from call stack</li>
 <li>the wrath of premature optimization</li>
@@ -284,7 +461,7 @@
 </ul>
 <hr>
 <h4><a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">Max sub-array problem</a></h4>
-<div class="code"><pre><span class="n">def</span> <span class="n">max_sub_array</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">:</span>
+<pre class="code literal-block"><span class="n">def</span> <span class="n">max_sub_array</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">:</span>
     <span class="n">max_ending_here</span> <span class="o">=</span> <span class="n">max_so_far</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">begin</span> <span class="o">=</span> <span class="n">begin_temp</span> <span class="o">=</span> <span class="n">end</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -301,21 +478,27 @@
             <span class="n">end</span> <span class="o">=</span> <span class="n">i</span>
 
     <span class="k">return</span> <span class="n">max_so_far</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span>
-</pre></div>
-            
+</pre>
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/app-jamming-2014.html" class="u-url">App Jamming 2014</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/app-jamming-2014.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-19T23:00:23+00:00" itemprop="datePublished" title="Publication date">2014-04-19 23:00</time></a></p>
+                <p class="commentline">
         
-    <p>
-        <a href="posts/week-20140504.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140504.html">Comments</a>
+    <a href="posts/app-jamming-2014.html#disqus_thread" data-disqus-identifier="cache/posts/app-jamming-2014.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/app-jamming-2014.html">App Jamming 2014</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-04-19T23:00:23">2014-04-19 23:00</time>
-        </small></h1>
-        <hr>
-        <h4>App Jamming 2014</h4>
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<h4>App Jamming 2014</h4>
 <p>I was at my friend Michelle's app jamming 2014 event yesterday as a mentor. This is my first such experience and I thought I'd make a note, mostly because it was fun, partly because I really need to pick up blogging again.</p>
 <p>(I'll post pictures once I get them)</p>
 <p>App jamming is an annual event where we teach teenage girls (mostly age 11-15) to code with the help of <a href="http://ai2.appinventor.mit.edu/">MIT App inventor</a>. This year is the second year and around 50 girls signed up. </p>
@@ -348,22 +531,29 @@
 <p>Overall it was fun. Kids were a bit quiet in the very first beginning but jumping around soon after they made the kitten meow. There was a moment during the lunch break, where we accidentally realized that while all the mentors were chatting in the lunch area, all the kids were at their table, focused on their app. That was beautiful and precious. </p>
 <p>As Michelle put it, we are working hard at bringing more girls (also with the newly founded <a href="http://womenwhocodehk.com/">Women Who Code HK</a>) into programming because we no longer want to be outliers in this industry. And so far things look promising. </p>
 <p>(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )</p>
-            
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/week-20140420.html" class="u-url">Week 20140420</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/week-20140420.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-14T21:41:33+00:00" itemprop="datePublished" title="Publication date">2014-04-14 21:41</time></a></p>
+                <p class="commentline">
         
-    <p>
-        <a href="posts/app-jamming-2014.html#disqus_thread" data-disqus-identifier="cache/posts/app-jamming-2014.html">Comments</a>
+    <a href="posts/week-20140420.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140420.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/week-20140420.html">Week 20140420</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-04-14T21:41:33">2014-04-14 21:41</time>
-        </small></h1>
-        <hr>
-        <h4><a href="https://www.youtube.com/watch?v=St9cL47_1GI">Advanced technique for web functional testing</a></h4>
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<h4><a href="https://www.youtube.com/watch?v=St9cL47_1GI">Advanced technique for web functional testing</a></h4>
 <ul>
-<li>test responsive: <code>self.driver.set_window_size</code></li>
+<li>test responsive: <code>self.driver.set_window_size</code>
+</li>
 <li>Needle -- test by comparing screenshots</li>
 <li>Saucelabs</li>
 <li><a href="http://davehaeffner.com/selenium-guidebook/">the selenium guidebook</a></li>
@@ -373,7 +563,8 @@
 <h4><a href="http://blog.miguelgrinberg.com/post/easy-web-scraping-with-python">Web scraping with Python</a></h4>
 <ul>
 <li><code>multiprocessing.Pool</code></li>
-<li><code>argparse</code> module</li>
+<li>
+<code>argparse</code> module</li>
 </ul>
 <hr>
 <h4>Micellaneous</h4>
@@ -388,66 +579,89 @@
 <p>It is due to lack of RAM memory. The solution is to create a swap file. I followed the instructions <a href="http://wiki.paparazziuav.org/wiki/GettingTheGCSRunningonAGumstixBoard">here</a>, note to compile <code>core</code> a 512MB swap is not enough, I ended up creating a 1G swap. DigitalOcean also has a nice article on <a href="https://www.digitalocean.com/community/articles/how-to-add-swap-on-ubuntu-12-04">creating swap files</a></p>
 </li>
 </ul>
-            
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/week-20140406.html" class="u-url">Week 20140406</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/week-20140406.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-31T13:32:10+00:00" itemprop="datePublished" title="Publication date">2014-03-31 13:32</time></a></p>
+                <p class="commentline">
         
-    <p>
-        <a href="posts/week-20140420.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140420.html">Comments</a>
+    <a href="posts/week-20140406.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140406.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/week-20140406.html">Week 20140406</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-03-31T13:32:10">2014-03-31 13:32</time>
-        </small></h1>
-        <hr>
-        <h4>Dan Grossman</h4>
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<h4>Dan Grossman</h4>
 <ul>
 <li>functions over lists are usually recursive: empty list; non-empty list (<code>hd</code>, <code>tl</code>) </li>
-<li>let expression: <code>let...in...end</code></li>
+<li>let expression: <code>let...in...end</code>
+</li>
 <li>Do a recursive computation, store in (local binding)</li>
-<li>Option: <code>isSome</code>, <code>valOf</code></li>
-<li>Bool comparisons: <code>andalso</code>, <code>orelse</code>, <code>not</code></li>
-<li><code>real</code> is not an equality type (subject to round errors)</li>
+<li>Option: <code>isSome</code>, <code>valOf</code>
+</li>
+<li>Bool comparisons: <code>andalso</code>, <code>orelse</code>, <code>not</code>
+</li>
+<li>
+<code>real</code> is not an equality type (subject to round errors)</li>
 <li>no mutation --&gt; no need to worry about alias or copies --&gt; implementation more efficient &amp; better security</li>
-<li>Done <a href="https://github.com/xysun/armory/tree/master/ProgrammingLanguages">HW1</a></li>
+<li>Done <a href="https://github.com/xysun/armory/tree/master/ProgrammingLanguages">HW1</a>
+</li>
 </ul>
 <h4><a href="https://www.youtube.com/watch?v=fYlnfvKVDoM">Brandon Rhodes Pycon talk</a></h4>
 <ul>
 <li><a href="http://duartes.org/gustavo/blog/post/what-your-computer-does-while-you-wait/">Gustavo Duarte -- what your computer does while you wait</a></li>
 <li><a href="http://danluu.com/3c-conflict/">Dan Luu -- how misaligning data can increase performance 12x</a></li>
 <li>Python store general purpose data structures (eg. tuple) as array of addresses</li>
-<li><code>append</code> on a list adds extra spaces -- amortization</li>
-<li>list is fast for tail operations: <code>append</code>, <code>pop</code>. Not <code>pop(0)</code>, <code>insert(0)</code></li>
-<li><code>dict</code> is an array with keys stored at integer indexes according to hash value: <ul>
+<li>
+<code>append</code> on a list adds extra spaces -- amortization</li>
+<li>list is fast for tail operations: <code>append</code>, <code>pop</code>. Not <code>pop(0)</code>, <code>insert(0)</code>
+</li>
+<li>
+<code>dict</code> is an array with keys stored at integer indexes according to hash value: <ul>
 <li>hash -- key address -- value address</li>
 <li>PyCon 2010 "The mighty dictionary"</li>
 <li>can build compound keys with tuple</li>
 </ul>
 </li>
 <li>set: dictionary with no keys</li>
-<li><code>deque</code>, <code>heapq</code></li>
+<li>
+<code>deque</code>, <code>heapq</code>
+</li>
 <li>2013 PyCon, the clean architecture in Python</li>
 </ul>
 <hr>
 <h4>Miscellaneous</h4>
 <ul>
-<li><a href="https://www.rescuetime.com/">rescue time</a> is a neat productivity tool.</li>
+<li>
+<a href="https://www.rescuetime.com/">rescue time</a> is a neat productivity tool.</li>
 </ul>
-            
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/week-20140330.html" class="u-url">Weekly 20140330</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/week-20140330.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-24T21:09:02+00:00" itemprop="datePublished" title="Publication date">2014-03-24 21:09</time></a></p>
+                <p class="commentline">
         
-    <p>
-        <a href="posts/week-20140406.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140406.html">Comments</a>
+    <a href="posts/week-20140330.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140330.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/week-20140330.html">Weekly 20140330</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-03-24T21:09:02">2014-03-24 21:09</time>
-        </small></h1>
-        <hr>
-        <h4><a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041">Surely You're joking, Mr. Feynman!</a></h4>
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<h4><a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041">Surely You're joking, Mr. Feynman!</a></h4>
 <blockquote>
 <p>Learn what the rest of the world is like. The variety is worthwhile.</p>
 <p>"I could do that, but I won't" -- which is just another way of saying that you can't. </p>
@@ -460,26 +674,34 @@
 <li>expression: syntax, type-checking, evaluate</li>
 <li>REPL: Read, Evaluate, Print, Loop; do not type <code>use</code> without restarting REPL</li>
 <li>syntax: <ul>
-<li>negation: <code>~5</code></li>
-<li>division: <code>div</code></li>
+<li>negation: <code>~5</code>
+</li>
+<li>division: <code>div</code>
+</li>
 </ul>
 </li>
 <li>after expression evaluated, the expression producing the result is irrelevant --&gt; do not reuse <code>use</code> in sml</li>
-<li>access pair/tuple: <code>#1 e</code></li>
+<li>access pair/tuple: <code>#1 e</code>
+</li>
 <li>naming: <ul>
-<li><code>pair</code> &lt;--&gt; <code>pr</code></li>
+<li>
+<code>pair</code> &lt;--&gt; <code>pr</code>
+</li>
 </ul>
 </li>
 </ul>
 <hr>
 <h4><a href="http://c.learncodethehardway.org/book/">Learn C the hard way</a></h4>
 <ul>
-<li><a href="http://c.learncodethehardway.org/book/ex13.html">switch statement</a>: <ul>
-<li><code>return 1</code> --&gt; tell OS there's an error</li>
+<li>
+<a href="http://c.learncodethehardway.org/book/ex13.html">switch statement</a>: <ul>
+<li>
+<code>return 1</code> --&gt; tell OS there's an error</li>
 <li>only integers allowed (eg. char)</li>
 </ul>
 </li>
-<li><a href="http://c.learncodethehardway.org/book/ex14.html">use functions</a><ul>
+<li>
+<a href="http://c.learncodethehardway.org/book/ex14.html">use functions</a><ul>
 <li>forward declaration: use function before defining them</li>
 </ul>
 </li>
@@ -498,91 +720,98 @@
 <p>use <code>rlwrap sml</code> to enable history rollback through arrow keys</p>
 </li>
 </ul>
-            
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
+        <h1 class="p-name entry-title"><a href="posts/week-20140323.html" class="u-url">Weekly 20140323</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/week-20140323.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-20T19:52:36+00:00" itemprop="datePublished" title="Publication date">2014-03-20 19:52</time></a></p>
+                <p class="commentline">
         
-    <p>
-        <a href="posts/week-20140330.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140330.html">Comments</a>
+    <a href="posts/week-20140323.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140323.html">Comments</a>
 
 
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/week-20140323.html">Weekly 20140323</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-03-20T19:52:36">2014-03-20 19:52</time>
-        </small></h1>
-        <hr>
-        <h4><a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html">30 Python language features and tricks</a></h4>
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<h4><a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html">30 Python language features and tricks</a></h4>
 <ul>
 <li>Extended unpacking</li>
 </ul>
-<div class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
 <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-</pre></div>
+</pre>
 
 
 <ul>
 <li>List slices with negative step</li>
 </ul>
-<div class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
+</pre>
 
 
 <ul>
 <li>Name slices (<code>slice(start, end, slice)</code>)</li>
 </ul>
-<div class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">LASTTHREE</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">LASTTHREE</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">LASTTHREE</span><span class="p">]</span>
 <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-</pre></div>
+</pre>
 
 
 <ul>
 <li>Dictionary comprehension</li>
 </ul>
-<div class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span>
 <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">}</span>
-</pre></div>
+</pre>
 
 
 <ul>
 <li>Named tuples</li>
 </ul>
-<div class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">'Point'</span><span class="p">,</span> <span class="p">[</span><span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">])</span>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">'Point'</span><span class="p">,</span> <span class="p">[</span><span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">])</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">y</span>
 <span class="mi">13</span>
-</pre></div>
+</pre>
 
 
 <ul>
 <li>Use capital letter for set variables</li>
 <li>Counter</li>
 </ul>
-<div class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
 <span class="n">Counter</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
-</pre></div>
+</pre>
 
 
 <ul>
-<li><code>collections.deque</code> Double-ended queue</li>
+<li>
+<code>collections.deque</code> Double-ended queue</li>
 <li>default dict</li>
 </ul>
-<div class="code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>
 <span class="mi">0</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>
 <span class="s">''</span>
-</pre></div>
+</pre>
 
 
 <hr>
@@ -604,10 +833,10 @@
 <p>Flask test client</p>
 </li>
 </ul>
-<div class="code"><pre><span class="n">tester</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<pre class="code literal-block"><span class="n">tester</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">tester</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">"html/text"</span><span class="p">)</span>
 <span class="c"># response.data include all html text</span>
-</pre></div>
+</pre>
 
 
 <ul>
@@ -625,7 +854,7 @@
 <li>Install exuberant ctags</li>
 <li>Install tagbar</li>
 </ul>
-<div class="code"><pre><span class="nb">cd</span> ~/.vim
+<pre class="code literal-block"><span class="nb">cd</span> ~/.vim
 git clone git://github.com/majutsushi/tagbar
 mv tagbar/* .  <span class="c"># must be directly under .vim/</span>
 sudo rm -r tagbar/
@@ -633,136 +862,48 @@ sudo rm -r tagbar/
 vim tagbar.txt
 :helptags .
 <span class="c"># quit vim</span>
-</pre></div>
+</pre>
 
 
 <ul>
 <li>edit <code>.vimrc</code> (below is mine): </li>
 </ul>
-<div class="code"><pre><span class="nb">let </span>g:tagbar_ctags_bin<span class="o">=</span><span class="s1">'/usr/local/bin/ctags'</span> <span class="c"># change to ctags bin path, this is on MacOS</span>
+<pre class="code literal-block"><span class="nb">let </span>g:tagbar_ctags_bin<span class="o">=</span><span class="s1">'/usr/local/bin/ctags'</span> <span class="c"># change to ctags bin path, this is on MacOS</span>
 <span class="nb">let </span>g:tagbar_width<span class="o">=</span>40
 noremap &lt;silent&gt; tb :TagbarOpen fj &lt;CR&gt;
-</pre></div>
+</pre>
 
 
 <ul>
 <li>useful key shortcuts:</li>
 </ul>
-<div class="code"><pre>tb: open tagbar <span class="c"># my key binding</span>
+<pre class="code literal-block">tb: open tagbar <span class="c"># my key binding</span>
 p: go to tag, stay in tagbar
 &lt;enter&gt;: go to tag
 o: toggle fold
 *: open all <span class="nv">fold</span>
 <span class="o">=</span>: collapse all fold
 ?: keymap <span class="nb">help</span>
-</pre></div>
-            
-        
-    <p>
-        <a href="posts/week-20140323.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140323.html">Comments</a>
-
-
-        </p></div>
-        <div class="postbox">
-        <h1><a href="posts/2013.html">2013</a>
-        <small>  
-             Posted: <time class="published" datetime="2014-02-24T23:18:25">2014-02-24 23:18</time>
-        </small></h1>
-        <hr>
-        <p>年终奖到账, 交了离职信, 真正就和过去一年说再见了. </p>
-<p>2013年是我的本命年, 真的是曲折起伏波澜壮阔. 从年初工作压力大不顺心一直到4月跌到谷底，到拿到了HackerSchool的录取去纽约玩儿了三个月，期间写代码功力见长但也并不是一帆风顺，回到香港后慢慢地把自己的路子从金融扭到工程，而今再过一个月我所有的工资就将来自于Python, 同时我和其他3个小伙伴一起成立了Women Who Code HK, 手里还有几个项目在参与. 这些事情都是4月前做梦也想不到的。</p>
-<h4>全年目标回顾</h4>
-<ul>
-<li>读书：10本计算机，12本非计算机(6本虚构6本非虚构，包括多于2本中文书)</li>
-</ul>
-<p>完成程度：读了8本计算机，1本虚构(福尔摩斯), 2本非虚构(Mastery, 中国近代史)
-计算机书读得多了别的书精力就少了...</p>
-<ul>
-<li>
-<p>编程方面: </p>
-<ul>
-<li>阅读一个开源项目代码 --&gt; 小项目读了不少，大项目没有。这也是今年打算加强的。</li>
-<li>1万行代码 --&gt; 完成。数了数大概是1.5万行，Python和OCaml一半一半。今年到目前为止已经写了3千行了....</li>
-<li>在GitHub上被打星星/有fork --&gt; 完成。目前一共8颗星。不过纽约回来后忙得没有再启动新的个人项目。是时候立项了。</li>
-<li>活跃在一个邮件列表(mailing list)/社团(community) --&gt; 失败</li>
-<li>用代码赚钱--&gt; 完成</li>
-</ul>
-</li>
-<li>
-<p>生活方面: </p>
-<ul>
-<li>旅游: --&gt; 去了新西兰和纽约</li>
-<li>存钱: --&gt; 多谢年终奖，即使停薪三个月依然完成目标。</li>
-<li>换一份工作 --&gt; 完成</li>
-<li>小提琴500小时，进乐团 --&gt; 失败。花在小提琴上面的时间少了。不过生活的重心本来也转移了。</li>
-<li>学会游泳 --&gt; 连续第二年失败....</li>
-<li>跑100次步 --&gt; 跑步33次200公里，爬山2次40公里，徒手锻炼23次。和去年相比大幅下滑。</li>
-<li>双休日10点前起床 --&gt; 纽约前失败了10次。纽约后全部做到，因为实在是太忙了，有时候想睡懒觉在床上用手机看下邮件就默默爬起来洗澡干活去了....</li>
-</ul>
-</li>
-<li>
-<p>年度目标总结</p>
-</li>
-</ul>
-<p>1年前写这份目标的时候还一边写一边笑话自己自不量力。回过头来看真的是梦想有多大可能性就有多大。譬如我曾经觉得编程方面我一个都实现不了，结果回过头来看编程方面竟然完成率几乎100%。这要是回到1年前告诉那时的自己都不会相信的吧。</p>
-<h4>HackerSchool给了我什么</h4>
-<p>如果写一个HackerSchool之后我做了些什么会是一个牛逼闪闪的单子: </p>
-<ul>
-<li>换了工作</li>
-<li>同时给某个初创企业写Python后台</li>
-<li>成立了Women Who Code HK</li>
-<li>参与了一些国际化的开源项目，经常半夜和不同时区的小伙伴们一起开会。</li>
-</ul>
-<p>但这些都是表象，我清楚背后HackerSchool真正给我的是这些：</p>
-<ul>
-<li>无与伦比的人脉。认识了一群也许是未来十几年甚至几十年美国和一些其他地区程序界的中坚力量。</li>
-<li>养成了良好的编程和讨论习惯。保持了好奇心。</li>
-<li>学会分享。</li>
-<li>不再害怕面对觉得太学术太难的问题。</li>
-<li>以及最重要的，学会去做一个无论多么牛逼闪闪都依然善良耐心的正人君子。</li>
-</ul>
-<p>这些得着是对无论以后做什么都有益的。</p>
-<h4>我为什么离开DB</h4>
-<p>基本就是这几个原因: </p>
-<ol>
-<li>市场风险不是我的长期理想职业方向, 如果还在金融业的话我希望自己转到前台做交易员。而新的工作离这个目标更接近。</li>
-<li>三年下来觉得我已经像个吸饱了水的海绵学习曲线已经放平了，每天的工作都在自己的comfort zone里面并没有太大挑战。我承认小队长的工作看起来比较有趣，但我是否愿意继续混十几年做到他这个地方呢？我觉得这十几年花在别的地方成就会更大。</li>
-<li>在这个团队做得不是很开心，说狠一点就是经常被猪一样的队友噎死。</li>
-<li>我最怕的是以后变成那些人到中年没有别的本事只能在后台混日子还感觉良好的大多数人。</li>
-</ol>
-<p>递信之后意外地得到了许多老大级别人物的挽留(亚洲区市场风险老大形容我是one of the brightest youngsters I've ever worked with -- 我共事过的最聪明的年轻人之一)，经常被各种MD叫到小屋子里去谈话，这至少也证明了三年里我的工作得到了肯定。这样离开也没有遗憾了。</p>
-<p>也收到了一些所谓counter-offer, 但是敝行给出的职位我都不是很满意，我最想去的衍生品交易没有空位，然后给在纽约认识的前瑞银某MD写了个邮件，他回过来说: </p>
-<p>It's been pointed out recently that "do what you love" is obnoxious as a general philosophy, because the vast majority of the world doesn't have that option. But if you do have the option, then it's a no-brainer.</p>
-<p>(有人指出"要做你热爱的事情"是无稽之谈因为这个世界上的多数人都没有这个选择。然而如果你真的有这个选项，根本不用犹豫。)</p>
-<p>然后前两天晚上又和前教授新老板吃了个晚饭，一起聊未来的技术发展聊得很开心。</p>
-<p>所以就这样决定了吧。我总是说30岁前我不打算正经赚钱，我在德银也算攒到了第一笔金，是时候趁还输得起的年纪去别的地方闯一闯了。</p>
-<h4>总结</h4>
-<p>今年是毕业参加工作的第三年。如果第一年是初入职场的兴奋，第二年是轻车熟路，第三年就是临界点了。这一年是目前为止最辛苦的一年，也是收获最大的一年，我很高兴付出都有回报，而梦想依然在路上。</p>
-<p>当然了，要成为"本年龄段本性别里最好的程序员", 要实现给航天飞机和电影写代码的理想，要一项项勾掉"人生100个目标"那张单子，我才刚走过起点呢。</p>
-<p>Always remember the future comes one day a time.</p>
-<p>永远记住，未来是一天天来到的。</p>
-            
-        
-    <p>
-        <a href="posts/2013.html#disqus_thread" data-disqus-identifier="cache/posts/2013.html">Comments</a>
-
-
-        </p></div>
-    
-<div>
-<ul class="pager">
-    <li class="next">
-        <a href="index-1.html">Older posts →</a>
-    </li>
-</ul>
+</pre>
+</div>
+    </div>
+    </article>
 </div>
 
-    
+        <nav class="postindexpager">
+        <ul class="pager">
+            <li class="next">
+                <a href="index-1.html" rel="next">Older posts</a>
+            </li>
+        </ul>
+        </nav>
+
+
         
-       <script type="text/javascript">var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.type="text/javascript";a.src="http://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("HEAD")[0]||document.getElementsByTagName("BODY")[0]).appendChild(a)}());</script>
+       <script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 
 
-	
+
 
 
         </div>
@@ -770,31 +911,40 @@ o: toggle fold
 
         <footer>
             Contents © 2014         <a href="mailto:">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com">Nikola</a>         
+            
         </footer>
     </div>
 </div>
 
 
-            <script src="assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-            <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="assets/js/jquery.colorbox-min.js" type="text/javascript"></script>
-
-
-	
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.colorbox-min.js"></script>
+    
 <!-- Social buttons -->
 <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
 <a class="addthis_button_more">Share</a>
-<ul><li><a class="addthis_button_facebook"></a>
-</li><li><a class="addthis_button_google_plusone_share"></a>
-</li><li><a class="addthis_button_linkedin"></a>
-</li><li><a class="addthis_button_twitter"></a>
-</li></ul>
+<ul>
+<li>
+<a class="addthis_button_facebook"></a>
+</li>
+<li>
+<a class="addthis_button_google_plusone_share"></a>
+</li>
+<li>
+<a class="addthis_button_linkedin"></a>
+</li>
+<li>
+<a class="addthis_button_twitter"></a>
+</li>
+</ul>
 </div>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
 <!-- End of social buttons -->
 
 
-    <script type="text/javascript">jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    
 
 
 </body>

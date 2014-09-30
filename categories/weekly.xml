@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Weekly)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/weekly.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Mon, 19 May 2014 00:23:52 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Week 20140504</title><link>https://xysun.github.io/posts/week-20140504.html</link><description>&lt;h4&gt;&lt;a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures"&gt;Dan Grossman&lt;/a&gt;&lt;/h4&gt;
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing (Weekly)</title><link>https://xysun.github.io</link><description></description><language>en</language><lastBuildDate>Tue, 30 Sep 2014 22:25:00 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Week 20140504</title><link>https://xysun.github.io/posts/week-20140504.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures"&gt;Dan Grossman&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Syntax, semantics, idioms, libraries, tools&lt;/li&gt;
 &lt;li&gt;records: &lt;code&gt;#field_name record_name&lt;/code&gt;&lt;/li&gt;
@@ -27,7 +27,7 @@
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h4&gt;&lt;a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem"&gt;Max sub-array problem&lt;/a&gt;&lt;/h4&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;max_sub_array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;max_sub_array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;max_ending_here&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;max_so_far&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="n"&gt;begin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;begin_temp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
@@ -44,7 +44,7 @@
             &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
 
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;max_so_far&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Weekly</category><category>Code</category><guid>https://xysun.github.io/posts/week-20140504.html</guid><pubDate>Thu, 01 May 2014 22:24:37 GMT</pubDate></item><item><title>Week 20140420</title><link>https://xysun.github.io/posts/week-20140420.html</link><description>&lt;h4&gt;&lt;a href="https://www.youtube.com/watch?v=St9cL47_1GI"&gt;Advanced technique for web functional testing&lt;/a&gt;&lt;/h4&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140504.html</guid><pubDate>Thu, 01 May 2014 22:24:37 GMT</pubDate></item><item><title>Week 20140420</title><link>https://xysun.github.io/posts/week-20140420.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="https://www.youtube.com/watch?v=St9cL47_1GI"&gt;Advanced technique for web functional testing&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;test responsive: &lt;code&gt;self.driver.set_window_size&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Needle -- test by comparing screenshots&lt;/li&gt;
@@ -70,7 +70,7 @@
 &lt;p&gt;opam: "fork" failed: Cannot allocate memory.&lt;/p&gt;
 &lt;p&gt;It is due to lack of RAM memory. The solution is to create a swap file. I followed the instructions &lt;a href="http://wiki.paparazziuav.org/wiki/GettingTheGCSRunningonAGumstixBoard"&gt;here&lt;/a&gt;, note to compile &lt;code&gt;core&lt;/code&gt; a 512MB swap is not enough, I ended up creating a 1G swap. DigitalOcean also has a nice article on &lt;a href="https://www.digitalocean.com/community/articles/how-to-add-swap-on-ubuntu-12-04"&gt;creating swap files&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140420.html</guid><pubDate>Mon, 14 Apr 2014 21:41:33 GMT</pubDate></item><item><title>Week 20140406</title><link>https://xysun.github.io/posts/week-20140406.html</link><description>&lt;h4&gt;Dan Grossman&lt;/h4&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140420.html</guid><pubDate>Mon, 14 Apr 2014 21:41:33 GMT</pubDate></item><item><title>Week 20140406</title><link>https://xysun.github.io/posts/week-20140406.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;Dan Grossman&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;functions over lists are usually recursive: empty list; non-empty list (&lt;code&gt;hd&lt;/code&gt;, &lt;code&gt;tl&lt;/code&gt;) &lt;/li&gt;
 &lt;li&gt;let expression: &lt;code&gt;let...in...end&lt;/code&gt;&lt;/li&gt;
@@ -102,7 +102,7 @@
 &lt;h4&gt;Miscellaneous&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.rescuetime.com/"&gt;rescue time&lt;/a&gt; is a neat productivity tool.&lt;/li&gt;
-&lt;/ul&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140406.html</guid><pubDate>Mon, 31 Mar 2014 13:32:10 GMT</pubDate></item><item><title>Weekly 20140330</title><link>https://xysun.github.io/posts/week-20140330.html</link><description>&lt;h4&gt;&lt;a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041"&gt;Surely You're joking, Mr. Feynman!&lt;/a&gt;&lt;/h4&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140406.html</guid><pubDate>Mon, 31 Mar 2014 13:32:10 GMT</pubDate></item><item><title>Weekly 20140330</title><link>https://xysun.github.io/posts/week-20140330.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041"&gt;Surely You're joking, Mr. Feynman!&lt;/a&gt;&lt;/h4&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Learn what the rest of the world is like. The variety is worthwhile.&lt;/p&gt;
 &lt;p&gt;"I could do that, but I won't" -- which is just another way of saying that you can't. &lt;/p&gt;
@@ -152,78 +152,78 @@
 &lt;li&gt;
 &lt;p&gt;use &lt;code&gt;rlwrap sml&lt;/code&gt; to enable history rollback through arrow keys&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</description><category>Weekly</category><category>Code</category><guid>https://xysun.github.io/posts/week-20140330.html</guid><pubDate>Mon, 24 Mar 2014 21:09:02 GMT</pubDate></item><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><description>&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140330.html</guid><pubDate>Mon, 24 Mar 2014 21:09:02 GMT</pubDate></item><item><title>Weekly 20140323</title><link>https://xysun.github.io/posts/week-20140323.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html"&gt;30 Python language features and tricks&lt;/a&gt;&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Extended unpacking&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;List slices with negative step&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;[::&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Name slices (&lt;code&gt;slice(start, end, slice)&lt;/code&gt;)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;LASTTHREE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;slice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;LASTTHREE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;slice&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;LASTTHREE&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Dictionary comprehension&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Named tuples&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Point&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;namedtuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'Point'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'x'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'y'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Point&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;namedtuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'Point'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'x'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'y'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;
 &lt;span class="mi"&gt;13&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;Use capital letter for set variables&lt;/li&gt;
 &lt;li&gt;Counter&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Counter&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Counter&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Counter&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
 &lt;span class="n"&gt;Counter&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;most_common&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;collections.deque&lt;/code&gt; Double-ended queue&lt;/li&gt;
 &lt;li&gt;default dict&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="mi"&gt;0&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;collections&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="s"&gt;''&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;hr&gt;
@@ -245,10 +245,10 @@
 &lt;p&gt;Flask test client&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="n"&gt;tester&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;test_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;tester&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;test_client&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tester&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'/'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content_type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"html/text"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="c"&gt;# response.data include all html text&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
@@ -266,7 +266,7 @@
 &lt;li&gt;Install exuberant ctags&lt;/li&gt;
 &lt;li&gt;Install tagbar&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/.vim
+&lt;pre class="code literal-block"&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/.vim
 git clone git://github.com/majutsushi/tagbar
 mv tagbar/* .  &lt;span class="c"&gt;# must be directly under .vim/&lt;/span&gt;
 sudo rm -r tagbar/
@@ -274,22 +274,22 @@ sudo rm -r tagbar/
 vim tagbar.txt
 :helptags .
 &lt;span class="c"&gt;# quit vim&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;edit &lt;code&gt;.vimrc&lt;/code&gt; (below is mine): &lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;&lt;span class="nb"&gt;let &lt;/span&gt;g:tagbar_ctags_bin&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'/usr/local/bin/ctags'&lt;/span&gt; &lt;span class="c"&gt;# change to ctags bin path, this is on MacOS&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="nb"&gt;let &lt;/span&gt;g:tagbar_ctags_bin&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'/usr/local/bin/ctags'&lt;/span&gt; &lt;span class="c"&gt;# change to ctags bin path, this is on MacOS&lt;/span&gt;
 &lt;span class="nb"&gt;let &lt;/span&gt;g:tagbar_width&lt;span class="o"&gt;=&lt;/span&gt;40
 noremap &amp;lt;silent&amp;gt; tb :TagbarOpen fj &amp;lt;CR&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 
 
 &lt;ul&gt;
 &lt;li&gt;useful key shortcuts:&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class="code"&gt;&lt;pre&gt;tb: open tagbar &lt;span class="c"&gt;# my key binding&lt;/span&gt;
+&lt;pre class="code literal-block"&gt;tb: open tagbar &lt;span class="c"&gt;# my key binding&lt;/span&gt;
 p: go to tag, stay in tagbar
 &amp;lt;enter&amp;gt;: go to tag
 o: toggle fold

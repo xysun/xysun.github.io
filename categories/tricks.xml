@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing (Tricks)</title><link>https://xysun.github.io</link><description>I strove for none, for none was worth my strife.</description><atom:link href="https://xysun.github.io/categories/tricks.xml" type="application/rss+xml" rel="self"></atom:link><lastBuildDate>Mon, 19 May 2014 00:37:19 GMT</lastBuildDate><generator>nikola</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to insert images into posts in Nikola</title><link>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</link><description>&lt;p&gt;Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's &lt;a href="http://getnikola.com/handbook.html"&gt;official docs&lt;/a&gt;(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.&lt;/p&gt;
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing (Tricks)</title><link>https://xysun.github.io</link><description></description><language>en</language><lastBuildDate>Tue, 30 Sep 2014 22:25:00 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to insert images into posts in Nikola</title><link>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's &lt;a href="http://getnikola.com/handbook.html"&gt;official docs&lt;/a&gt;(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.&lt;/p&gt;
 &lt;p&gt;The simple trick is based on the fact that Nikola will automatically copy all contents under &lt;code&gt;files/&lt;/code&gt; folder to &lt;code&gt;output/&lt;/code&gt; folder when you run &lt;code&gt;nikola build&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;So here are the steps:&lt;/p&gt;
 &lt;ol&gt;
@@ -15,7 +15,7 @@
 &lt;li&gt;
 &lt;p&gt;&lt;code&gt;nikola build&lt;/code&gt;. Done.&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</description><category>Tricks</category><category>Code</category><guid>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</guid><pubDate>Mon, 19 May 2014 00:19:35 GMT</pubDate></item><item><title>Install LLVM OCaml bindings (and UTop)</title><link>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</link><description>&lt;p&gt;I put on a &lt;a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings"&gt;Stackoverflow answer here&lt;/a&gt;&lt;/p&gt;
+&lt;/ol&gt;&lt;/div&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</guid><pubDate>Mon, 19 May 2014 00:19:35 GMT</pubDate></item><item><title>Install LLVM OCaml bindings (and UTop)</title><link>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;I put on a &lt;a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings"&gt;Stackoverflow answer here&lt;/a&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Build LLVM with configuration: &lt;code&gt;--with-ocaml-libdir =&lt;/code&gt;ocamlc -where``&lt;/p&gt;
@@ -40,4 +40,4 @@
 &lt;li&gt;&lt;code&gt;ocamlmktop -o llvmtop llvm.cma -cc g++&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</guid><pubDate>Tue, 06 May 2014 23:27:24 GMT</pubDate></item></channel></rss>
+&lt;/ol&gt;&lt;/div&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</guid><pubDate>Tue, 06 May 2014 23:27:24 GMT</pubDate></item></channel></rss>
