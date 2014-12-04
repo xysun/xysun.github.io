@@ -32,9 +32,10 @@
         <link rel="prev" href="2013.html" title="2013" type="text/html">
         <link rel="next" href="week-20140330.html" title="Weekly 20140330" type="text/html">
     
-    <meta name="og:title" content="Weekly 20140323">
-    <meta name="og:url" content="https://xysun.github.io/posts/week-20140323.html">
-    <meta name="og:description" content="30 Python language features and tricks
+    <meta property="og:site_name" content="Do Nothing">
+    <meta property="og:title" content="Weekly 20140323">
+    <meta property="og:url" content="https://xysun.github.io/posts/week-20140323.html">
+    <meta property="og:description" content="30 Python language features and tricks
 
 Extended unpacking
 
@@ -55,8 +56,10 @@ List slices with negative step
 
 
 Name slices (slice(star">
-    <meta name="og:site_name" content="Do Nothing">
-    <meta name="og:type" content="article">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2014-03-20T19:52:36+08:00">
+           <meta property="article:tag" content="Code">
+           <meta property="article:tag" content="Weekly">
 
     
 
@@ -90,16 +93,13 @@ Name slices (slice(star">
             <ul class="nav navbar-nav">
                 
                 <li>
-<a href="../index.html">Home</a>
-                </li>
-<li>
-<a href="../stories/about.html">About</a>
+<a href="../archive.html">Archive</a>
                 </li>
 <li>
 <a href="../categories/index.html">Tags</a>
                 </li>
 <li>
-<a href="../rss.xml">RSS</a>
+<a href="../rss.xml">RSS feed</a>
 
                 
             </li>
@@ -137,10 +137,9 @@ Name slices (slice(star">
 
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-03-20T19:52:36+00:00" itemprop="datePublished" title="Publication date">2014-03-20 19:52</time></a></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-03-20T19:52:36+08:00" itemprop="datePublished" title="2014-03-20 19:52">2014-03-20 19:52</time></a></p>
                 <p class="commentline">
         
-    <a href="week-20140323.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140323.html">Comments</a>
 
 
             
@@ -326,24 +325,6 @@ o: toggle fold
         <h2>Comments</h2>
         
         
-        <div id="disqus_thread"></div>
-        <script>
-        var disqus_shortname ="nikolademo",
-            disqus_url="https://xysun.github.io/posts/week-20140323.html",
-        disqus_title="Weekly 20140323",
-        disqus_identifier="cache/posts/week-20140323.html",
-        disqus_config = function () {
-            this.language = "en";
-        };
-        (function() {
-            var dsq = document.createElement('script'); dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
-</noscript>
-    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
         </section>
@@ -352,7 +333,6 @@ o: toggle fold
 </article>
 
         
-       <script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 
 
 
@@ -360,7 +340,7 @@ o: toggle fold
         <!--End of body content-->
 
         <footer>
-            Contents © 2014         <a href="mailto:">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com">Nikola</a>         
+            Contents © 2014         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
     </div>
@@ -369,6 +349,8 @@ o: toggle fold
 
             <script src="../assets/js/jquery.min.js"></script>
             <script src="../assets/js/bootstrap.min.js"></script>
+            <script src="../assets/js/moment-with-locales.min.js"></script>
+            <script src="../assets/js/fancydates.js"></script>
         <script src="../assets/js/jquery.colorbox-min.js"></script>
     
 <!-- Social buttons -->
@@ -394,6 +376,12 @@ o: toggle fold
 
 
     <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    <!-- fancy dates -->
+    <script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script>
+    <!-- end fancy dates -->
     
 
 

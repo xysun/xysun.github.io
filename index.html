@@ -2,7 +2,7 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
     <head>
     <meta charset="utf-8">
-    <meta name="description" content="I strove for none, for none was worth my strife.">
+    <meta name="description" content="This is a demo site for Nikola.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Do Nothing | Do Nothing</title>
 
@@ -55,17 +55,14 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                 
-                <li class="active">
-<a href="#">Home</a>
-                </li>
-<li>
-<a href="stories/about.html">About</a>
+                <li>
+<a href="archive.html">Archive</a>
                 </li>
 <li>
 <a href="categories/index.html">Tags</a>
                 </li>
 <li>
-<a href="rss.xml">RSS</a>
+<a href="rss.xml">RSS feed</a>
 
                 
             </li>
@@ -94,13 +91,65 @@
 <div class="postindex">
     <article class="h-entry post-text">
     <header>
+        <h1 class="p-name entry-title"><a href="posts/1-1-1.html" class="u-url">1 * '1' = '1'</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/1-1-1.html" rel="bookmark"><time class="published dt-published" datetime="2014-12-04T21:36:49+08:00" itemprop="datePublished" title="2014-12-04 21:36">2014-12-04 21:36</time></a></p>
+                <p class="commentline">
+        
+
+
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<p>There are some days I wish Python is strongly typed. And today is one of them. </p>
+<h4>Background</h4>
+<p>I work on an algorithm trading desk. Our algorithm trading engine is in Python. For a few days my team has been working on a new feature which can assign a "weight" to each trading strategy, so for example if a strategy has a weight of 2, then each trading order it sends will automatically has its size doubled up. </p>
+<p>Last night the development work was done. I run the tests, merged back to development branch, and deployed to our simulation environment. </p>
+<p>This morning when I came into office, I was greeted by an error: basically it was shouting at me that the volume field in an order should be a number, not a string. </p>
+<p>This has never happened before. </p>
+<h4>What happened</h4>
+<p>My first instinct is I could just add a simple <code>int()</code> wrapper around the volume field and back to my breakfast. Luckily I didn't and instead sat down to find the bug. </p>
+<p>It turns out as we're reading the weights from a config file, but without properly converting it into an integer, so the weight stays as a string and everytime it's applied to order volume, Python won't complain about type mismatch, instead something like below happens:</p>
+<pre class="code literal-block"><span class="mi">1</span> <span class="o">*</span> <span class="s">'1'</span> <span class="o">=</span> <span class="s">'1'</span>
+</pre>
+
+
+<p>And an order with size '1', not number 1 is sent. </p>
+<h4>Why didn't my tests fail?</h4>
+<p>We have both unit tests and integration tests (where a dummy strategy will run throught the whole market data --&gt; trading signal --&gt; trading execution process). </p>
+<p>In this case I didn't update the integration tests to include the weight. And in our code the default weight is 1 (NOTE: not '1'), so the tests happily passed. </p>
+<h4>Remediation</h4>
+<p>Just add an <code>int()</code> coersion when reading the weight from the config file. </p>
+<p>I also included the weight field in my tests. </p>
+<h4>The real danger</h4>
+<p>It only occurred to me in the afternoon that if this has not been properly fixed, real disaster could happen: </p>
+<p>Imagine a strategy with weight = 1 emits a trading signal with size = 3: </p>
+<pre class="code literal-block"><span class="mi">3</span> <span class="o">*</span> <span class="s">'1'</span> <span class="o">=</span> <span class="s">'111'</span>
+<span class="nb">int</span><span class="p">(</span><span class="s">'111'</span><span class="p">)</span> <span class="o">=</span> <span class="mi">111</span>  <span class="c">#ahhhh fat finger</span>
+</pre>
+
+
+<p>Now I don't even want to think about what <code>5 * '1'</code> would turn out. </p>
+<h4>Takeaways</h4>
+<ul>
+<li>NEVER blindly coerce types.</li>
+<li>Always update tests with new features. </li>
+<li>It's important to trace down to the root cause of a bug. </li>
+</ul>
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
         <h1 class="p-name entry-title"><a href="posts/selenium-auto-tests-on-server.html" class="u-url">Running automated selenium tests on Debian server</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/selenium-auto-tests-on-server.html" rel="bookmark"><time class="published dt-published" datetime="2014-09-21T13:11:27+00:00" itemprop="datePublished" title="Publication date">2014-09-21 13:11</time></a></p>
+            <p class="dateline"><a href="posts/selenium-auto-tests-on-server.html" rel="bookmark"><time class="published dt-published" datetime="2014-09-21T13:11:27+08:00" itemprop="datePublished" title="2014-09-21 13:11">2014-09-21 13:11</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/selenium-auto-tests-on-server.html#disqus_thread" data-disqus-identifier="cache/posts/selenium-auto-tests-on-server.html">Comments</a>
 
 
         </p>
@@ -112,12 +161,12 @@
 <p>Below is my notes on achieving this.</p>
 <h4>Running selenium headless</h4>
 <p>Selenium normally requires a display. On a Linux server, I use <a href="http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml">xvfb</a> to simulate the display. The command is:</p>
-<pre class="code literal-block">xvfb-run --server-num<span class="o">=</span>10 &lt;python commands here&gt;
+<pre class="code literal-block">xvfb-run --server-num<span class="o">=</span><span class="m">10</span> &lt;python commands here&gt;
 </pre>
 
 
 <p>eg:</p>
-<pre class="code literal-block">xvfb-run --server-num<span class="o">=</span>10 python -m unittest discover --pattern<span class="o">=</span>*.py
+<pre class="code literal-block">xvfb-run --server-num<span class="o">=</span><span class="m">10</span> python -m unittest discover --pattern<span class="o">=</span>*.py
 </pre>
 
 
@@ -206,10 +255,9 @@
         <h1 class="p-name entry-title"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" class="u-url">How to insert images into posts in Nikola</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-19T00:19:35+00:00" itemprop="datePublished" title="Publication date">2014-05-19 00:19</time></a></p>
+            <p class="dateline"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-19T00:19:35+08:00" itemprop="datePublished" title="2014-05-19 00:19">2014-05-19 00:19</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/how-to-insert-pictures-into-posts-in-nikola.html#disqus_thread" data-disqus-identifier="cache/posts/how-to-insert-pictures-into-posts-in-nikola.html">Comments</a>
 
 
         </p>
@@ -242,10 +290,9 @@
         <h1 class="p-name entry-title"><a href="posts/regex-parsing-thompsons-algorithm.html" class="u-url">Regex parsing: Thompson's algorithm</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/regex-parsing-thompsons-algorithm.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-18T22:26:11+00:00" itemprop="datePublished" title="Publication date">2014-05-18 22:26</time></a></p>
+            <p class="dateline"><a href="posts/regex-parsing-thompsons-algorithm.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-18T22:26:11+08:00" itemprop="datePublished" title="2014-05-18 22:26">2014-05-18 22:26</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/regex-parsing-thompsons-algorithm.html#disqus_thread" data-disqus-identifier="cache/posts/regex-parsing-thompsons-algorithm.html">Comments</a>
 
 
         </p>
@@ -271,24 +318,24 @@
 <p>This means Thompson's algorithm will significantly perform better over some pathological input patterns such as <code>a?a?a?aaa</code> matching <code>aaa</code>, since time complexity is exponential for backtracking algorithm and only linear for Thompson's algorithm.</p>
 <h3>Code</h3>
 <p>First step is to convert an input string into post-fix tokens, and add concatenation in the right place. A simple lexer and recursive-descent parser is used for this stage, following the grammar below (for detailed lexing and parsing code please refer to the source code):</p>
-<pre class="code literal-block"><span class="n">Grammar</span> <span class="k">for</span> <span class="n">regex</span><span class="o">:</span>
+<pre class="code literal-block">Grammar for regex:
 
-<span class="n">regex</span> <span class="o">=</span> <span class="n">exp</span> <span class="err">$</span>
+regex = exp $
 
-<span class="n">exp</span>      <span class="o">=</span> <span class="n">term</span> <span class="p">[</span><span class="o">|</span><span class="p">]</span> <span class="n">exp</span>      <span class="p">{</span><span class="n">push</span> <span class="sc">'|'</span><span class="p">}</span>
-         <span class="o">|</span> <span class="n">term</span>
-         <span class="o">|</span>                   <span class="n">empty</span><span class="o">?</span>
+exp      = term [|] exp      {push '|'}
+         | term
+         |                   empty?
 
-<span class="n">term</span>     <span class="o">=</span> <span class="n">factor</span> <span class="n">term</span>       <span class="n">chain</span> <span class="p">{</span><span class="n">add</span> <span class="err">\</span><span class="n">x08</span><span class="p">}</span>  <span class="err">#</span> <span class="err">\</span><span class="n">x08</span> <span class="n">is</span> <span class="n">used</span> <span class="n">as</span> <span class="n">CONCAT</span> <span class="n">token</span>
-         <span class="o">|</span> <span class="n">factor</span>
+term     = factor term       chain {add \x08}  # \x08 is used as CONCAT token
+         | factor
 
-<span class="n">factor</span>   <span class="o">=</span> <span class="n">primary</span> <span class="p">[</span><span class="o">*</span><span class="p">]</span>       <span class="n">star</span> <span class="p">{</span><span class="n">push</span> <span class="sc">'*'</span><span class="p">}</span>
-         <span class="o">|</span> <span class="n">primary</span> <span class="p">[</span><span class="o">+</span><span class="p">]</span>       <span class="n">plus</span> <span class="p">{</span><span class="n">push</span> <span class="sc">'+'</span><span class="p">}</span>
-         <span class="o">|</span> <span class="n">primary</span> <span class="p">[</span><span class="o">?</span><span class="p">]</span>       <span class="n">optional</span> <span class="p">{</span><span class="n">push</span> <span class="sc">'?'</span><span class="p">}</span>
-         <span class="o">|</span> <span class="n">primary</span>
+factor   = primary [*]       star {push '*'}
+         | primary [+]       plus {push '+'}
+         | primary [?]       optional {push '?'}
+         | primary
 
-<span class="n">primary</span>  <span class="o">=</span> <span class="err">\</span><span class="p">(</span> <span class="n">exp</span> <span class="err">\</span><span class="p">)</span>
-         <span class="o">|</span> <span class="kt">char</span>              <span class="n">literal</span> <span class="p">{</span><span class="n">push</span> <span class="kt">char</span><span class="p">}</span>
+primary  = \( exp \)
+         | char              literal {push char}
 </pre>
 
 
@@ -368,10 +415,9 @@
         <h1 class="p-name entry-title"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" class="u-url">Install LLVM OCaml bindings (and UTop)</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-06T23:27:24+00:00" itemprop="datePublished" title="Publication date">2014-05-06 23:27</time></a></p>
+            <p class="dateline"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-06T23:27:24+08:00" itemprop="datePublished" title="2014-05-06 23:27">2014-05-06 23:27</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/install-llvm-ocaml-bindings-and-toplevel.html#disqus_thread" data-disqus-identifier="cache/posts/install-llvm-ocaml-bindings-and-toplevel.html">Comments</a>
 
 
         </p>
@@ -413,10 +459,9 @@
         <h1 class="p-name entry-title"><a href="posts/week-20140504.html" class="u-url">Week 20140504</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/week-20140504.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-01T22:24:37+00:00" itemprop="datePublished" title="Publication date">2014-05-01 22:24</time></a></p>
+            <p class="dateline"><a href="posts/week-20140504.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-01T22:24:37+08:00" itemprop="datePublished" title="2014-05-01 22:24">2014-05-01 22:24</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/week-20140504.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140504.html">Comments</a>
 
 
         </p>
@@ -461,23 +506,23 @@
 </ul>
 <hr>
 <h4><a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">Max sub-array problem</a></h4>
-<pre class="code literal-block"><span class="n">def</span> <span class="n">max_sub_array</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">:</span>
-    <span class="n">max_ending_here</span> <span class="o">=</span> <span class="n">max_so_far</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">begin</span> <span class="o">=</span> <span class="n">begin_temp</span> <span class="o">=</span> <span class="n">end</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<pre class="code literal-block">def max_sub_array(l):
+    max_ending_here = max_so_far = l[0]
+    begin = begin_temp = end = l[0]
 
-    <span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">len</span><span class="p">(</span><span class="n">l</span><span class="p">))</span><span class="o">:</span>
-        <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">max_ending_here</span><span class="o">:</span>
-            <span class="n">max_ending_here</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">begin_temp</span> <span class="o">=</span> <span class="n">i</span>
-        <span class="nl">else:</span>
-            <span class="n">max_ending_here</span> <span class="o">+=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    for i in range(1, len(l)):
+        if l[i] &gt; l[i] + max_ending_here:
+            max_ending_here = l[i]
+            begin_temp = i
+        else:
+            max_ending_here += l[i]
 
-        <span class="k">if</span> <span class="n">max_ending_here</span> <span class="o">&gt;=</span> <span class="n">max_so_far</span><span class="o">:</span>
-            <span class="n">max_so_far</span> <span class="o">=</span> <span class="n">max_ending_here</span>
-            <span class="n">begin</span> <span class="o">=</span> <span class="n">begin_temp</span>
-            <span class="n">end</span> <span class="o">=</span> <span class="n">i</span>
+        if max_ending_here &gt;= max_so_far:
+            max_so_far = max_ending_here
+            begin = begin_temp
+            end = i
 
-    <span class="k">return</span> <span class="n">max_so_far</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span>
+    return max_so_far, begin, end
 </pre>
 </div>
     </div>
@@ -487,10 +532,9 @@
         <h1 class="p-name entry-title"><a href="posts/app-jamming-2014.html" class="u-url">App Jamming 2014</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/app-jamming-2014.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-19T23:00:23+00:00" itemprop="datePublished" title="Publication date">2014-04-19 23:00</time></a></p>
+            <p class="dateline"><a href="posts/app-jamming-2014.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-19T23:00:23+08:00" itemprop="datePublished" title="2014-04-19 23:00">2014-04-19 23:00</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/app-jamming-2014.html#disqus_thread" data-disqus-identifier="cache/posts/app-jamming-2014.html">Comments</a>
 
 
         </p>
@@ -539,10 +583,9 @@
         <h1 class="p-name entry-title"><a href="posts/week-20140420.html" class="u-url">Week 20140420</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/week-20140420.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-14T21:41:33+00:00" itemprop="datePublished" title="Publication date">2014-04-14 21:41</time></a></p>
+            <p class="dateline"><a href="posts/week-20140420.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-14T21:41:33+08:00" itemprop="datePublished" title="2014-04-14 21:41">2014-04-14 21:41</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/week-20140420.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140420.html">Comments</a>
 
 
         </p>
@@ -587,10 +630,9 @@
         <h1 class="p-name entry-title"><a href="posts/week-20140406.html" class="u-url">Week 20140406</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/week-20140406.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-31T13:32:10+00:00" itemprop="datePublished" title="Publication date">2014-03-31 13:32</time></a></p>
+            <p class="dateline"><a href="posts/week-20140406.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-31T13:32:10+08:00" itemprop="datePublished" title="2014-03-31 13:32">2014-03-31 13:32</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/week-20140406.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140406.html">Comments</a>
 
 
         </p>
@@ -650,10 +692,9 @@
         <h1 class="p-name entry-title"><a href="posts/week-20140330.html" class="u-url">Weekly 20140330</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/week-20140330.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-24T21:09:02+00:00" itemprop="datePublished" title="Publication date">2014-03-24 21:09</time></a></p>
+            <p class="dateline"><a href="posts/week-20140330.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-24T21:09:02+08:00" itemprop="datePublished" title="2014-03-24 21:09">2014-03-24 21:09</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/week-20140330.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140330.html">Comments</a>
 
 
         </p>
@@ -723,171 +764,6 @@
 </div>
     </div>
     </article>
-    <article class="h-entry post-text">
-    <header>
-        <h1 class="p-name entry-title"><a href="posts/week-20140323.html" class="u-url">Weekly 20140323</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/week-20140323.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-20T19:52:36+00:00" itemprop="datePublished" title="Publication date">2014-03-20 19:52</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/week-20140323.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140323.html">Comments</a>
-
-
-        </p>
-</div>
-    </header>
-    <div class="e-content entry-content">
-    <div>
-<h4><a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html">30 Python language features and tricks</a></h4>
-<ul>
-<li>Extended unpacking</li>
-</ul>
-<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
-<span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-</pre>
-
-
-<ul>
-<li>List slices with negative step</li>
-</ul>
-<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-</pre>
-
-
-<ul>
-<li>Name slices (<code>slice(start, end, slice)</code>)</li>
-</ul>
-<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">LASTTHREE</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">LASTTHREE</span><span class="p">]</span>
-<span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-</pre>
-
-
-<ul>
-<li>Dictionary comprehension</li>
-</ul>
-<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span>
-<span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">}</span>
-</pre>
-
-
-<ul>
-<li>Named tuples</li>
-</ul>
-<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">'Point'</span><span class="p">,</span> <span class="p">[</span><span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">])</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">y</span>
-<span class="mi">13</span>
-</pre>
-
-
-<ul>
-<li>Use capital letter for set variables</li>
-<li>Counter</li>
-</ul>
-<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
-<span class="n">Counter</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
-</pre>
-
-
-<ul>
-<li>
-<code>collections.deque</code> Double-ended queue</li>
-<li>default dict</li>
-</ul>
-<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>
-<span class="mi">0</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>
-<span class="s">''</span>
-</pre>
-
-
-<hr>
-<h4><a href="http://stackoverflow.com/questions/4431922/link-encryption-with-django-and-python">Simple URL encryption</a></h4>
-<p>Append a KEY string (with an easy delimitor) to the ID field, then use <code>base64.urlsafe_b64encode</code> and <code>base64.urlsafe_b64decode</code></p>
-<hr>
-<h4><a href="https://github.com/mjhea0/flaskr-tdd">flaskr-tdd</a></h4>
-<ul>
-<li>
-<p>TDD: </p>
-<ol>
-<li>write a test</li>
-<li>run the test (it should fail)</li>
-<li>write just enough code to pass the test</li>
-<li>refactor</li>
-</ol>
-</li>
-<li>
-<p>Flask test client</p>
-</li>
-</ul>
-<pre class="code literal-block"><span class="n">tester</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">tester</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">"html/text"</span><span class="p">)</span>
-<span class="c"># response.data include all html text</span>
-</pre>
-
-
-<ul>
-<li>
-<p><a href="http://flask.pocoo.org/docs/patterns/flashing/">Flask flash system</a>: <code>get_flashed_messages</code> --&gt; may be useful for client-side validation</p>
-</li>
-<li>
-<p><code>url_for('static', filename = 'style.css')</code></p>
-</li>
-</ul>
-<hr>
-<h4><a href="http://majutsushi.github.io/tagbar/">Install tagbar on vim</a></h4>
-<ul>
-<li>create .vim/ if not exist</li>
-<li>Install exuberant ctags</li>
-<li>Install tagbar</li>
-</ul>
-<pre class="code literal-block"><span class="nb">cd</span> ~/.vim
-git clone git://github.com/majutsushi/tagbar
-mv tagbar/* .  <span class="c"># must be directly under .vim/</span>
-sudo rm -r tagbar/
-<span class="nb">cd </span>doc/
-vim tagbar.txt
-:helptags .
-<span class="c"># quit vim</span>
-</pre>
-
-
-<ul>
-<li>edit <code>.vimrc</code> (below is mine): </li>
-</ul>
-<pre class="code literal-block"><span class="nb">let </span>g:tagbar_ctags_bin<span class="o">=</span><span class="s1">'/usr/local/bin/ctags'</span> <span class="c"># change to ctags bin path, this is on MacOS</span>
-<span class="nb">let </span>g:tagbar_width<span class="o">=</span>40
-noremap &lt;silent&gt; tb :TagbarOpen fj &lt;CR&gt;
-</pre>
-
-
-<ul>
-<li>useful key shortcuts:</li>
-</ul>
-<pre class="code literal-block">tb: open tagbar <span class="c"># my key binding</span>
-p: go to tag, stay in tagbar
-&lt;enter&gt;: go to tag
-o: toggle fold
-*: open all <span class="nv">fold</span>
-<span class="o">=</span>: collapse all fold
-?: keymap <span class="nb">help</span>
-</pre>
-</div>
-    </div>
-    </article>
 </div>
 
         <nav class="postindexpager">
@@ -900,7 +776,6 @@ o: toggle fold
 
 
         
-       <script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 
 
 
@@ -910,7 +785,7 @@ o: toggle fold
         <!--End of body content-->
 
         <footer>
-            Contents © 2014         <a href="mailto:">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com">Nikola</a>         
+            Contents © 2014         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
     </div>
@@ -919,6 +794,8 @@ o: toggle fold
 
             <script src="assets/js/jquery.min.js"></script>
             <script src="assets/js/bootstrap.min.js"></script>
+            <script src="assets/js/moment-with-locales.min.js"></script>
+            <script src="assets/js/fancydates.js"></script>
         <script src="assets/js/jquery.colorbox-min.js"></script>
     
 <!-- Social buttons -->
@@ -944,6 +821,12 @@ o: toggle fold
 
 
     <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    <!-- fancy dates -->
+    <script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script>
+    <!-- end fancy dates -->
     
 
 

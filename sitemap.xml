@@ -6,114 +6,118 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://xysun.github.io/2014/index.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/archive.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/chinese.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/code.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/draft.html</loc>
-  <lastmod>2014-05-18</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/index.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/ocaml.html</loc>
-  <lastmod>2014-05-01</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/selenium.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/tricks.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/weekly.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/zeromq.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/galleries/index.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/index-1.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/index.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/listings/index.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
+ </url>
+ <url>
+  <loc>https://xysun.github.io/posts/1-1-1.html</loc>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/2013.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/app-jamming-2014.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/miguels-flask-mega-tutorial.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140323.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140330.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140406.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140420.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/week-20140504.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/stories/about.html</loc>
-  <lastmod>2014-09-30</lastmod>
+  <lastmod>2014-12-04</lastmod>
  </url>
 </urlset>

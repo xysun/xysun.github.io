@@ -32,15 +32,18 @@
         <link rel="prev" href="week-20140323.html" title="Weekly 20140323" type="text/html">
         <link rel="next" href="week-20140406.html" title="Week 20140406" type="text/html">
     
-    <meta name="og:title" content="Weekly 20140330">
-    <meta name="og:url" content="https://xysun.github.io/posts/week-20140330.html">
-    <meta name="og:description" content="Surely You're joking, Mr. Feynman!
+    <meta property="og:site_name" content="Do Nothing">
+    <meta property="og:title" content="Weekly 20140330">
+    <meta property="og:url" content="https://xysun.github.io/posts/week-20140330.html">
+    <meta property="og:description" content="Surely You're joking, Mr. Feynman!
 
 Learn what the rest of the world is like. The variety is worthwhile.
 &quot;I could do that, but I won't&quot; -- which is just another way of saying that you can't. 
 You don'">
-    <meta name="og:site_name" content="Do Nothing">
-    <meta name="og:type" content="article">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2014-03-24T21:09:02+08:00">
+           <meta property="article:tag" content="Code">
+           <meta property="article:tag" content="Weekly">
 
     
 
@@ -74,16 +77,13 @@ You don'">
             <ul class="nav navbar-nav">
                 
                 <li>
-<a href="../index.html">Home</a>
-                </li>
-<li>
-<a href="../stories/about.html">About</a>
+<a href="../archive.html">Archive</a>
                 </li>
 <li>
 <a href="../categories/index.html">Tags</a>
                 </li>
 <li>
-<a href="../rss.xml">RSS</a>
+<a href="../rss.xml">RSS feed</a>
 
                 
             </li>
@@ -121,10 +121,9 @@ You don'">
 
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-03-24T21:09:02+00:00" itemprop="datePublished" title="Publication date">2014-03-24 21:09</time></a></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-03-24T21:09:02+08:00" itemprop="datePublished" title="2014-03-24 21:09">2014-03-24 21:09</time></a></p>
                 <p class="commentline">
         
-    <a href="week-20140330.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140330.html">Comments</a>
 
 
             
@@ -223,24 +222,6 @@ You don'">
         <h2>Comments</h2>
         
         
-        <div id="disqus_thread"></div>
-        <script>
-        var disqus_shortname ="nikolademo",
-            disqus_url="https://xysun.github.io/posts/week-20140330.html",
-        disqus_title="Weekly 20140330",
-        disqus_identifier="cache/posts/week-20140330.html",
-        disqus_config = function () {
-            this.language = "en";
-        };
-        (function() {
-            var dsq = document.createElement('script'); dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
-</noscript>
-    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
         </section>
@@ -249,7 +230,6 @@ You don'">
 </article>
 
         
-       <script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 
 
 
@@ -257,7 +237,7 @@ You don'">
         <!--End of body content-->
 
         <footer>
-            Contents © 2014         <a href="mailto:">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com">Nikola</a>         
+            Contents © 2014         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
     </div>
@@ -266,6 +246,8 @@ You don'">
 
             <script src="../assets/js/jquery.min.js"></script>
             <script src="../assets/js/bootstrap.min.js"></script>
+            <script src="../assets/js/moment-with-locales.min.js"></script>
+            <script src="../assets/js/fancydates.js"></script>
         <script src="../assets/js/jquery.colorbox-min.js"></script>
     
 <!-- Social buttons -->
@@ -291,6 +273,12 @@ You don'">
 
 
     <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    <!-- fancy dates -->
+    <script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script>
+    <!-- end fancy dates -->
     
 
 

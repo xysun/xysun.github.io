@@ -3,7 +3,7 @@
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Miguel's flask mega tutorial | Do Nothing</title>
+    <title>1 * '1' = '1' | Do Nothing</title>
 
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -15,7 +15,7 @@
     
             <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 
-      <link rel="canonical" href="https://xysun.github.io/posts/miguels-flask-mega-tutorial.html">
+      <link rel="canonical" href="https://xysun.github.io/posts/1-1-1.html">
 
 
 
@@ -29,21 +29,16 @@
     
 
     <meta name="author" content="Xiayun Sun">
-        <link rel="next" href="2013.html" title="2013" type="text/html">
+        <link rel="prev" href="selenium-auto-tests-on-server.html" title="Running automated selenium tests on Debian server" type="text/html">
     
     <meta property="og:site_name" content="Do Nothing">
-    <meta property="og:title" content="Miguel's flask mega tutorial">
-    <meta property="og:url" content="https://xysun.github.io/posts/miguels-flask-mega-tutorial.html">
-    <meta property="og:description" content="Link
-Notes
-
-flask:
-Use url_for to build and reference URLs
-app.before_request, app.after_request (after_request can be used to measure database query performance)
-Rotating file handler
-Don't use windo">
+    <meta property="og:title" content="1 * '1' = '1'">
+    <meta property="og:url" content="https://xysun.github.io/posts/1-1-1.html">
+    <meta property="og:description" content="There are some days I wish Python is strongly typed. And today is one of them. 
+Background
+I work on an algorithm trading desk. Our algorithm trading engine is in Python. For a few days my team has be">
     <meta property="og:type" content="article">
-    <meta property="article:published_time" content="2014-02-23T17:01:52+08:00">
+    <meta property="article:published_time" content="2014-12-04T21:36:49+08:00">
            <meta property="article:tag" content="Code">
 
     
@@ -95,7 +90,7 @@ Don't use windo">
                 
                     
     <li>
-    <a href="miguels-flask-mega-tutorial.md" id="sourcelink">Source</a>
+    <a href="1-1-1.md" id="sourcelink">Source</a>
     </li>
 
                 
@@ -118,18 +113,18 @@ Don't use windo">
     
     <header>
         
-    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Miguel's flask mega tutorial</a></h1>
+    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">1 * '1' = '1'</a></h1>
 
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-02-23T17:01:52+08:00" itemprop="datePublished" title="2014-02-23 17:01">2014-02-23 17:01</time></a></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-12-04T21:36:49+08:00" itemprop="datePublished" title="2014-12-04 21:36">2014-12-04 21:36</time></a></p>
                 <p class="commentline">
         
 
 
             
         </p>
-<p class="sourceline"><a href="miguels-flask-mega-tutorial.md" id="sourcelink">Source</a></p>
+<p class="sourceline"><a href="1-1-1.md" id="sourcelink">Source</a></p>
 
         </div>
         
@@ -138,78 +133,40 @@ Don't use windo">
 
     <div class="e-content entry-content" itemprop="articleBody text">
     <div>
-<p><a href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world">Link</a></p>
-<h5>Notes</h5>
+<p>There are some days I wish Python is strongly typed. And today is one of them. </p>
+<h4>Background</h4>
+<p>I work on an algorithm trading desk. Our algorithm trading engine is in Python. For a few days my team has been working on a new feature which can assign a "weight" to each trading strategy, so for example if a strategy has a weight of 2, then each trading order it sends will automatically has its size doubled up. </p>
+<p>Last night the development work was done. I run the tests, merged back to development branch, and deployed to our simulation environment. </p>
+<p>This morning when I came into office, I was greeted by an error: basically it was shouting at me that the volume field in an order should be a number, not a string. </p>
+<p>This has never happened before. </p>
+<h4>What happened</h4>
+<p>My first instinct is I could just add a simple <code>int()</code> wrapper around the volume field and back to my breakfast. Luckily I didn't and instead sat down to find the bug. </p>
+<p>It turns out as we're reading the weights from a config file, but without properly converting it into an integer, so the weight stays as a string and everytime it's applied to order volume, Python won't complain about type mismatch, instead something like below happens:</p>
+<pre class="code literal-block"><span class="mi">1</span> <span class="o">*</span> <span class="s">'1'</span> <span class="o">=</span> <span class="s">'1'</span>
+</pre>
+
+
+<p>And an order with size '1', not number 1 is sent. </p>
+<h4>Why didn't my tests fail?</h4>
+<p>We have both unit tests and integration tests (where a dummy strategy will run throught the whole market data --&gt; trading signal --&gt; trading execution process). </p>
+<p>In this case I didn't update the integration tests to include the weight. And in our code the default weight is 1 (NOTE: not '1'), so the tests happily passed. </p>
+<h4>Remediation</h4>
+<p>Just add an <code>int()</code> coersion when reading the weight from the config file. </p>
+<p>I also included the weight field in my tests. </p>
+<h4>The real danger</h4>
+<p>It only occurred to me in the afternoon that if this has not been properly fixed, real disaster could happen: </p>
+<p>Imagine a strategy with weight = 1 emits a trading signal with size = 3: </p>
+<pre class="code literal-block"><span class="mi">3</span> <span class="o">*</span> <span class="s">'1'</span> <span class="o">=</span> <span class="s">'111'</span>
+<span class="nb">int</span><span class="p">(</span><span class="s">'111'</span><span class="p">)</span> <span class="o">=</span> <span class="mi">111</span>  <span class="c">#ahhhh fat finger</span>
+</pre>
+
+
+<p>Now I don't even want to think about what <code>5 * '1'</code> would turn out. </p>
+<h4>Takeaways</h4>
 <ul>
-<li>flask:<ul>
-<li>Use <code>url_for</code> to build and reference URLs</li>
-<li>
-<code>app.before_request</code>, <code>app.after_request</code> (<code>after_request</code> can be used to measure database query performance)</li>
-<li>Rotating file handler</li>
-<li>Don't use <code>window.history.back</code> in forms</li>
-<li>Move logic away from <code>views</code>
-</li>
-<li>Better return query objects than query results</li>
-<li>Pagination (<code>yield_per</code> in sqlalchemy)</li>
-<li>Unit test: <ul>
-<li>use a different test database</li>
-<li>regression testing: write a test for every new bug</li>
-</ul>
-</li>
-<li>Debugging: <code>pdb.set_trace()</code>
-</li>
-</ul>
-</li>
-<li>Jinja:<ul>
-<li>Global variables/utilities like <code>config</code>, <code>g</code>, <code>session</code>, <code>url_for</code> are available in Jinja templates</li>
-<li>
-<code>render_template</code> can be used in rendering HTML email templates</li>
-</ul>
-</li>
-<li>Useful plugins: <code>coverage</code>, <code>cProfile</code>, werkzeug profiler</li>
-</ul>
-<h5>Code snippets</h5>
-<ul>
-<li>
-<p>pass variable in URL:</p>
-<p><code>python
-@app.route('/index/&lt;int:page&gt;')
-def turnto(page):</code></p>
-</li>
-<li>
-<p>use <code>include</code> in control statements in Jinja:</p>
-<p><code>{% for post in posts %}
-    {% include "post.html" %}
-{% endfor %}</code></p>
-</li>
-<li>
-<p>rollback when error occurred:</p>
-<p><code>python
-@app.errorhandler(500)
-def err500():
-    dbsession.rollback()</code></p>
-</li>
-<li>
-<p>Python's fake mail server: <code>python -m smtpd -n -c DebuggingServer localhost:1025</code></p>
-</li>
-<li>
-<p>Asynchoronous decorator:</p>
-<p>```python
-from threading import Thread
-from functools import wraps</p>
-<p>def async(f):
-    @wraps(f)
-    def wrapper(<em>args, </em>*kwargs):
-        thr = Thread(target = f, args = args, kwargs = kwargs)
-        thr.start()
-    return wrapper
-```</p>
-</li>
-<li>
-<p>Expose new global variables in Jinja:</p>
-<p><code>python
-app.jinja_env.globals['momentjs'] = momentjs</code></p>
-</li>
+<li>NEVER blindly coerce types.</li>
+<li>Always update tests with new features. </li>
+<li>It's important to trace down to the root cause of a bug. </li>
 </ul>
 </div>
     </div>
@@ -222,8 +179,8 @@ app.jinja_env.globals['momentjs'] = momentjs</code></p>
 
     
         <ul class="pager">
-            <li class="next">
-                <a href="2013.html" rel="next" title="2013">Next post</a>
+            <li class="previous">
+                <a href="selenium-auto-tests-on-server.html" rel="prev" title="Running automated selenium tests on Debian server">Previous post</a>
             </li>
         </ul>
 

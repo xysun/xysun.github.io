@@ -2,7 +2,7 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
     <head>
     <meta charset="utf-8">
-    <meta name="description" content="I strove for none, for none was worth my strife.">
+    <meta name="description" content="This is a demo site for Nikola.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Do Nothing (old posts, page 1) | Do Nothing</title>
 
@@ -56,16 +56,13 @@
             <ul class="nav navbar-nav">
                 
                 <li>
-<a href="index.html">Home</a>
-                </li>
-<li>
-<a href="stories/about.html">About</a>
+<a href="archive.html">Archive</a>
                 </li>
 <li>
 <a href="categories/index.html">Tags</a>
                 </li>
 <li>
-<a href="rss.xml">RSS</a>
+<a href="rss.xml">RSS feed</a>
 
                 
             </li>
@@ -94,13 +91,176 @@
 <div class="postindex">
     <article class="h-entry post-text">
     <header>
+        <h1 class="p-name entry-title"><a href="posts/week-20140323.html" class="u-url">Weekly 20140323</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="dateline"><a href="posts/week-20140323.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-20T19:52:36+08:00" itemprop="datePublished" title="2014-03-20 19:52">2014-03-20 19:52</time></a></p>
+                <p class="commentline">
+        
+
+
+        </p>
+</div>
+    </header>
+    <div class="e-content entry-content">
+    <div>
+<h4><a href="http://sahandsaba.com/thirty-python-language-features-and-tricks-you-may-not-know.html">30 Python language features and tricks</a></h4>
+<ul>
+<li>Extended unpacking</li>
+</ul>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</pre>
+
+
+<ul>
+<li>List slices with negative step</li>
+</ul>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+</pre>
+
+
+<ul>
+<li>Name slices (<code>slice(start, end, slice)</code>)</li>
+</ul>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">LASTTHREE</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="n">LASTTHREE</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+</pre>
+
+
+<ul>
+<li>Dictionary comprehension</li>
+</ul>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span>
+<span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">}</span>
+</pre>
+
+
+<ul>
+<li>Named tuples</li>
+</ul>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">Point</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">'Point'</span><span class="p">,</span> <span class="p">[</span><span class="s">'x'</span><span class="p">,</span> <span class="s">'y'</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">y</span>
+<span class="mi">13</span>
+</pre>
+
+
+<ul>
+<li>Use capital letter for set variables</li>
+<li>Counter</li>
+</ul>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">Counter</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span>
+</pre>
+
+
+<ul>
+<li>
+<code>collections.deque</code> Double-ended queue</li>
+<li>default dict</li>
+</ul>
+<pre class="code literal-block"><span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">m</span><span class="p">[</span><span class="s">'a'</span><span class="p">]</span>
+<span class="s">''</span>
+</pre>
+
+
+<hr>
+<h4><a href="http://stackoverflow.com/questions/4431922/link-encryption-with-django-and-python">Simple URL encryption</a></h4>
+<p>Append a KEY string (with an easy delimitor) to the ID field, then use <code>base64.urlsafe_b64encode</code> and <code>base64.urlsafe_b64decode</code></p>
+<hr>
+<h4><a href="https://github.com/mjhea0/flaskr-tdd">flaskr-tdd</a></h4>
+<ul>
+<li>
+<p>TDD: </p>
+<ol>
+<li>write a test</li>
+<li>run the test (it should fail)</li>
+<li>write just enough code to pass the test</li>
+<li>refactor</li>
+</ol>
+</li>
+<li>
+<p>Flask test client</p>
+</li>
+</ul>
+<pre class="code literal-block"><span class="n">tester</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">test_client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">tester</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'/'</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">"html/text"</span><span class="p">)</span>
+<span class="c"># response.data include all html text</span>
+</pre>
+
+
+<ul>
+<li>
+<p><a href="http://flask.pocoo.org/docs/patterns/flashing/">Flask flash system</a>: <code>get_flashed_messages</code> --&gt; may be useful for client-side validation</p>
+</li>
+<li>
+<p><code>url_for('static', filename = 'style.css')</code></p>
+</li>
+</ul>
+<hr>
+<h4><a href="http://majutsushi.github.io/tagbar/">Install tagbar on vim</a></h4>
+<ul>
+<li>create .vim/ if not exist</li>
+<li>Install exuberant ctags</li>
+<li>Install tagbar</li>
+</ul>
+<pre class="code literal-block"><span class="nb">cd</span> ~/.vim
+git clone git://github.com/majutsushi/tagbar
+mv tagbar/* .  <span class="c"># must be directly under .vim/</span>
+sudo rm -r tagbar/
+<span class="nb">cd </span>doc/
+vim tagbar.txt
+:helptags .
+<span class="c"># quit vim</span>
+</pre>
+
+
+<ul>
+<li>edit <code>.vimrc</code> (below is mine): </li>
+</ul>
+<pre class="code literal-block"><span class="nb">let </span>g:tagbar_ctags_bin<span class="o">=</span><span class="s1">'/usr/local/bin/ctags'</span> <span class="c"># change to ctags bin path, this is on MacOS</span>
+<span class="nb">let </span>g:tagbar_width<span class="o">=</span>40
+noremap &lt;silent&gt; tb :TagbarOpen fj &lt;CR&gt;
+</pre>
+
+
+<ul>
+<li>useful key shortcuts:</li>
+</ul>
+<pre class="code literal-block">tb: open tagbar <span class="c"># my key binding</span>
+p: go to tag, stay in tagbar
+&lt;enter&gt;: go to tag
+o: toggle fold
+*: open all <span class="nv">fold</span>
+<span class="o">=</span>: collapse all fold
+?: keymap <span class="nb">help</span>
+</pre>
+</div>
+    </div>
+    </article>
+    <article class="h-entry post-text">
+    <header>
         <h1 class="p-name entry-title"><a href="posts/2013.html" class="u-url">2013</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/2013.html" rel="bookmark"><time class="published dt-published" datetime="2014-02-24T23:18:25+00:00" itemprop="datePublished" title="Publication date">2014-02-24 23:18</time></a></p>
+            <p class="dateline"><a href="posts/2013.html" rel="bookmark"><time class="published dt-published" datetime="2014-02-24T23:18:25+08:00" itemprop="datePublished" title="2014-02-24 23:18">2014-02-24 23:18</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/2013.html#disqus_thread" data-disqus-identifier="cache/posts/2013.html">Comments</a>
 
 
         </p>
@@ -188,10 +348,9 @@
         <h1 class="p-name entry-title"><a href="posts/miguels-flask-mega-tutorial.html" class="u-url">Miguel's flask mega tutorial</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
-            <p class="dateline"><a href="posts/miguels-flask-mega-tutorial.html" rel="bookmark"><time class="published dt-published" datetime="2014-02-23T17:01:52+00:00" itemprop="datePublished" title="Publication date">2014-02-23 17:01</time></a></p>
+            <p class="dateline"><a href="posts/miguels-flask-mega-tutorial.html" rel="bookmark"><time class="published dt-published" datetime="2014-02-23T17:01:52+08:00" itemprop="datePublished" title="2014-02-23 17:01">2014-02-23 17:01</time></a></p>
                 <p class="commentline">
         
-    <a href="posts/miguels-flask-mega-tutorial.html#disqus_thread" data-disqus-identifier="cache/posts/miguels-flask-mega-tutorial.html">Comments</a>
 
 
         </p>
@@ -287,7 +446,6 @@ app.jinja_env.globals['momentjs'] = momentjs</code></p>
 
 
         
-       <script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 
 
 
@@ -297,7 +455,7 @@ app.jinja_env.globals['momentjs'] = momentjs</code></p>
         <!--End of body content-->
 
         <footer>
-            Contents © 2014         <a href="mailto:">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com">Nikola</a>         
+            Contents © 2014         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
     </div>
@@ -306,6 +464,8 @@ app.jinja_env.globals['momentjs'] = momentjs</code></p>
 
             <script src="assets/js/jquery.min.js"></script>
             <script src="assets/js/bootstrap.min.js"></script>
+            <script src="assets/js/moment-with-locales.min.js"></script>
+            <script src="assets/js/fancydates.js"></script>
         <script src="assets/js/jquery.colorbox-min.js"></script>
     
 <!-- Social buttons -->
@@ -331,6 +491,12 @@ app.jinja_env.globals['momentjs'] = momentjs</code></p>
 
 
     <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    <!-- fancy dates -->
+    <script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script>
+    <!-- end fancy dates -->
     
 
 

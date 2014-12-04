@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing (selenium)</title><link>https://xysun.github.io</link><description></description><language>en</language><lastBuildDate>Tue, 30 Sep 2014 22:31:04 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Running automated selenium tests on Debian server</title><link>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;In the startup I work we use &lt;a href="http://www.seleniumhq.org/"&gt;selenium&lt;/a&gt; for automated web testing. Previously the testing flow involves manually open the selenium plugin in firefox, set the environment-specific variables and click the "Play entire test suite" button. Recently I migrated the task to a Debian server which frees us from manual work and enables us to do much more, eg. test scheduling, integrating to the deployment process, etc. &lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing (selenium)</title><link>https://xysun.github.io</link><description></description><atom:link href="https://xysun.github.io/categories/selenium.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Thu, 04 Dec 2014 21:41:53 GMT</lastBuildDate><generator>http://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Running automated selenium tests on Debian server</title><link>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;In the startup I work we use &lt;a href="http://www.seleniumhq.org/"&gt;selenium&lt;/a&gt; for automated web testing. Previously the testing flow involves manually open the selenium plugin in firefox, set the environment-specific variables and click the "Play entire test suite" button. Recently I migrated the task to a Debian server which frees us from manual work and enables us to do much more, eg. test scheduling, integrating to the deployment process, etc. &lt;/p&gt;
 &lt;p&gt;Below is my notes on achieving this.&lt;/p&gt;
 &lt;h4&gt;Running selenium headless&lt;/h4&gt;
 &lt;p&gt;Selenium normally requires a display. On a Linux server, I use &lt;a href="http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml"&gt;xvfb&lt;/a&gt; to simulate the display. The command is:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;xvfb-run --server-num&lt;span class="o"&gt;=&lt;/span&gt;10 &amp;lt;python commands here&amp;gt;
+&lt;pre class="code literal-block"&gt;xvfb-run --server-num&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &amp;lt;python commands here&amp;gt;
 &lt;/pre&gt;
 
 
 &lt;p&gt;eg:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;xvfb-run --server-num&lt;span class="o"&gt;=&lt;/span&gt;10 python -m unittest discover --pattern&lt;span class="o"&gt;=&lt;/span&gt;*.py
+&lt;pre class="code literal-block"&gt;xvfb-run --server-num&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; python -m unittest discover --pattern&lt;span class="o"&gt;=&lt;/span&gt;*.py
 &lt;/pre&gt;
 
 
@@ -88,4 +88,4 @@
 &lt;/pre&gt;
 
 
-&lt;p&gt;In this way the complete test process can be kicked off by simply running &lt;code&gt;mftest &amp;lt;env&amp;gt;&lt;/code&gt; where &lt;code&gt;&amp;lt;env&amp;gt;&lt;/code&gt; can be either &lt;code&gt;demo&lt;/code&gt; or &lt;code&gt;pilot&lt;/code&gt; or &lt;code&gt;prod&lt;/code&gt;, and the program will pick up the right config.&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><category>selenium</category><guid>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</guid><pubDate>Sun, 21 Sep 2014 13:11:27 GMT</pubDate></item></channel></rss>
+&lt;p&gt;In this way the complete test process can be kicked off by simply running &lt;code&gt;mftest &amp;lt;env&amp;gt;&lt;/code&gt; where &lt;code&gt;&amp;lt;env&amp;gt;&lt;/code&gt; can be either &lt;code&gt;demo&lt;/code&gt; or &lt;code&gt;pilot&lt;/code&gt; or &lt;code&gt;prod&lt;/code&gt;, and the program will pick up the right config.&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><category>selenium</category><guid>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</guid><pubDate>Sun, 21 Sep 2014 05:11:27 GMT</pubDate></item></channel></rss>

@@ -2,9 +2,9 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
     <head>
     <meta charset="utf-8">
-    <meta name="description" content="Posts about chinese">
+    <meta name="description" content="Posts about Chinese">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Posts about chinese | Do Nothing</title>
+    <title>Posts about Chinese | Do Nothing</title>
 
     
             <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -29,7 +29,7 @@
 
     
 
-        <link rel="alternate" type="application/rss+xml" title="RSS for tag chinese" href="chinese.xml">
+        <link rel="alternate" type="application/rss+xml" title="RSS for tag Chinese" href="chinese.xml">
 
 
 </head>
@@ -58,16 +58,13 @@
             <ul class="nav navbar-nav">
                 
                 <li>
-<a href="../index.html">Home</a>
-                </li>
-<li>
-<a href="../stories/about.html">About</a>
+<a href="../archive.html">Archive</a>
                 </li>
 <li>
 <a href="index.html">Tags</a>
                 </li>
 <li>
-<a href="../rss.xml">RSS</a>
+<a href="../rss.xml">RSS feed</a>
 
                 
             </li>
@@ -95,14 +92,14 @@
             
 <article class="tagpage">
     <header>
-        <h1>Posts about chinese</h1>
+        <h1>Posts about Chinese</h1>
         <div class="metadata">
                 <p class="feedlink"><a href="chinese.xml" type="application/rss+xml">RSS feed</a></p>
         </div>
     </header>
     <ul class="postlist">
         <li>
-<a href="../posts/2013.html" class="listtitle">2013</a> <time class="listdate" datetime="2014-02-24T23:18:25+00:00" title="Publication date">2014-02-24 23:18</time>
+<a href="../posts/2013.html" class="listtitle">2013</a> <time class="listdate" datetime="2014-02-24T23:18:25+08:00" title="2014-02-24 23:18">2014-02-24 23:18</time>
 </li>
     </ul>
 </article>
@@ -111,7 +108,7 @@
         <!--End of body content-->
 
         <footer>
-            Contents © 2014         <a href="mailto:">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com">Nikola</a>         
+            Contents © 2014         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
     </div>
@@ -120,6 +117,8 @@
 
             <script src="../assets/js/jquery.min.js"></script>
             <script src="../assets/js/bootstrap.min.js"></script>
+            <script src="../assets/js/moment-with-locales.min.js"></script>
+            <script src="../assets/js/fancydates.js"></script>
         <script src="../assets/js/jquery.colorbox-min.js"></script>
     
 <!-- Social buttons -->
@@ -145,6 +144,12 @@
 
 
     <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    <!-- fancy dates -->
+    <script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script>
+    <!-- end fancy dates -->
     
 
 

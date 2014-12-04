@@ -2,7 +2,7 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
     <head>
     <meta charset="utf-8">
-    <meta name="description" content="I strove for none, for none was worth my strife.">
+    <meta name="description" content="This is a demo site for Nikola.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Archive | Do Nothing</title>
 
@@ -54,17 +54,14 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
                 
-                <li>
-<a href="index.html">Home</a>
-                </li>
-<li>
-<a href="stories/about.html">About</a>
+                <li class="active">
+<a href="#">Archive</a>
                 </li>
 <li>
 <a href="categories/index.html">Tags</a>
                 </li>
 <li>
-<a href="rss.xml">RSS</a>
+<a href="rss.xml">RSS feed</a>
 
                 
             </li>
@@ -105,7 +102,7 @@
         <!--End of body content-->
 
         <footer>
-            Contents © 2014         <a href="mailto:">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com">Nikola</a>         
+            Contents © 2014         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
     </div>
@@ -114,6 +111,8 @@
 
             <script src="assets/js/jquery.min.js"></script>
             <script src="assets/js/bootstrap.min.js"></script>
+            <script src="assets/js/moment-with-locales.min.js"></script>
+            <script src="assets/js/fancydates.js"></script>
         <script src="assets/js/jquery.colorbox-min.js"></script>
     
 <!-- Social buttons -->
@@ -139,6 +138,12 @@
 
 
     <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
+    <!-- fancy dates -->
+    <script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script>
+    <!-- end fancy dates -->
     
 
 
