@@ -1,80 +1,51 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Regex parsing: Thompson's algorithm | Do Nothing</title>
-
-    
-            <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/code.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/colorbox.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
-
-    
-            <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
-
-      <link rel="canonical" href="https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">
-
-
-
-
-    
-        <!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]-->
-
-    
-
-
-    
-
-    <meta name="author" content="Xiayun Sun">
-        <link rel="prev" href="install-llvm-ocaml-bindings-and-toplevel.html" title="Install LLVM OCaml bindings (and UTop)" type="text/html">
-        <link rel="next" href="how-to-insert-pictures-into-posts-in-nikola.html" title="How to insert images into posts in Nikola" type="text/html">
-    
-    <meta property="og:site_name" content="Do Nothing">
-    <meta property="og:title" content="Regex parsing: Thompson's algorithm">
-    <meta property="og:url" content="https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">
-    <meta property="og:description" content="This is a repost of my previous blog article at the old domain. 
+<head>
+<meta charset="utf-8">
+<base href="https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regex parsing: Thompson's algorithm | Do Nothing</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
+<link rel="canonical" href="https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta name="author" content="Xiayun Sun">
+<link rel="prev" href="install-llvm-ocaml-bindings-and-toplevel.html" title="Install LLVM OCaml bindings (and UTop)" type="text/html">
+<link rel="next" href="how-to-insert-pictures-into-posts-in-nikola.html" title="How to insert images into posts in Nikola" type="text/html">
+<meta property="og:site_name" content="Do Nothing">
+<meta property="og:title" content="Regex parsing: Thompson's algorithm">
+<meta property="og:url" content="https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">
+<meta property="og:description" content="This is a repost of my previous blog article at the old domain. 
 Source code can be found here
 Theory
 The central idea behind a regex engine is non-deterministic automata, NFA. While the name is scary">
-    <meta property="og:type" content="article">
-    <meta property="article:published_time" content="2014-05-18T22:26:11+08:00">
-           <meta property="article:tag" content="Code">
-
-    
-
-    
-
-
-
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-05-18T22:26:11+08:00">
+<meta property="article:tag" content="Code">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
 
 <!-- Menubar -->
 
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://xysun.github.io">
+            <a class="navbar-brand" href="https://xysun.github.io/">
 
                 <span id="blog-title">Do Nothing</span>
             </a>
         </div>
 <!-- /.navbar-header -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
-                
-                <li>
+<li>
 <a href="../archive.html">Archive</a>
                 </li>
 <li>
@@ -89,39 +60,29 @@ The central idea behind a regex engine is non-deterministic automata, NFA. While
                 
             </li>
 </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                
-                
-                    
-    <li>
+<ul class="nav navbar-nav navbar-right">
+<li>
     <a href="regex-parsing-thompsons-algorithm.md" id="sourcelink">Source</a>
     </li>
 
                 
             </ul>
-        </div>
+</div>
 <!-- /.navbar-collapse -->
     </div>
 <!-- /.container -->
-</nav>
-
-<!-- End of Menubar -->
-
-<div class="container" id="content">
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
     <div class="body-content">
         <!--Body content-->
         <div class="row">
             
             
-<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article">
-    
-    <header>
-        
-    <h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Regex parsing: Thompson's algorithm</a></h1>
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Regex parsing: Thompson's algorithm</a></h1>
 
         <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">Xiayun Sun</span></p>
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Xiayun Sun
+            </span></p>
             <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2014-05-18T22:26:11+08:00" itemprop="datePublished" title="2014-05-18 22:26">2014-05-18 22:26</time></a></p>
                 <p class="commentline">
         
@@ -135,9 +96,7 @@ The central idea behind a regex engine is non-deterministic automata, NFA. While
         </div>
         
 
-    </header>
-
-    <div class="e-content entry-content" itemprop="articleBody text">
+    </header><div class="e-content entry-content" itemprop="articleBody text">
     <div>
 <p>This is a repost of my previous blog article at the old domain. </p>
 <p>Source code can be found <a href="https://github.com/xysun/regex">here</a></p>
@@ -248,27 +207,17 @@ primary  = \( exp \)
 <p>Russ Cox wrote about <a href="http://swtch.com/~rsc/regexp/regexp1.html">history behind regex implementation</a> (last section).</p>
 </div>
     </div>
-    <aside class="postpromonav">
-    <nav>
-    
-        <ul itemprop="keywords" class="tags">
-           <li><a class="tag p-category" href="../categories/code.html" rel="tag">Code</a></li>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../categories/code.html" rel="tag">Code</a></li>
         </ul>
-
-    
-        <ul class="pager">
-            <li class="previous">
+<ul class="pager hidden-print">
+<li class="previous">
                 <a href="install-llvm-ocaml-bindings-and-toplevel.html" rel="prev" title="Install LLVM OCaml bindings (and UTop)">Previous post</a>
             </li>
             <li class="next">
                 <a href="how-to-insert-pictures-into-posts-in-nikola.html" rel="next" title="How to insert images into posts in Nikola">Next post</a>
             </li>
-        </ul>
-
-    </nav>
-    </aside>
-        <section class="comments">
-        <h2>Comments</h2>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
         
         
         <div id="disqus_thread"></div>
@@ -285,70 +234,36 @@ primary  = \( exp \)
             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
         })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+    </script><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
 </noscript>
     <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-        </section>
-    
-
-</article>
-
-        
-       <script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
-
-
-
-        </div>
+        </section></article><script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
         <!--End of body content-->
 
-        <footer>
-            Contents © 2014         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+        <footer id="footer">
+            Contents © 2015         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
             
         </footer>
-    </div>
+</div>
 </div>
 
 
-            <script src="../assets/js/jquery.min.js"></script>
-            <script src="../assets/js/bootstrap.min.js"></script>
-            <script src="../assets/js/moment-with-locales.min.js"></script>
-            <script src="../assets/js/fancydates.js"></script>
-        <script src="../assets/js/jquery.colorbox-min.js"></script>
-    
-<!-- Social buttons -->
+            <script src="../assets/js/all-nocdn.js"></script><!-- Social buttons --><!--
 <div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
 <a class="addthis_button_more">Share</a>
-<ul>
-<li>
-<a class="addthis_button_facebook"></a>
-</li>
-<li>
-<a class="addthis_button_google_plusone_share"></a>
-</li>
-<li>
-<a class="addthis_button_linkedin"></a>
-</li>
-<li>
-<a class="addthis_button_twitter"></a>
-</li>
+<ul><li><a class="addthis_button_facebook"></a>
+<li><a class="addthis_button_google_plusone_share"></a>
+<li><a class="addthis_button_linkedin"></a>
+<li><a class="addthis_button_twitter"></a>
 </ul>
 </div>
 <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
-<!-- End of social buttons -->
-
-
-    <script>jQuery("a.image-reference").colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script>
-    <!-- fancy dates -->
-    <script>
+--><!-- End of social buttons --><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
     moment.locale("");
     fancydates(0, "YYYY-MM-DD HH:mm");
-    </script>
-    <!-- end fancy dates -->
-    
-
-
+    </script><!-- end fancy dates -->
 </body>
 </html>
