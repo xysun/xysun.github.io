@@ -9,7 +9,7 @@
 .. type: text
 -->
 
-This is my notes about the book "Head first design patterns". 
+This is my notes about the book [Head first design patterns](http://shop.oreilly.com/product/9780596007126.do).
 
 ## Overview 
 
