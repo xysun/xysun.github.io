@@ -11,7 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://xysun.github.io/index.html">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/1-1-1.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-1-strategy-pattern.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -63,7 +63,140 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/1-1-1.html" class="u-url">1 * '1' = '1'</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-1-strategy-pattern.html" class="u-url">Design pattern #1: Strategy Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-1-strategy-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-10-23T18:30:45+08:00" title="2015-10-23 18:30">2015-10-23 18:30</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-1-strategy-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-1-strategy-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>This is my notes about the book "Head first design patterns". </p>
+<h3>Overview</h3>
+<p>Strategy pattern: encapsulating behaviors / algorithms.</p>
+<h3>Starting example</h3>
+<p>We start with a duck base class and several concrete duck classes: </p>
+<pre class="code literal-block"><span class="k">abstract</span> <span class="k">class</span> <span class="nc">Duck</span> <span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">quack</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"quack"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span>
+
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">RedDuck</span> <span class="k">extends</span> <span class="nc">Duck</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"RedDuck"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">RubberDuck</span> <span class="k">extends</span> <span class="nc">Duck</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"rubber duck"</span><span class="o">)</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Now we want to add fly behavior, but <strong><em>only to some of the ducks</em></strong>. </p>
+<p>Inheritance is not the right solution, because it'll add <code>fly</code> to all subclasses. </p>
+<h3>General problem:</h3>
+<p>Duck behavior keeps changing across subclasses, and it's not appropriate for <em>all</em> subclasses to have those behaviors</p>
+<h3>Book's solution:</h3>
+<p>Encapsulate <strong><em>behavior</em></strong> in classes. And assign behavior to the instances of Duck, and able to change dynamically.</p>
+<pre class="code literal-block"><span class="k">trait</span> <span class="nc">FlyBehavior</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">fly</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">FlyWithWings</span> <span class="k">extends</span> <span class="nc">FlyBehavior</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">fly</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"fly with wings"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">FlyNoWay</span> <span class="k">extends</span> <span class="nc">FlyBehavior</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">fly</span> <span class="k">=</span> <span class="o">()</span> <span class="c1">// do nothing</span>
+<span class="o">}</span>
+
+
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Duck</span>
+<span class="o">{</span>
+
+  <span class="k">val</span> <span class="n">flyBehavior</span><span class="k">:</span><span class="kt">FlyBehavior</span> <span class="c1">// use super type here,</span>
+
+  <span class="c1">// NOTE: we can also use var for flyBehavior and a setter method to change behavior in runtime</span>
+
+  <span class="k">def</span> <span class="n">performFly</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">flyBehavior</span><span class="o">.</span><span class="n">fly</span> <span class="c1">// delegate to behavior class</span>
+
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span>
+
+<span class="o">}</span>
+
+
+<span class="k">class</span> <span class="nc">RedDuck</span> <span class="k">extends</span> <span class="nc">Duck</span><span class="o">{</span>
+
+  <span class="k">val</span> <span class="n">flyBehavior</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">FlyWithWings</span>
+
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"RedDuck"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">RubberDuck</span> <span class="k">extends</span> <span class="nc">Duck</span> <span class="o">{</span>
+
+  <span class="k">val</span> <span class="n">flyBehavior</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">FlyNoWay</span> <span class="c1">// rubber duck cannot fly</span>
+
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"rubber duck"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">Main</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">={</span>
+    <span class="k">val</span> <span class="n">redDuck</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">RedDuck</span>
+    <span class="n">redDuck</span><span class="o">.</span><span class="n">performFly</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Design principle:</h3>
+<ul>
+<li>Identify the aspects of your application that vary and separate them from what stays the same. (In this case, behavior is what varies)</li>
+<li>Program to an interface/supertype, not an implementation. (Use interface for behaviors)</li>
+<li>Favor composition over inheritance: "HAS-A" rather than "IS-A"</li>
+</ul>
+<h3>Pattern definition:</h3>
+<p>Strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it. </p>
+<p>In our example, behavior is our "algorithm"</p>
+<h3>Other notes:</h3>
+<ul>
+<li>The importance of having a shared vocabulary</li>
+<li>OO basics: abstraction; encapsulation; polymorphism; inheritance</li>
+</ul>
+<h3>How about using traits?</h3>
+<p>Unlike interface in Java, traits in scala can have concrete implementations, so we have code reuse. </p>
+<p>Compared to book's solution, however, I'm unable to update the behavior in runtime. </p>
+<pre class="code literal-block"><span class="k">abstract</span> <span class="k">class</span> <span class="nc">Duck</span> <span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">quack</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"quack"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span>
+
+<span class="o">}</span>
+
+<span class="k">trait</span> <span class="nc">FlyableDuck</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">fly</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"flying!"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">RedDuck</span> <span class="k">extends</span> <span class="nc">Duck</span> <span class="k">with</span> <span class="nc">FlyableDuck</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"RedDuck"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">RubberDuck</span> <span class="k">extends</span> <span class="nc">Duck</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"rubber duck"</span><span class="o">)</span>
+<span class="o">}</span>
+</pre>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/1-1-1.html" class="u-url">1 * '1' = '1'</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
@@ -649,82 +782,6 @@ primary  = \( exp \)
 <ul>
 <li>
 <a href="https://www.rescuetime.com/">rescue time</a> is a neat productivity tool.</li>
-</ul>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/week-20140330.html" class="u-url">Weekly 20140330</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Xiayun Sun
-            </span></p>
-            <p class="dateline"><a href="posts/week-20140330.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-24T21:09:02+08:00" title="2014-03-24 21:09">2014-03-24 21:09</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/week-20140330.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140330.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<h4><a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041">Surely You're joking, Mr. Feynman!</a></h4>
-<blockquote>
-<p>Learn what the rest of the world is like. The variety is worthwhile.</p>
-<p>"I could do that, but I won't" -- which is just another way of saying that you can't. </p>
-<p>You don't have to be responsible for the world that you're in.</p>
-<p>You have no responsibility to live up to what other people think you ought to accomplish. </p>
-</blockquote>
-<hr>
-<h4><a href="http://courses.cs.washington.edu/courses/cse341/13sp/videos/unit1/">Dan Grossman</a></h4>
-<ul>
-<li>expression: syntax, type-checking, evaluate</li>
-<li>REPL: Read, Evaluate, Print, Loop; do not type <code>use</code> without restarting REPL</li>
-<li>syntax: <ul>
-<li>negation: <code>~5</code>
-</li>
-<li>division: <code>div</code>
-</li>
-</ul>
-</li>
-<li>after expression evaluated, the expression producing the result is irrelevant --&gt; do not reuse <code>use</code> in sml</li>
-<li>access pair/tuple: <code>#1 e</code>
-</li>
-<li>naming: <ul>
-<li>
-<code>pair</code> &lt;--&gt; <code>pr</code>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h4><a href="http://c.learncodethehardway.org/book/">Learn C the hard way</a></h4>
-<ul>
-<li>
-<a href="http://c.learncodethehardway.org/book/ex13.html">switch statement</a>: <ul>
-<li>
-<code>return 1</code> --&gt; tell OS there's an error</li>
-<li>only integers allowed (eg. char)</li>
-</ul>
-</li>
-<li>
-<a href="http://c.learncodethehardway.org/book/ex14.html">use functions</a><ul>
-<li>forward declaration: use function before defining them</li>
-</ul>
-</li>
-<li><a href="http://c.learncodethehardway.org/book/ex15.html">pointers</a></li>
-</ul>
-<hr>
-<h4>Miscellaneous</h4>
-<ul>
-<li>
-<p>I wrote a small <a href="https://gist.github.com/xysun/9837480">utility</a> to manage my "My Clippings.txt" from Kindle. This script will create a separate note for each book. </p>
-</li>
-<li>
-<p><a href="http://defunkt.io/gist/">gist</a> is an awesome command line tool for gist. </p>
-</li>
-<li>
-<p>use <code>rlwrap sml</code> to enable history rollback through arrow keys</p>
-</li>
 </ul>
 </div>
     </div>

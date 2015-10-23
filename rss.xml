@@ -1,5 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link type="application/rss+xml" rel="self" href="https://xysun.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Wed, 30 Sep 2015 15:00:16 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>1 * '1' = '1'</title><link>https://xysun.github.io/posts/1-1-1.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;There are some days I wish Python is strongly typed. And today is one of them. &lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link type="application/rss+xml" href="https://xysun.github.io/rss.xml" rel="self"></atom:link><language>en</language><lastBuildDate>Fri, 23 Oct 2015 11:32:17 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design pattern #1: Strategy Pattern</title><link>https://xysun.github.io/posts/design-pattern-1-strategy-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;This is my notes about the book "Head first design patterns". &lt;/p&gt;
+&lt;h3&gt;Overview&lt;/h3&gt;
+&lt;p&gt;Strategy pattern: encapsulating behaviors / algorithms.&lt;/p&gt;
+&lt;h3&gt;Starting example&lt;/h3&gt;
+&lt;p&gt;We start with a duck base class and several concrete duck classes: &lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;quack&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"quack"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RedDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"RedDuck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RubberDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"rubber duck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Now we want to add fly behavior, but &lt;strong&gt;&lt;em&gt;only to some of the ducks&lt;/em&gt;&lt;/strong&gt;. &lt;/p&gt;
+&lt;p&gt;Inheritance is not the right solution, because it'll add &lt;code&gt;fly&lt;/code&gt; to all subclasses. &lt;/p&gt;
+&lt;h3&gt;General problem:&lt;/h3&gt;
+&lt;p&gt;Duck behavior keeps changing across subclasses, and it's not appropriate for &lt;em&gt;all&lt;/em&gt; subclasses to have those behaviors&lt;/p&gt;
+&lt;h3&gt;Book's solution:&lt;/h3&gt;
+&lt;p&gt;Encapsulate &lt;strong&gt;&lt;em&gt;behavior&lt;/em&gt;&lt;/strong&gt; in classes. And assign behavior to the instances of Duck, and able to change dynamically.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;trait&lt;/span&gt; &lt;span class="nc"&gt;FlyBehavior&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FlyWithWings&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;FlyBehavior&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"fly with wings"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FlyNoWay&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;FlyBehavior&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="c1"&gt;// do nothing&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;flyBehavior&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;FlyBehavior&lt;/span&gt; &lt;span class="c1"&gt;// use super type here,&lt;/span&gt;
+
+  &lt;span class="c1"&gt;// NOTE: we can also use var for flyBehavior and a setter method to change behavior in runtime&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;performFly&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;flyBehavior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="c1"&gt;// delegate to behavior class&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RedDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;flyBehavior&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;FlyWithWings&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"RedDuck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RubberDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;flyBehavior&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;FlyNoWay&lt;/span&gt; &lt;span class="c1"&gt;// rubber duck cannot fly&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"rubber duck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;Main&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;={&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;redDuck&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;RedDuck&lt;/span&gt;
+    &lt;span class="n"&gt;redDuck&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;performFly&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Design principle:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Identify the aspects of your application that vary and separate them from what stays the same. (In this case, behavior is what varies)&lt;/li&gt;
+&lt;li&gt;Program to an interface/supertype, not an implementation. (Use interface for behaviors)&lt;/li&gt;
+&lt;li&gt;Favor composition over inheritance: "HAS-A" rather than "IS-A"&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Pattern definition:&lt;/h3&gt;
+&lt;p&gt;Strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it. &lt;/p&gt;
+&lt;p&gt;In our example, behavior is our "algorithm"&lt;/p&gt;
+&lt;h3&gt;Other notes:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;The importance of having a shared vocabulary&lt;/li&gt;
+&lt;li&gt;OO basics: abstraction; encapsulation; polymorphism; inheritance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;How about using traits?&lt;/h3&gt;
+&lt;p&gt;Unlike interface in Java, traits in scala can have concrete implementations, so we have code reuse. &lt;/p&gt;
+&lt;p&gt;Compared to book's solution, however, I'm unable to update the behavior in runtime. &lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;quack&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"quack"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;trait&lt;/span&gt; &lt;span class="nc"&gt;FlyableDuck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"flying!"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RedDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nc"&gt;FlyableDuck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"RedDuck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RubberDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"rubber duck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-1-strategy-pattern.html</guid><pubDate>Fri, 23 Oct 2015 10:30:45 GMT</pubDate></item><item><title>1 * '1' = '1'</title><link>https://xysun.github.io/posts/1-1-1.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;There are some days I wish Python is strongly typed. And today is one of them. &lt;/p&gt;
 &lt;h4&gt;Background&lt;/h4&gt;
 &lt;p&gt;I work on an algorithm trading desk. Our algorithm trading engine is in Python. For a few days my team has been working on a new feature which can assign a "weight" to each trading strategy, so for example if a strategy has a weight of 2, then each trading order it sends will automatically has its size doubled up. &lt;/p&gt;
 &lt;p&gt;Last night the development work was done. I run the tests, merged back to development branch, and deployed to our simulation environment. &lt;/p&gt;
@@ -404,54 +519,4 @@ primary  = \( exp \)
 &lt;h4&gt;Miscellaneous&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.rescuetime.com/"&gt;rescue time&lt;/a&gt; is a neat productivity tool.&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140406.html</guid><pubDate>Mon, 31 Mar 2014 05:32:10 GMT</pubDate></item><item><title>Weekly 20140330</title><link>https://xysun.github.io/posts/week-20140330.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="http://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041"&gt;Surely You're joking, Mr. Feynman!&lt;/a&gt;&lt;/h4&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Learn what the rest of the world is like. The variety is worthwhile.&lt;/p&gt;
-&lt;p&gt;"I could do that, but I won't" -- which is just another way of saying that you can't. &lt;/p&gt;
-&lt;p&gt;You don't have to be responsible for the world that you're in.&lt;/p&gt;
-&lt;p&gt;You have no responsibility to live up to what other people think you ought to accomplish. &lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h4&gt;&lt;a href="http://courses.cs.washington.edu/courses/cse341/13sp/videos/unit1/"&gt;Dan Grossman&lt;/a&gt;&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;expression: syntax, type-checking, evaluate&lt;/li&gt;
-&lt;li&gt;REPL: Read, Evaluate, Print, Loop; do not type &lt;code&gt;use&lt;/code&gt; without restarting REPL&lt;/li&gt;
-&lt;li&gt;syntax: &lt;ul&gt;
-&lt;li&gt;negation: &lt;code&gt;~5&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;division: &lt;code&gt;div&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;after expression evaluated, the expression producing the result is irrelevant --&amp;gt; do not reuse &lt;code&gt;use&lt;/code&gt; in sml&lt;/li&gt;
-&lt;li&gt;access pair/tuple: &lt;code&gt;#1 e&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;naming: &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;pair&lt;/code&gt; &amp;lt;--&amp;gt; &lt;code&gt;pr&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h4&gt;&lt;a href="http://c.learncodethehardway.org/book/"&gt;Learn C the hard way&lt;/a&gt;&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="http://c.learncodethehardway.org/book/ex13.html"&gt;switch statement&lt;/a&gt;: &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;return 1&lt;/code&gt; --&amp;gt; tell OS there's an error&lt;/li&gt;
-&lt;li&gt;only integers allowed (eg. char)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://c.learncodethehardway.org/book/ex14.html"&gt;use functions&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;forward declaration: use function before defining them&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://c.learncodethehardway.org/book/ex15.html"&gt;pointers&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h4&gt;Miscellaneous&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;I wrote a small &lt;a href="https://gist.github.com/xysun/9837480"&gt;utility&lt;/a&gt; to manage my "My Clippings.txt" from Kindle. This script will create a separate note for each book. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://defunkt.io/gist/"&gt;gist&lt;/a&gt; is an awesome command line tool for gist. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;use &lt;code&gt;rlwrap sml&lt;/code&gt; to enable history rollback through arrow keys&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140330.html</guid><pubDate>Mon, 24 Mar 2014 13:09:02 GMT</pubDate></item></channel></rss>
+&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140406.html</guid><pubDate>Mon, 31 Mar 2014 05:32:10 GMT</pubDate></item></channel></rss>
