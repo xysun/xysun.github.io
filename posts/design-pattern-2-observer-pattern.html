@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="https://xysun.github.io/posts/design-pattern-2-observer-pattern.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Pattern #2: Observer Pattern | Do Nothing</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
+<link rel="canonical" href="https://xysun.github.io/posts/design-pattern-2-observer-pattern.html">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta name="author" content="Xiayun Sun">
+<link rel="prev" href="design-pattern-1-strategy-pattern.html" title="Design pattern #1: Strategy Pattern" type="text/html">
+<meta property="og:site_name" content="Do Nothing">
+<meta property="og:title" content="Design Pattern #2: Observer Pattern">
+<meta property="og:url" content="https://xysun.github.io/posts/design-pattern-2-observer-pattern.html">
+<meta property="og:description" content="Overview
+observer pattern = publisher + subscriber
+Pattern definition:
+The observer pattern defines a one-to-many dependency between objects so that when one object changes stats, all of its dependent">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-10-26T20:55:32+08:00">
+<meta property="article:tag" content="Book">
+<meta property="article:tag" content="Code">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://xysun.github.io/">
+
+                <span id="blog-title">Do Nothing</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../stories/about.html">About</a>
+                </li>
+<li>
+<a href="../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="design-pattern-2-observer-pattern.md" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Design Pattern #2: Observer Pattern</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2015-10-26T20:55:32+08:00" itemprop="datePublished" title="2015-10-26 20:55">2015-10-26 20:55</time></a></p>
+                <p class="commentline">
+        
+    <a href="design-pattern-2-observer-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-2-observer-pattern.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="design-pattern-2-observer-pattern.md" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<h3>Overview</h3>
+<p>observer pattern = publisher + subscriber</p>
+<h3>Pattern definition:</h3>
+<p>The observer pattern defines a one-to-many dependency between objects so that when one object changes stats, all of its dependents are notified and updated automatically.</p>
+<h3>Starting example: weather monitoring application</h3>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">WeatherStation</span> <span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">measurementsChanged</span><span class="o">()</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">temp</span> <span class="k">=</span> <span class="n">getTemperature</span>
+    <span class="k">val</span> <span class="n">humidity</span> <span class="k">=</span> <span class="n">getHumidity</span>
+    <span class="k">val</span> <span class="n">pressure</span> <span class="k">=</span> <span class="n">getPressure</span>
+
+    <span class="c1">// we want to make the displays extensible (i.e. decouple them), also maybe subscribe/unsubscribe during runtime</span>
+    <span class="n">currentConditionsDisplay</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="o">,</span> <span class="n">humidity</span><span class="o">,</span> <span class="n">pressure</span><span class="o">)</span>
+    <span class="n">statisticsDisplay</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="o">,</span> <span class="n">humidity</span><span class="o">,</span> <span class="n">pressure</span><span class="o">)</span>
+    <span class="n">forecastDisplay</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="o">,</span> <span class="n">humidity</span><span class="o">,</span> <span class="n">pressure</span><span class="o">)</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3>Solution round 1: bad data encapsulation</h3>
+<p>Note the Double temperature is passed everywhere!</p>
+<pre class="code literal-block"><span class="k">trait</span> <span class="nc">DisplayElement</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">trait</span> <span class="nc">Observer</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">trait</span> <span class="nc">Subject</span> <span class="o">{</span>
+
+  <span class="k">val</span> <span class="n">observers</span><span class="k">:</span><span class="kt">ListBuffer</span><span class="o">[</span><span class="kt">Observer</span><span class="o">]</span> <span class="k">=</span> <span class="nc">ListBuffer</span><span class="o">[</span><span class="kt">Observer</span><span class="o">]()</span>
+
+  <span class="k">def</span> <span class="n">registerObserver</span><span class="o">(</span><span class="n">observer</span><span class="k">:</span> <span class="kt">Observer</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span> <span class="o">+=</span> <span class="n">observer</span>
+
+  <span class="k">def</span> <span class="n">removeObserver</span><span class="o">(</span><span class="n">observer</span><span class="k">:</span> <span class="kt">Observer</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">remove</span><span class="o">(</span><span class="n">observers</span><span class="o">.</span><span class="n">indexOf</span><span class="o">(</span><span class="n">observer</span><span class="o">))</span>
+
+  <span class="k">def</span> <span class="n">notifyObservers</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">WeatherStation</span> <span class="k">extends</span> <span class="nc">Subject</span><span class="o">{</span>
+
+  <span class="k">var</span> <span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="k">def</span> <span class="n">notifyObservers</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="o">))</span>
+
+  <span class="k">def</span> <span class="n">setMeasurement</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">temp</span>
+    <span class="n">notifyObservers</span><span class="o">(</span><span class="n">temp</span><span class="o">)</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+
+<span class="k">class</span> <span class="nc">CurrentConditionDisplay</span><span class="o">(</span><span class="n">subject</span><span class="k">:</span> <span class="kt">Subject</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Observer</span> <span class="k">with</span> <span class="nc">DisplayElement</span><span class="o">{</span>
+  <span class="c1">// we're passing the subject in constructor so that we can call its register methods and other methods for pull</span>
+
+  <span class="n">subject</span><span class="o">.</span><span class="n">registerObserver</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+
+  <span class="k">var</span> <span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="k">def</span> <span class="n">display</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">s"current condition display, temperature: </span><span class="si">$temperature</span><span class="s">"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">temp</span>
+    <span class="n">display</span>
+  <span class="o">}</span>
+
+  <span class="c1">// NOTE: if using the pull model, would be something like this: </span>
+
+  <span class="k">def</span> <span class="n">update</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">subject</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">WeatherStation</span><span class="o">].</span><span class="n">temperature</span>
+    <span class="n">display</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">Main</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">station</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">WeatherStation</span>
+    <span class="k">val</span> <span class="n">display</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">CurrentConditionDisplay</span><span class="o">(</span><span class="n">station</span><span class="o">)</span>
+
+    <span class="n">station</span><span class="o">.</span><span class="n">setMeasurement</span><span class="o">(</span><span class="mf">10.0</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Solution round 2: better data encapsulation</h3>
+<p>The <code>java.util.Observer</code> use <code>Object</code> type to pass data around: <code>update(Observable o, Object arg)</code></p>
+<p>All the others the same, but we encapsulate data: </p>
+<p>Note: scala's trait proves superior again as you can have concrete implementation but still can compose (as opposed to in Java, it uses a class for <code>Observable</code>, thus limiting its reuse potential)</p>
+<pre class="code literal-block"><span class="c1">// DisplayElement and Main stays the same</span>
+
+<span class="k">trait</span> <span class="nc">Data</span>
+
+<span class="k">trait</span> <span class="nc">Observer</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">subject</span><span class="k">:</span> <span class="kt">Subject</span><span class="o">,</span> <span class="n">data</span><span class="k">:</span> <span class="kt">Data</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="c1">// note we pass both subject (so that observers can also use pull model) and data here</span>
+<span class="o">}</span>
+
+<span class="k">trait</span> <span class="nc">Subject</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">observers</span><span class="k">:</span><span class="kt">ListBuffer</span><span class="o">[</span><span class="kt">Observer</span><span class="o">]</span> <span class="k">=</span> <span class="nc">ListBuffer</span><span class="o">[</span><span class="kt">Observer</span><span class="o">]()</span>
+
+  <span class="k">def</span> <span class="n">registerObserver</span><span class="o">(</span><span class="n">observer</span><span class="k">:</span> <span class="kt">Observer</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span> <span class="o">+=</span> <span class="n">observer</span>
+
+  <span class="k">def</span> <span class="n">removeObserver</span><span class="o">(</span><span class="n">observer</span><span class="k">:</span> <span class="kt">Observer</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">remove</span><span class="o">(</span><span class="n">observers</span><span class="o">.</span><span class="n">indexOf</span><span class="o">(</span><span class="n">observer</span><span class="o">))</span>
+
+ <span class="k">def</span> <span class="n">notifyObservers</span><span class="o">(</span><span class="n">data</span><span class="k">:</span> <span class="kt">Data</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="c1">// we pass data to all observers</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="k">class</span> <span class="nc">WeatherData</span> <span class="o">(</span><span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Data</span>
+
+<span class="k">class</span> <span class="nc">WeatherStation</span> <span class="k">extends</span> <span class="nc">Subject</span><span class="o">{</span>
+
+  <span class="k">var</span> <span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="k">def</span> <span class="n">notifyObservers</span><span class="o">(</span><span class="n">data</span><span class="k">:</span> <span class="kt">Data</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">data</span><span class="o">))</span> 
+
+  <span class="k">def</span> <span class="n">setMeasurement</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">temp</span>
+    <span class="n">notifyObservers</span><span class="o">(</span><span class="nc">WeatherData</span><span class="o">(</span><span class="n">temp</span><span class="o">))</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">CurrentConditionDisplay</span><span class="o">(</span><span class="n">subject</span><span class="k">:</span> <span class="kt">Subject</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Observer</span> <span class="k">with</span> <span class="nc">DisplayElement</span><span class="o">{</span>
+
+  <span class="n">subject</span><span class="o">.</span><span class="n">registerObserver</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+
+  <span class="k">var</span> <span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="k">def</span> <span class="n">display</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">s"current condition display, temperature: </span><span class="si">$temperature</span><span class="s">"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">subject</span><span class="k">:</span> <span class="kt">Subject</span><span class="o">,</span> <span class="n">data</span><span class="k">:</span> <span class="kt">Data</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">data</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">WeatherData</span><span class="o">].</span><span class="n">temperature</span> <span class="c1">// we need to cast to WeatherData</span>
+    <span class="n">display</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3>Design Principle</h3>
+<p>Strive for loosely coupled designs between objects that interact. </p>
+<h3>Others</h3>
+<ul>
+<li>
+<code>push</code> and <code>pull</code> style </li>
+<li>
+<code>java.util.Observer</code> also has a <code>setChanged()</code> method to control notifications.</li>
+<li>Never depend on a specific notification order.</li>
+</ul>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../categories/book.html" rel="tag">Book</a></li>
+            <li><a class="tag p-category" href="../categories/code.html" rel="tag">Code</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="design-pattern-1-strategy-pattern.html" rel="prev" title="Design pattern #1: Strategy Pattern">Previous post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="nikolademo",
+            disqus_url="https://xysun.github.io/posts/design-pattern-2-observer-pattern.html",
+        disqus_title="Design Pattern #2: Observer Pattern",
+        disqus_identifier="cache/posts/design-pattern-2-observer-pattern.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2015         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../assets/js/all-nocdn.js"></script><!-- Social buttons --><!--
+<div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+<a class="addthis_button_more">Share</a>
+<ul><li><a class="addthis_button_facebook"></a>
+<li><a class="addthis_button_google_plusone_share"></a>
+<li><a class="addthis_button_linkedin"></a>
+<li><a class="addthis_button_twitter"></a>
+</ul>
+</div>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
+--><!-- End of social buttons --><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

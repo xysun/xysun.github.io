@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>https://xysun.github.io/categories/book.xml</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://xysun.github.io/categories/chinese.xml</loc>
@@ -15,7 +15,7 @@
  </sitemap>
  <sitemap>
   <loc>https://xysun.github.io/categories/code.xml</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://xysun.github.io/categories/draft.xml</loc>
@@ -47,10 +47,10 @@
  </sitemap>
  <sitemap>
   <loc>https://xysun.github.io/rss.xml</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://xysun.github.io/sitemap.xml</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </sitemap>
 </sitemapindex>

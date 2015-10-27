@@ -63,7 +63,68 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/week-20140330.html" class="u-url">Weekly 20140330</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/week-20140406.html" class="u-url">Week 20140406</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/week-20140406.html" rel="bookmark"><time class="published dt-published" datetime="2014-03-31T13:32:10+08:00" title="2014-03-31 13:32">2014-03-31 13:32</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/week-20140406.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140406.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<h4>Dan Grossman</h4>
+<ul>
+<li>functions over lists are usually recursive: empty list; non-empty list (<code>hd</code>, <code>tl</code>) </li>
+<li>let expression: <code>let...in...end</code>
+</li>
+<li>Do a recursive computation, store in (local binding)</li>
+<li>Option: <code>isSome</code>, <code>valOf</code>
+</li>
+<li>Bool comparisons: <code>andalso</code>, <code>orelse</code>, <code>not</code>
+</li>
+<li>
+<code>real</code> is not an equality type (subject to round errors)</li>
+<li>no mutation --&gt; no need to worry about alias or copies --&gt; implementation more efficient &amp; better security</li>
+<li>Done <a href="https://github.com/xysun/armory/tree/master/ProgrammingLanguages">HW1</a>
+</li>
+</ul>
+<h4><a href="https://www.youtube.com/watch?v=fYlnfvKVDoM">Brandon Rhodes Pycon talk</a></h4>
+<ul>
+<li><a href="http://duartes.org/gustavo/blog/post/what-your-computer-does-while-you-wait/">Gustavo Duarte -- what your computer does while you wait</a></li>
+<li><a href="http://danluu.com/3c-conflict/">Dan Luu -- how misaligning data can increase performance 12x</a></li>
+<li>Python store general purpose data structures (eg. tuple) as array of addresses</li>
+<li>
+<code>append</code> on a list adds extra spaces -- amortization</li>
+<li>list is fast for tail operations: <code>append</code>, <code>pop</code>. Not <code>pop(0)</code>, <code>insert(0)</code>
+</li>
+<li>
+<code>dict</code> is an array with keys stored at integer indexes according to hash value: <ul>
+<li>hash -- key address -- value address</li>
+<li>PyCon 2010 "The mighty dictionary"</li>
+<li>can build compound keys with tuple</li>
+</ul>
+</li>
+<li>set: dictionary with no keys</li>
+<li>
+<code>deque</code>, <code>heapq</code>
+</li>
+<li>2013 PyCon, the clean architecture in Python</li>
+</ul>
+<hr>
+<h4>Miscellaneous</h4>
+<ul>
+<li>
+<a href="https://www.rescuetime.com/">rescue time</a> is a neat productivity tool.</li>
+</ul>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/week-20140330.html" class="u-url">Weekly 20140330</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun

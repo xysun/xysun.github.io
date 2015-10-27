@@ -11,15 +11,15 @@
  </url>
  <url>
   <loc>https://xysun.github.io/2015/index.html</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/archive.html</loc>
-  <lastmod>2015-10-23T10:35:00Z</lastmod>
+  <lastmod>2015-10-26T14:52:00Z</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/book.html</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/chinese.html</loc>
@@ -27,7 +27,7 @@
  </url>
  <url>
   <loc>https://xysun.github.io/categories/code.html</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/categories/draft.html</loc>
@@ -63,11 +63,11 @@
  </url>
  <url>
   <loc>https://xysun.github.io/index-1.html</loc>
-  <lastmod>2015-10-23T10:35:00Z</lastmod>
+  <lastmod>2015-10-26T14:52:00Z</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/index.html</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/listings/index.html</loc>
@@ -91,7 +91,11 @@
  </url>
  <url>
   <loc>https://xysun.github.io/posts/design-pattern-1-strategy-pattern.html</loc>
-  <lastmod>2015-10-23T16:43:00Z</lastmod>
+  <lastmod>2015-10-26T14:52:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://xysun.github.io/posts/design-pattern-2-observer-pattern.html</loc>
+  <lastmod>2015-10-27T14:36:00Z</lastmod>
  </url>
  <url>
   <loc>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</loc>
