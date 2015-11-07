@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link href="https://xysun.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Tue, 27 Oct 2015 14:36:49 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #2: Observer Pattern</title><link>https://xysun.github.io/posts/design-pattern-2-observer-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h3&gt;Overview&lt;/h3&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link type="application/rss+xml" rel="self" href="https://xysun.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Sat, 07 Nov 2015 08:38:51 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #3: Decorator Pattern</title><link>https://xysun.github.io/posts/design-pattern-3-decorator-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes for the book Head first design patterns. &lt;/p&gt;
+&lt;h3&gt;Overview&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Give objects new responsibilities without making any code changes to the underlying class, even at runtime.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Example problem&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Starbuzz's &lt;code&gt;cost()&lt;/code&gt; function for beverage + condiments combinations&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Solution: &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;span class="cm"&gt; * Created by jsun on 11/7/2015 AD.&lt;/span&gt;
+&lt;span class="cm"&gt; */&lt;/span&gt;
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Beverage&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// abstract component&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cost&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Double&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DarkRoast&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// concrete component&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;2.00&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// we pass in the decorated object in constructor; decorator object is like a wrapper&lt;/span&gt;
+&lt;span class="c1"&gt;// decorator object mirror the types of decorated object (both extends Beverage here)&lt;/span&gt;
+&lt;span class="c1"&gt;// a class for condiments only --&amp;gt; not really necessary? &lt;/span&gt;
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CondimentDecorator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Beverage&lt;/span&gt; &lt;span class="c1"&gt;// abstract decorator&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Mocha&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;CondimentDecorator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="c1"&gt;// "composing" behaviors&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Whip&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;CondimentDecorator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.2&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cost&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;Main&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;drink&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;Whip&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;Mocha&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;DarkRoast&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;drink&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cost&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// 2 + 0.5 + 0.2 = 2.7&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Decorator Pattern&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;The Decorator Pattern attached additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Decorators have the same supertype as decorated.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Each decorator HAS-A a component, i.e the decorator has an instance variable that holds a reference to a component&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Decorators are typically created by using other patterns like Factory and Builder.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Downside: often result in a large number of small classes that can be overwhelming; can increase component instantiation complexity (can be mitigated by Factory/Builder pattern)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Basically "wrappers"&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Design Principle&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Classes should be open for extension, but closed for modification. Concentrate on areas that are most likely to change in the future.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Example in real life: &lt;code&gt;java.io&lt;/code&gt; package&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;all decorators: eg. &lt;code&gt;LineNumberInputStream&lt;/code&gt; -&amp;gt; &lt;code&gt;BufferedInputStream&lt;/code&gt; -&amp;gt; &lt;code&gt;FileInputStream&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;abstract component: &lt;code&gt;InpustStream&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;concrete component: &lt;code&gt;FileInputStream&lt;/code&gt;, &lt;code&gt;StringBufferInputStream&lt;/code&gt;, etc&lt;/li&gt;
+&lt;li&gt;abstract decorator: &lt;code&gt;FilterInputStream&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;concrete decorator: &lt;code&gt;BufferedInputStream&lt;/code&gt;, &lt;code&gt;LineNumberInputStream&lt;/code&gt;, etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Scala&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;implicits&lt;/code&gt; to add behavior without changing original class code (not runtime though)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;ExtendedModels&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;implicit&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ExtendedBeverage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;costWithMilk&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.2&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="c1"&gt;// Beverage now has a costWithMilk() method, not the best example&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-3-decorator-pattern.html</guid><pubDate>Sat, 07 Nov 2015 07:48:40 GMT</pubDate></item><item><title>Design Pattern #2: Observer Pattern</title><link>https://xysun.github.io/posts/design-pattern-2-observer-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h3&gt;Overview&lt;/h3&gt;
 &lt;p&gt;observer pattern = publisher + subscriber&lt;/p&gt;
 &lt;h3&gt;Pattern definition:&lt;/h3&gt;
 &lt;p&gt;The observer pattern defines a one-to-many dependency between objects so that when one object changes stats, all of its dependents are notified and updated automatically.&lt;/p&gt;
@@ -613,30 +702,4 @@ primary  = \( exp \)
 &lt;hr&gt;
 &lt;p&gt;Overall it was fun. Kids were a bit quiet in the very first beginning but jumping around soon after they made the kitten meow. There was a moment during the lunch break, where we accidentally realized that while all the mentors were chatting in the lunch area, all the kids were at their table, focused on their app. That was beautiful and precious. &lt;/p&gt;
 &lt;p&gt;As Michelle put it, we are working hard at bringing more girls (also with the newly founded &lt;a href="http://womenwhocodehk.com/"&gt;Women Who Code HK&lt;/a&gt;) into programming because we no longer want to be outliers in this industry. And so far things look promising. &lt;/p&gt;
-&lt;p&gt;(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/app-jamming-2014.html</guid><pubDate>Sat, 19 Apr 2014 15:00:23 GMT</pubDate></item><item><title>Week 20140420</title><link>https://xysun.github.io/posts/week-20140420.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;&lt;a href="https://www.youtube.com/watch?v=St9cL47_1GI"&gt;Advanced technique for web functional testing&lt;/a&gt;&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;test responsive: &lt;code&gt;self.driver.set_window_size&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Needle -- test by comparing screenshots&lt;/li&gt;
-&lt;li&gt;Saucelabs&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://davehaeffner.com/selenium-guidebook/"&gt;the selenium guidebook&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;selenium testing tools cookbook&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h4&gt;&lt;a href="http://blog.miguelgrinberg.com/post/easy-web-scraping-with-python"&gt;Web scraping with Python&lt;/a&gt;&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;multiprocessing.Pool&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;argparse&lt;/code&gt; module&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h4&gt;Micellaneous&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;a href="http://www.artima.com/weblogs/viewpost.jsp?thread=240845"&gt;decorators with arguments&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;manually create swap file&lt;/p&gt;
-&lt;p&gt;Recently when I try to update the &lt;code&gt;opam&lt;/code&gt; on my &lt;a href="https://www.digitalocean.com/?refcode=52476c7ad3e1"&gt;DigitalOcean&lt;/a&gt; server, the below error pop up: &lt;/p&gt;
-&lt;p&gt;opam: "fork" failed: Cannot allocate memory.&lt;/p&gt;
-&lt;p&gt;It is due to lack of RAM memory. The solution is to create a swap file. I followed the instructions &lt;a href="http://wiki.paparazziuav.org/wiki/GettingTheGCSRunningonAGumstixBoard"&gt;here&lt;/a&gt;, note to compile &lt;code&gt;core&lt;/code&gt; a 512MB swap is not enough, I ended up creating a 1G swap. DigitalOcean also has a nice article on &lt;a href="https://www.digitalocean.com/community/articles/how-to-add-swap-on-ubuntu-12-04"&gt;creating swap files&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140420.html</guid><pubDate>Mon, 14 Apr 2014 13:41:33 GMT</pubDate></item></channel></rss>
+&lt;p&gt;(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/app-jamming-2014.html</guid><pubDate>Sat, 19 Apr 2014 15:00:23 GMT</pubDate></item></channel></rss>

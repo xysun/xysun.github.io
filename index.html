@@ -11,7 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://xysun.github.io/index.html">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-2-observer-pattern.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-3-decorator-pattern.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -63,7 +63,117 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-2-observer-pattern.html" class="u-url">Design Pattern #2: Observer Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-3-decorator-pattern.html" class="u-url">Design Pattern #3: Decorator Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-3-decorator-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-11-07T15:48:40+08:00" title="2015-11-07 15:48">2015-11-07 15:48</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-3-decorator-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-3-decorator-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>These are my notes for the book Head first design patterns. </p>
+<h3>Overview</h3>
+<ul>
+<li>Give objects new responsibilities without making any code changes to the underlying class, even at runtime.</li>
+</ul>
+<h3>Example problem</h3>
+<ul>
+<li>
+<p>Starbuzz's <code>cost()</code> function for beverage + condiments combinations</p>
+</li>
+<li>
+<p>Solution: </p>
+</li>
+</ul>
+<pre class="code literal-block"><span class="cm">/**</span>
+<span class="cm"> * Created by jsun on 11/7/2015 AD.</span>
+<span class="cm"> */</span>
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Beverage</span> <span class="o">{</span> <span class="c1">// abstract component</span>
+  <span class="k">def</span> <span class="n">cost</span><span class="k">:</span><span class="kt">Double</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">DarkRoast</span> <span class="k">extends</span> <span class="nc">Beverage</span><span class="o">{</span> <span class="c1">// concrete component</span>
+  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">2.00</span>
+<span class="o">}</span>
+
+<span class="c1">// we pass in the decorated object in constructor; decorator object is like a wrapper</span>
+<span class="c1">// decorator object mirror the types of decorated object (both extends Beverage here)</span>
+<span class="c1">// a class for condiments only --&gt; not really necessary? </span>
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Beverage</span> <span class="c1">// abstract decorator</span>
+
+<span class="k">class</span> <span class="nc">Mocha</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="o">){</span>
+  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span> <span class="c1">// "composing" behaviors</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">Whip</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="o">){</span>
+  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">Main</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">drink</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Whip</span><span class="o">(</span><span class="k">new</span> <span class="nc">Mocha</span><span class="o">(</span><span class="k">new</span> <span class="nc">DarkRoast</span><span class="o">))</span>
+    <span class="n">println</span><span class="o">(</span><span class="n">drink</span><span class="o">.</span><span class="n">cost</span><span class="o">)</span> <span class="c1">// 2 + 0.5 + 0.2 = 2.7</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Decorator Pattern</h3>
+<ul>
+<li>
+<p>The Decorator Pattern attached additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.</p>
+</li>
+<li>
+<p>Decorators have the same supertype as decorated.</p>
+</li>
+<li>
+<p>Each decorator HAS-A a component, i.e the decorator has an instance variable that holds a reference to a component</p>
+</li>
+<li>
+<p>Decorators are typically created by using other patterns like Factory and Builder.</p>
+</li>
+<li>
+<p>Downside: often result in a large number of small classes that can be overwhelming; can increase component instantiation complexity (can be mitigated by Factory/Builder pattern)</p>
+</li>
+<li>
+<p>Basically "wrappers"</p>
+</li>
+</ul>
+<h3>Design Principle</h3>
+<ul>
+<li>Classes should be open for extension, but closed for modification. Concentrate on areas that are most likely to change in the future.</li>
+</ul>
+<h3>Example in real life: <code>java.io</code> package</h3>
+<ul>
+<li>all decorators: eg. <code>LineNumberInputStream</code> -&gt; <code>BufferedInputStream</code> -&gt; <code>FileInputStream</code>
+</li>
+<li>abstract component: <code>InpustStream</code>
+</li>
+<li>concrete component: <code>FileInputStream</code>, <code>StringBufferInputStream</code>, etc</li>
+<li>abstract decorator: <code>FilterInputStream</code>
+</li>
+<li>concrete decorator: <code>BufferedInputStream</code>, <code>LineNumberInputStream</code>, etc.</li>
+</ul>
+<h3>Scala</h3>
+<ul>
+<li>Use <code>implicits</code> to add behavior without changing original class code (not runtime though)</li>
+</ul>
+<pre class="code literal-block"><span class="k">object</span> <span class="nc">ExtendedModels</span><span class="o">{</span>
+  <span class="k">implicit</span> <span class="k">class</span> <span class="nc">ExtendedBeverage</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">){</span>
+    <span class="k">def</span> <span class="n">costWithMilk</span> <span class="k">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span> <span class="c1">// Beverage now has a costWithMilk() method, not the best example</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-2-observer-pattern.html" class="u-url">Design Pattern #2: Observer Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
@@ -848,52 +958,6 @@ primary  = \( exp \)
 <p>Overall it was fun. Kids were a bit quiet in the very first beginning but jumping around soon after they made the kitten meow. There was a moment during the lunch break, where we accidentally realized that while all the mentors were chatting in the lunch area, all the kids were at their table, focused on their app. That was beautiful and precious. </p>
 <p>As Michelle put it, we are working hard at bringing more girls (also with the newly founded <a href="http://womenwhocodehk.com/">Women Who Code HK</a>) into programming because we no longer want to be outliers in this industry. And so far things look promising. </p>
 <p>(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )</p>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/week-20140420.html" class="u-url">Week 20140420</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Xiayun Sun
-            </span></p>
-            <p class="dateline"><a href="posts/week-20140420.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-14T21:41:33+08:00" title="2014-04-14 21:41">2014-04-14 21:41</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/week-20140420.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140420.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<h4><a href="https://www.youtube.com/watch?v=St9cL47_1GI">Advanced technique for web functional testing</a></h4>
-<ul>
-<li>test responsive: <code>self.driver.set_window_size</code>
-</li>
-<li>Needle -- test by comparing screenshots</li>
-<li>Saucelabs</li>
-<li><a href="http://davehaeffner.com/selenium-guidebook/">the selenium guidebook</a></li>
-<li>selenium testing tools cookbook</li>
-</ul>
-<hr>
-<h4><a href="http://blog.miguelgrinberg.com/post/easy-web-scraping-with-python">Web scraping with Python</a></h4>
-<ul>
-<li><code>multiprocessing.Pool</code></li>
-<li>
-<code>argparse</code> module</li>
-</ul>
-<hr>
-<h4>Micellaneous</h4>
-<ul>
-<li>
-<p><a href="http://www.artima.com/weblogs/viewpost.jsp?thread=240845">decorators with arguments</a></p>
-</li>
-<li>
-<p>manually create swap file</p>
-<p>Recently when I try to update the <code>opam</code> on my <a href="https://www.digitalocean.com/?refcode=52476c7ad3e1">DigitalOcean</a> server, the below error pop up: </p>
-<p>opam: "fork" failed: Cannot allocate memory.</p>
-<p>It is due to lack of RAM memory. The solution is to create a swap file. I followed the instructions <a href="http://wiki.paparazziuav.org/wiki/GettingTheGCSRunningonAGumstixBoard">here</a>, note to compile <code>core</code> a 512MB swap is not enough, I ended up creating a 1G swap. DigitalOcean also has a nice article on <a href="https://www.digitalocean.com/community/articles/how-to-add-swap-on-ubuntu-12-04">creating swap files</a></p>
-</li>
-</ul>
 </div>
     </div>
     </article>
