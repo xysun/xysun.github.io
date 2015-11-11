@@ -11,7 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://xysun.github.io/index.html">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-3-decorator-pattern.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-4-factory-pattern.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -63,7 +63,211 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-3-decorator-pattern.html" class="u-url">Design Pattern #3: Decorator Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-4-factory-pattern.html" class="u-url">Design Pattern #4: Factory Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-4-factory-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-11-10T21:43:45+08:00" title="2015-11-10 21:43">2015-11-10 21:43</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-4-factory-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-4-factory-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<h3>Example problem: pizza shop</h3>
+<pre class="code literal-block">  <span class="c1">// this code will need to change if pizza types change in the future</span>
+  <span class="c1">// i.e not "closed for modification"</span>
+
+  <span class="k">def</span> <span class="n">orderPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span><span class="k">:</span><span class="kt">Pizza</span> <span class="o">=</span> <span class="o">{</span> <span class="c1">// Pizza is a trait or abstract class</span>
+    <span class="k">val</span> <span class="n">pizza</span> <span class="k">=</span> <span class="n">pizzaType</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="s">"cheese"</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">CheesePizza</span>
+      <span class="k">case</span> <span class="s">"greek"</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">GreekPizza</span>
+      <span class="k">case</span> <span class="s">"pepperoni"</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">PepperoniPizza</span>
+    <span class="o">}</span>
+
+    <span class="n">pizza</span><span class="o">.</span><span class="n">prepare</span><span class="o">()</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">bake</span><span class="o">()</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">cut</span><span class="o">()</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">box</span><span class="o">()</span>
+
+    <span class="n">pizza</span>
+</pre>
+
+
+<h3>"Simple Factory Pattern"</h3>
+<ul>
+<li>Use an object to handle object creation.</li>
+<li>One implementation with no subclassing.</li>
+</ul>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">SimplePizzaFactory</span><span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">createPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span><span class="k">:</span><span class="kt">Pizza</span> <span class="o">=</span>
+    <span class="n">pizzaType</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="s">"cheese"</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">CheesePizza</span>
+      <span class="k">case</span> <span class="s">"greek"</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">GreekPizza</span>
+      <span class="k">case</span> <span class="s">"pepperoni"</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">PepperoniPizza</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// we pass factory in constructor</span>
+<span class="k">class</span> <span class="nc">PizzaShop</span><span class="o">(</span><span class="n">factory</span><span class="k">:</span> <span class="kt">SimplePizzaFactory</span><span class="o">)</span> <span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">orderPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span><span class="k">:</span><span class="kt">Pizza</span> <span class="o">=</span> <span class="o">{</span>
+
+    <span class="k">val</span> <span class="n">pizza</span> <span class="k">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">createPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="o">)</span>
+
+    <span class="n">pizza</span><span class="o">.</span><span class="n">prepare</span><span class="o">()</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">bake</span><span class="o">()</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">cut</span><span class="o">()</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">box</span><span class="o">()</span>
+
+    <span class="n">pizza</span>
+
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>The Good:</p>
+<ul>
+<li>Object creation is now encapsulated. </li>
+<li>Multiple instances can share one same factory. </li>
+</ul>
+<p>What if we need multiple factories? </p>
+<pre class="code literal-block"><span class="k">val</span> <span class="n">nyPizzaFactory</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">NYPizzaFactory</span> <span class="c1">// extends SimplePizzaFactory</span>
+<span class="k">val</span> <span class="n">nyPizzaStore</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">PizzaShop</span><span class="o">(</span><span class="n">nyPizzaFactory</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">chicagoPizzaFactory</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">ChicagoPizzaFactory</span>
+<span class="k">val</span> <span class="n">chicagoPizzaStore</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">PizzaShop</span><span class="o">(</span><span class="n">chicagoPizzaStore</span><span class="o">)</span>
+</pre>
+
+
+<p>hmm...</p>
+<h3>Factory Method Pattern</h3>
+<pre class="code literal-block"><span class="cm">/**</span>
+<span class="cm"> * Created by jsun on 11/10/2015 AD.</span>
+<span class="cm"> */</span>
+
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Pizza</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">prepare</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">bake</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">cut</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">box</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="c1">// we pass factory in constructor</span>
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">PizzaShop</span> <span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">createPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span><span class="k">:</span><span class="kt">Pizza</span> <span class="c1">// subclass must implement this "factory method"</span>
+
+  <span class="k">def</span> <span class="n">orderPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span><span class="k">:</span><span class="kt">Pizza</span> <span class="o">=</span> <span class="o">{</span>
+
+    <span class="k">val</span> <span class="n">pizza</span> <span class="k">=</span> <span class="n">createPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="o">)</span>
+
+    <span class="c1">// the rest procedures are localized and will be consistent</span>
+
+    <span class="n">pizza</span><span class="o">.</span><span class="n">prepare</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">bake</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">cut</span>
+    <span class="n">pizza</span><span class="o">.</span><span class="n">box</span>
+
+    <span class="n">pizza</span>
+
+  <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="k">class</span> <span class="nc">NYPizzaShop</span> <span class="k">extends</span> <span class="nc">PizzaShop</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">createPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">NYPizza</span>
+<span class="o">}</span>
+</pre>
+
+
+<ul>
+<li>Defer object creation to subclass</li>
+<li>Can localize other procedures (eg. <code>prepare</code>, <code>bake</code>, <code>cut</code>, <code>box</code>)</li>
+<li>
+<code>Creator</code> class (PizzaShop) + <code>Product</code> class (Pizza). "Parallel classes"</li>
+<li>However, creating <em>one</em> product only.</li>
+</ul>
+<p>Now what if you have different families of pizza ingredients? </p>
+<h3>Abstract Factory Pattern</h3>
+<pre class="code literal-block"><span class="c1">// "abstract factory"</span>
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">PizzaIngredientFactory</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">createDough</span><span class="k">:</span><span class="kt">Dough</span> <span class="c1">// "Factory Methods"</span>
+  <span class="k">def</span> <span class="n">createSauce</span><span class="k">:</span><span class="kt">Sauce</span>
+  <span class="c1">// will need to change interface if new ingredients are being added</span>
+<span class="o">}</span>
+
+<span class="c1">// concrete factory</span>
+<span class="k">class</span> <span class="nc">NYIngredientFactory</span> <span class="k">extends</span> <span class="nc">PizzaIngredientFactory</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">createDough</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">ThinCrustDough</span>
+  <span class="k">def</span> <span class="n">createSauce</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">MarinaraSauce</span>
+<span class="o">}</span>
+
+
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Pizza</span><span class="o">{</span>
+  <span class="k">var</span> <span class="n">dough</span><span class="k">:</span><span class="kt">Dough</span>
+  <span class="k">var</span> <span class="n">sauce</span><span class="k">:</span><span class="kt">Sauce</span>
+
+  <span class="k">def</span> <span class="n">prepare</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">bake</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">cut</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">box</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="c1">// use concrete factories through composition</span>
+<span class="k">class</span> <span class="nc">CheesePizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="k">:</span> <span class="kt">PizzaIngredientFactory</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Pizza</span><span class="o">{</span>
+
+  <span class="n">dough</span> <span class="k">=</span> <span class="n">ingredientFactory</span><span class="o">.</span><span class="n">createDough</span>
+  <span class="n">sauce</span> <span class="k">=</span> <span class="n">ingredientFactory</span><span class="o">.</span><span class="n">createSauce</span>
+
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">NYPizzaShop</span> <span class="k">extends</span> <span class="nc">PizzaShop</span><span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">createPizza</span><span class="o">(</span><span class="n">pizzaType</span><span class="k">:</span><span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">ingredientFactory</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">NYIngredientFactory</span>
+    <span class="n">pizzaType</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="s">"cheese"</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">CheesePizza</span><span class="o">(</span><span class="n">ingredientFactory</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<ul>
+<li>For multiple families of object</li>
+<li>Definition: create families of related or dependent objects (pizza ingredients here)  without specifying their concrete classes.</li>
+</ul>
+<h3>Design Principle (Dependency Inversion Principle)</h3>
+<ul>
+<li>
+<p>Depend upon abstractions. Do not depend upon concrete classes. </p>
+</li>
+<li>
+<p>No variables should hold a reference to a concrete class. (eg. using <code>new</code>)</p>
+</li>
+<li>
+<p>No class should derive from a concrete class.</p>
+</li>
+<li>
+<p>No method should override an implemented method of any of its base classes.</p>
+</li>
+</ul>
+<h3>Reference</h3>
+<ul>
+<li><a href="https://web.cs.dal.ca/~jin/3132/lectures/dp-07.pdf">https://web.cs.dal.ca/~jin/3132/lectures/dp-07.pdf</a></li>
+<li><a href="http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory">http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory</a></li>
+<li><a href="http://corey.quickshiftconsulting.com/blog/first-post">http://corey.quickshiftconsulting.com/blog/first-post</a></li>
+</ul>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-3-decorator-pattern.html" class="u-url">Design Pattern #3: Decorator Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
@@ -908,56 +1112,6 @@ primary  = \( exp \)
 
     return max_so_far, begin, end
 </pre>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/app-jamming-2014.html" class="u-url">App Jamming 2014</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Xiayun Sun
-            </span></p>
-            <p class="dateline"><a href="posts/app-jamming-2014.html" rel="bookmark"><time class="published dt-published" datetime="2014-04-19T23:00:23+08:00" title="2014-04-19 23:00">2014-04-19 23:00</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/app-jamming-2014.html#disqus_thread" data-disqus-identifier="cache/posts/app-jamming-2014.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<h4>App Jamming 2014</h4>
-<p>I was at my friend Michelle's app jamming 2014 event yesterday as a mentor. This is my first such experience and I thought I'd make a note, mostly because it was fun, partly because I really need to pick up blogging again.</p>
-<p>(I'll post pictures once I get them)</p>
-<p>App jamming is an annual event where we teach teenage girls (mostly age 11-15) to code with the help of <a href="http://ai2.appinventor.mit.edu/">MIT App inventor</a>. This year is the second year and around 50 girls signed up. </p>
-<p>Most girls have never written a line of code before. Because of this I was a bit reserved about the idea of writing an app, since in my mind writing an app is not necessary the best introduction to programming. But it turned out alright, and in hindsight, I think making an app has its unique advantages: </p>
-<ul>
-<li>
-<p>Better interaction, with UI</p>
-<p>MIT app inventor is awesome in that the build process is very simple and elegant -- just scan a QR code and the app would run on an Android phone. </p>
-<p>Kids were over the moon when they made the first app, "HelloPurr", where you can pat a cat and it will "meow". The room was filled with "meow"s and I don't think a traditional "Hello world" would have the same effect. (When I wrote my Hello world I emailed the .exe to my parents only to find out they were disappointed, my mom was like, "I thought there would be music!")</p>
-</li>
-<li>
-<p>Programming with blocks</p>
-<p>The app inventor uses the same idea behind <a href="http://scratch.mit.edu/">Scratch</a>, also from MIT, where you write programs by dragging logic blocks. While I am still a bit suspicious on whether this will foster the right logic thinking, it is indeed a straightforward-yet-not-scaring introduction of programming, since you don't need a text editor at all. </p>
-</li>
-</ul>
-<p>Along the way I've noticed a few interesting things:</p>
-<ul>
-<li>Most kids' favorite app is instagram! I've never ever used instagram. Gesus I feel so old. </li>
-<li>
-<p>Most kids' want to be invisible if they could have one superpower. </p>
-<p>I...never...thought about that. I only wished I could have more time than others (there was an episode in Doraemon where Nobi can stop the world's time and go to do whatever he wants and restarts world's time again. I remember watching this and thinking, I really really want to do the same. </p>
-<p>Is it because parents nowadays are way too harsh on their kids? </p>
-</li>
-<li>
-<p>Unfortunately, they also have amazingly short attention spans. </p>
-<p>I think it is partly due to the iPad-dominated world right now. I try to help on this as much as possible, by never giving answers straight away but rather guide them through the thinking process ("How do you want to make the ants move? What would happen when the hand crashes with the ant? And what's the right function to do that? Do you think <code>collide</code> is a good choice? Why?") But I don't think it helps much, especially during such short time. </p>
-</li>
-</ul>
-<hr>
-<p>Overall it was fun. Kids were a bit quiet in the very first beginning but jumping around soon after they made the kitten meow. There was a moment during the lunch break, where we accidentally realized that while all the mentors were chatting in the lunch area, all the kids were at their table, focused on their app. That was beautiful and precious. </p>
-<p>As Michelle put it, we are working hard at bringing more girls (also with the newly founded <a href="http://womenwhocodehk.com/">Women Who Code HK</a>) into programming because we no longer want to be outliers in this industry. And so far things look promising. </p>
-<p>(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )</p>
 </div>
     </div>
     </article>

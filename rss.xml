@@ -1,5 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link type="application/rss+xml" rel="self" href="https://xysun.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Sat, 07 Nov 2015 08:38:51 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #3: Decorator Pattern</title><link>https://xysun.github.io/posts/design-pattern-3-decorator-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes for the book Head first design patterns. &lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link href="https://xysun.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Wed, 11 Nov 2015 01:23:42 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #4: Factory Pattern</title><link>https://xysun.github.io/posts/design-pattern-4-factory-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h3&gt;Example problem: pizza shop&lt;/h3&gt;
+&lt;pre class="code literal-block"&gt;  &lt;span class="c1"&gt;// this code will need to change if pizza types change in the future&lt;/span&gt;
+  &lt;span class="c1"&gt;// i.e not "closed for modification"&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;orderPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Pizza&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// Pizza is a trait or abstract class&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;pizza&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pizzaType&lt;/span&gt; &lt;span class="k"&gt;match&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;"cheese"&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;CheesePizza&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;"greek"&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;GreekPizza&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;"pepperoni"&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;PepperoniPizza&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prepare&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bake&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cut&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;box&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;pizza&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;"Simple Factory Pattern"&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Use an object to handle object creation.&lt;/li&gt;
+&lt;li&gt;One implementation with no subclassing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SimplePizzaFactory&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Pizza&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+    &lt;span class="n"&gt;pizzaType&lt;/span&gt; &lt;span class="k"&gt;match&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;"cheese"&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;CheesePizza&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;"greek"&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;GreekPizza&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;"pepperoni"&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;PepperoniPizza&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// we pass factory in constructor&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PizzaShop&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;factory&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;SimplePizzaFactory&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;orderPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Pizza&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;pizza&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;factory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prepare&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bake&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cut&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;box&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;pizza&lt;/span&gt;
+
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;The Good:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Object creation is now encapsulated. &lt;/li&gt;
+&lt;li&gt;Multiple instances can share one same factory. &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;What if we need multiple factories? &lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;nyPizzaFactory&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;NYPizzaFactory&lt;/span&gt; &lt;span class="c1"&gt;// extends SimplePizzaFactory&lt;/span&gt;
+&lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;nyPizzaStore&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;PizzaShop&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nyPizzaFactory&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;chicagoPizzaFactory&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;ChicagoPizzaFactory&lt;/span&gt;
+&lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;chicagoPizzaStore&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;PizzaShop&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;chicagoPizzaStore&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;hmm...&lt;/p&gt;
+&lt;h3&gt;Factory Method Pattern&lt;/h3&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
+&lt;span class="cm"&gt; * Created by jsun on 11/10/2015 AD.&lt;/span&gt;
+&lt;span class="cm"&gt; */&lt;/span&gt;
+
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;prepare&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;bake&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cut&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;box&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// we pass factory in constructor&lt;/span&gt;
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PizzaShop&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Pizza&lt;/span&gt; &lt;span class="c1"&gt;// subclass must implement this "factory method"&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;orderPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Pizza&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;pizza&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;createPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;// the rest procedures are localized and will be consistent&lt;/span&gt;
+
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;prepare&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bake&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cut&lt;/span&gt;
+    &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;box&lt;/span&gt;
+
+    &lt;span class="n"&gt;pizza&lt;/span&gt;
+
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;NYPizzaShop&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;PizzaShop&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;NYPizza&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Defer object creation to subclass&lt;/li&gt;
+&lt;li&gt;Can localize other procedures (eg. &lt;code&gt;prepare&lt;/code&gt;, &lt;code&gt;bake&lt;/code&gt;, &lt;code&gt;cut&lt;/code&gt;, &lt;code&gt;box&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Creator&lt;/code&gt; class (PizzaShop) + &lt;code&gt;Product&lt;/code&gt; class (Pizza). "Parallel classes"&lt;/li&gt;
+&lt;li&gt;However, creating &lt;em&gt;one&lt;/em&gt; product only.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now what if you have different families of pizza ingredients? &lt;/p&gt;
+&lt;h3&gt;Abstract Factory Pattern&lt;/h3&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="c1"&gt;// "abstract factory"&lt;/span&gt;
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PizzaIngredientFactory&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createDough&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Dough&lt;/span&gt; &lt;span class="c1"&gt;// "Factory Methods"&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createSauce&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Sauce&lt;/span&gt;
+  &lt;span class="c1"&gt;// will need to change interface if new ingredients are being added&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// concrete factory&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;NYIngredientFactory&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;PizzaIngredientFactory&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createDough&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;ThinCrustDough&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createSauce&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;MarinaraSauce&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;dough&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Dough&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;sauce&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Sauce&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;prepare&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;bake&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cut&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;box&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// use concrete factories through composition&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CheesePizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ingredientFactory&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;PizzaIngredientFactory&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="n"&gt;dough&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ingredientFactory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createDough&lt;/span&gt;
+  &lt;span class="n"&gt;sauce&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ingredientFactory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createSauce&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;NYPizzaShop&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;PizzaShop&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createPizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pizzaType&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;ingredientFactory&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;NYIngredientFactory&lt;/span&gt;
+    &lt;span class="n"&gt;pizzaType&lt;/span&gt; &lt;span class="k"&gt;match&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s"&gt;"cheese"&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;CheesePizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ingredientFactory&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;For multiple families of object&lt;/li&gt;
+&lt;li&gt;Definition: create families of related or dependent objects (pizza ingredients here)  without specifying their concrete classes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Design Principle (Dependency Inversion Principle)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Depend upon abstractions. Do not depend upon concrete classes. &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;No variables should hold a reference to a concrete class. (eg. using &lt;code&gt;new&lt;/code&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;No class should derive from a concrete class.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;No method should override an implemented method of any of its base classes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Reference&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://web.cs.dal.ca/~jin/3132/lectures/dp-07.pdf"&gt;https://web.cs.dal.ca/~jin/3132/lectures/dp-07.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory"&gt;http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://corey.quickshiftconsulting.com/blog/first-post"&gt;http://corey.quickshiftconsulting.com/blog/first-post&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-4-factory-pattern.html</guid><pubDate>Tue, 10 Nov 2015 13:43:45 GMT</pubDate></item><item><title>Design Pattern #3: Decorator Pattern</title><link>https://xysun.github.io/posts/design-pattern-3-decorator-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes for the book Head first design patterns. &lt;/p&gt;
 &lt;h3&gt;Overview&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;Give objects new responsibilities without making any code changes to the underlying class, even at runtime.&lt;/li&gt;
@@ -670,36 +855,4 @@ primary  = \( exp \)
             end = i
 
     return max_so_far, begin, end
-&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140504.html</guid><pubDate>Thu, 01 May 2014 14:24:37 GMT</pubDate></item><item><title>App Jamming 2014</title><link>https://xysun.github.io/posts/app-jamming-2014.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;h4&gt;App Jamming 2014&lt;/h4&gt;
-&lt;p&gt;I was at my friend Michelle's app jamming 2014 event yesterday as a mentor. This is my first such experience and I thought I'd make a note, mostly because it was fun, partly because I really need to pick up blogging again.&lt;/p&gt;
-&lt;p&gt;(I'll post pictures once I get them)&lt;/p&gt;
-&lt;p&gt;App jamming is an annual event where we teach teenage girls (mostly age 11-15) to code with the help of &lt;a href="http://ai2.appinventor.mit.edu/"&gt;MIT App inventor&lt;/a&gt;. This year is the second year and around 50 girls signed up. &lt;/p&gt;
-&lt;p&gt;Most girls have never written a line of code before. Because of this I was a bit reserved about the idea of writing an app, since in my mind writing an app is not necessary the best introduction to programming. But it turned out alright, and in hindsight, I think making an app has its unique advantages: &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Better interaction, with UI&lt;/p&gt;
-&lt;p&gt;MIT app inventor is awesome in that the build process is very simple and elegant -- just scan a QR code and the app would run on an Android phone. &lt;/p&gt;
-&lt;p&gt;Kids were over the moon when they made the first app, "HelloPurr", where you can pat a cat and it will "meow". The room was filled with "meow"s and I don't think a traditional "Hello world" would have the same effect. (When I wrote my Hello world I emailed the .exe to my parents only to find out they were disappointed, my mom was like, "I thought there would be music!")&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Programming with blocks&lt;/p&gt;
-&lt;p&gt;The app inventor uses the same idea behind &lt;a href="http://scratch.mit.edu/"&gt;Scratch&lt;/a&gt;, also from MIT, where you write programs by dragging logic blocks. While I am still a bit suspicious on whether this will foster the right logic thinking, it is indeed a straightforward-yet-not-scaring introduction of programming, since you don't need a text editor at all. &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Along the way I've noticed a few interesting things:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Most kids' favorite app is instagram! I've never ever used instagram. Gesus I feel so old. &lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Most kids' want to be invisible if they could have one superpower. &lt;/p&gt;
-&lt;p&gt;I...never...thought about that. I only wished I could have more time than others (there was an episode in Doraemon where Nobi can stop the world's time and go to do whatever he wants and restarts world's time again. I remember watching this and thinking, I really really want to do the same. &lt;/p&gt;
-&lt;p&gt;Is it because parents nowadays are way too harsh on their kids? &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Unfortunately, they also have amazingly short attention spans. &lt;/p&gt;
-&lt;p&gt;I think it is partly due to the iPad-dominated world right now. I try to help on this as much as possible, by never giving answers straight away but rather guide them through the thinking process ("How do you want to make the ants move? What would happen when the hand crashes with the ant? And what's the right function to do that? Do you think &lt;code&gt;collide&lt;/code&gt; is a good choice? Why?") But I don't think it helps much, especially during such short time. &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;Overall it was fun. Kids were a bit quiet in the very first beginning but jumping around soon after they made the kitten meow. There was a moment during the lunch break, where we accidentally realized that while all the mentors were chatting in the lunch area, all the kids were at their table, focused on their app. That was beautiful and precious. &lt;/p&gt;
-&lt;p&gt;As Michelle put it, we are working hard at bringing more girls (also with the newly founded &lt;a href="http://womenwhocodehk.com/"&gt;Women Who Code HK&lt;/a&gt;) into programming because we no longer want to be outliers in this industry. And so far things look promising. &lt;/p&gt;
-&lt;p&gt;(There was a girl at my table who participated last year, and fell in love with programming. This year she is graduating from high school and she is picking computer science as her major. I was talking to her and telling her she would have a great adventure and we were both excited. It's really fulfilling to see we actually made an impact. )&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/app-jamming-2014.html</guid><pubDate>Sat, 19 Apr 2014 15:00:23 GMT</pubDate></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><category>Code</category><category>Weekly</category><guid>https://xysun.github.io/posts/week-20140504.html</guid><pubDate>Thu, 01 May 2014 14:24:37 GMT</pubDate></item></channel></rss>
