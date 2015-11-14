@@ -11,7 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://xysun.github.io/index.html">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-4-factory-pattern.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-5-singleton-pattern.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -63,7 +63,117 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-4-factory-pattern.html" class="u-url">Design Pattern #4: Factory Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-5-singleton-pattern.html" class="u-url">Design Pattern #5: Singleton Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-5-singleton-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-11-14T15:48:26+08:00" title="2015-11-14 15:48">2015-11-14 15:48</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-5-singleton-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-5-singleton-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>These are my notes about the book Head First Design Patterns.</p>
+<h3>Definition:</h3>
+<ul>
+<li>
+<p>Ensure one and only one object is instantiated for a given class, and provides a global point of access. </p>
+</li>
+<li>
+<p>Example usage: global resources like connection/thread pools</p>
+</li>
+<li>
+<p>For resource intensive objects, can implemented in lazy manner.</p>
+</li>
+</ul>
+<h3>Java implementation:</h3>
+<p>Use a private constructor.</p>
+<pre class="code literal-block"><span class="cm">/**</span>
+<span class="cm"> * Created by jsun on 11/14/2015 AD.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){};</span>
+
+    <span class="c1">// NOT THREAD SAFE!</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span> <span class="c1">// others have to call this method to get instance</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// other methods below</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3>To be thread safe</h3>
+<ul>
+<li>Use <code>synchronized</code>. Expensive (can decrease performance by 100x) and we actually only need to synchronize during the first time.</li>
+</ul>
+<pre class="code literal-block"><span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span>
+</pre>
+
+
+<ul>
+<li>Create eagerly</li>
+</ul>
+<p>JVM will ensure instance created before any thread access.</p>
+<pre class="code literal-block"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
+
+    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){};</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<ul>
+<li>Double checked locking: only synchronize if instance is not created yet.</li>
+</ul>
+<pre class="code literal-block"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">volatile</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
+
+    <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">(){};</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="kd">synchronized</span> <span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">){</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">uniqueInstance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span> <span class="c1">// check again</span>
+                    <span class="n">uniqueInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Singleton</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">uniqueInstance</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3>Scala:</h3>
+<ul>
+<li>Scala has native support for singleton: <code>Object</code>.</li>
+</ul>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-4-factory-pattern.html" class="u-url">Design Pattern #4: Factory Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
@@ -1040,78 +1150,6 @@ primary  = \( exp \)
 </ul>
 </li>
 </ol>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/week-20140504.html" class="u-url">Week 20140504</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Xiayun Sun
-            </span></p>
-            <p class="dateline"><a href="posts/week-20140504.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-01T22:24:37+08:00" title="2014-05-01 22:24">2014-05-01 22:24</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/week-20140504.html#disqus_thread" data-disqus-identifier="cache/posts/week-20140504.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<h4><a href="http://courses.cs.washington.edu/courses/cse341/13sp/#lectures">Dan Grossman</a></h4>
-<ul>
-<li>Syntax, semantics, idioms, libraries, tools</li>
-<li>records: <code>#field_name record_name</code>
-</li>
-<li>tuples are syntax sugers of records (field_name = 1, 2, 3...)</li>
-<li>
-<code>datatype</code> bindings: <code>Constant of int | Add of expr * expr</code>
-</li>
-<li>pattern matching: <code>case x of =&gt;</code>
-</li>
-<li>one-of (Option); each-of (Records)</li>
-<li>type synonym: <code>type name = t</code>. <code>type card = suit * rank</code>
-</li>
-<li>polymorphic datatype: <code>datatype 'a option = NONE | SOME of 'a</code>
-</li>
-<li>
-<code>val p = e</code>. <code>p</code> --&gt; patterns</li>
-<li><code>fun f p = e</code></li>
-<li>
-<code>exception</code>, <code>raise</code>
-</li>
-<li><code>e1 handle exn =&gt; e2</code></li>
-<li>tail optimization: remove caller from call stack</li>
-<li>the wrath of premature optimization</li>
-</ul>
-<hr>
-<h4><a href="http://www.amazon.com/Foundation-Novels-Isaac-Asimov/dp/0553293354/ref=sr_1_1?ie=UTF8&amp;qid=1399198338&amp;sr=8-1&amp;keywords=asimov+foundation">Foundation by Isaac Asimov</a></h4>
-<p>(Notes generated by my little <a href="https://gist.github.com/xysun/9837480">Kindle script</a></p>
-<ul>
-<li>If you're born in a cubicle and grow up in a corridor, and work in a cell, and vacation in a crowded sun-room, then coming up into the open with nothing but sky over you might just give you a nervous breakdown. </li>
-<li>I don't care an electron</li>
-<li>And when Onum Barr stepped into his little garden early the next morning, he found a box at his feet. It contained provisions, concentrated provisions such as one would find aboard ship, and alien in taste and preparation. But they were good, and lasted long. </li>
-<li>The whole war is a battle between those two systems, between the Empire and the Foundation; between the big and the little. </li>
-</ul>
-<hr>
-<h4><a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">Max sub-array problem</a></h4>
-<pre class="code literal-block">def max_sub_array(l):
-    max_ending_here = max_so_far = l[0]
-    begin = begin_temp = end = l[0]
-
-    for i in range(1, len(l)):
-        if l[i] &gt; l[i] + max_ending_here:
-            max_ending_here = l[i]
-            begin_temp = i
-        else:
-            max_ending_here += l[i]
-
-        if max_ending_here &gt;= max_so_far:
-            max_so_far = max_ending_here
-            begin = begin_temp
-            end = i
-
-    return max_so_far, begin, end
-</pre>
 </div>
     </div>
     </article>
