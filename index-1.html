@@ -63,7 +63,50 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/week-20140504.html" class="u-url">Week 20140504</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" class="u-url">Install LLVM OCaml bindings (and UTop)</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-06T23:27:24+08:00" title="2014-05-06 23:27">2014-05-06 23:27</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/install-llvm-ocaml-bindings-and-toplevel.html#disqus_thread" data-disqus-identifier="cache/posts/install-llvm-ocaml-bindings-and-toplevel.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>I put on a <a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings">Stackoverflow answer here</a></p>
+<ol>
+<li>
+<p>Build LLVM with configuration: <code>--with-ocaml-libdir =</code>ocamlc -where``</p>
+</li>
+<li>
+<p>To compile LLVM codes: <code>ocamlc -cc g++ llvm.cma test.ml -o test</code></p>
+</li>
+<li>
+<p>To make UTop work: </p>
+<ul>
+<li>
+<p>create a <code>myutop_main.ml</code> file with: <code>let () = UTop_main.main ()</code></p>
+</li>
+<li>
+<p>create a custom <code>llvmutop</code>: <code>ocamlfind ocamlmktop -o llvmutop -thread -linkpkg -package utop llvm.cma myutop_main.ml -cc g++</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>If you just want OCaml's build-in toplevel:</p>
+<ul>
+<li><code>ocamlmktop -o llvmtop llvm.cma -cc g++</code></li>
+</ul>
+</li>
+</ol>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/week-20140504.html" class="u-url">Week 20140504</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun

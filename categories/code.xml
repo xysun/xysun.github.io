@@ -1,5 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing (Code)</title><link>https://xysun.github.io</link><description></description><atom:link href="https://xysun.github.io/categories/code.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sat, 14 Nov 2015 08:25:11 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #5: Singleton Pattern</title><link>https://xysun.github.io/posts/design-pattern-5-singleton-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing (Code)</title><link>https://xysun.github.io</link><description></description><atom:link rel="self" type="application/rss+xml" href="https://xysun.github.io/categories/code.xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Nov 2015 13:15:05 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #6: Command Pattern</title><link>https://xysun.github.io/posts/design-pattern-6-command-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
+&lt;h3&gt;Example problem&lt;/h3&gt;
+&lt;p&gt;Home automation remote control: on, off, undo. Supporting extensible commands.&lt;/p&gt;
+&lt;h3&gt;Cook example&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Customer &amp;lt;--&amp;gt; &lt;code&gt;Client&lt;/code&gt;: customer create command object and call &lt;code&gt;setCommand&lt;/code&gt; on invoker&lt;/li&gt;
+&lt;li&gt;Order &amp;lt;--&amp;gt; &lt;code&gt;Command&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Waitress &amp;lt;--&amp;gt; &lt;code&gt;Invoker&lt;/code&gt;: can call &lt;code&gt;execute&lt;/code&gt; on the command objects.&lt;/li&gt;
+&lt;li&gt;Cook &amp;lt;--&amp;gt; &lt;code&gt;Receiver&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Order&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cook&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Cook&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// hold reference to the actual "actor"&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;orderUp&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// interface that encapsulates the action&lt;/span&gt;
+    &lt;span class="n"&gt;cook&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;makeBurger&lt;/span&gt; &lt;span class="c1"&gt;// can vary among different command objects&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Simple remote control with one slot&lt;/h3&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Command&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;LightOnCommand&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;light&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Light&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Command&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// command object&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;execute&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;light&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RemoteControl&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// invoker&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;slot&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Command&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;setCommand&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Command&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;slot&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cmd&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;buttonPressed&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;slot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;Main&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// client&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;control&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;RemoteControl&lt;/span&gt;
+    &lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setCommand&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;LightOnCommand&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;Light&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;control&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;buttonPressed&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Support undo:&lt;/h3&gt;
+&lt;p&gt;Keep track of last command called.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="c1"&gt;// NOTE: these are NOT gramatically correct&lt;/span&gt;
+
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Command&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;undo&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;LightOnCommand&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;light&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Light&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Command&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// command object&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;execute&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;light&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;undo&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;light&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;off&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RemoteControl&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// invoker&lt;/span&gt;
+  &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;slots&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;Command&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;Nil&lt;/span&gt;
+
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;undoCommand&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Command&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;NoCommand&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;setCommand&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmd&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Command&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;slots&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;i&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cmd&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;buttonPressed&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;slots&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;
+    &lt;span class="n"&gt;undoCommand&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;slots&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// keep track of last command &lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;undo&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;undoCommand&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;undo&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;To support a history of undos, keep a stack. &lt;/p&gt;
+&lt;h3&gt;Use a macro command&lt;/h3&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MacroCommand&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;commands&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;Command&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Command&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;execute&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;commands&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;foreach&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Definition&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Encapsulating a request as an object. Decouple the requester of an action from the object that actually performs the action.&lt;/li&gt;
+&lt;li&gt;"Store them, pass them around, and invoke them when you need them"&lt;/li&gt;
+&lt;li&gt;Roles:&lt;ul&gt;
+&lt;li&gt;Client: create a concrete command and set its receiver&lt;/li&gt;
+&lt;li&gt;Invoker: holds a command and call its &lt;code&gt;execute&lt;/code&gt; method&lt;/li&gt;
+&lt;li&gt;Receiver: know how to carry out the request&lt;/li&gt;
+&lt;li&gt;Command: provide &lt;code&gt;execute&lt;/code&gt; (and &lt;code&gt;undo&lt;/code&gt;) method. Bind together a set of actions on a specific receiver.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Others&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Implementing a &lt;code&gt;NoCommand&lt;/code&gt; can be useful (no need to check &lt;code&gt;null&lt;/code&gt; any more). aka "null object" (better handled by &lt;code&gt;Option&lt;/code&gt; type in scala)&lt;/li&gt;
+&lt;li&gt;More usages:&lt;ul&gt;
+&lt;li&gt;Job queues: have a group of threads sit on end of the queue, retrieve a command object, call its &lt;code&gt;execute&lt;/code&gt; method.&lt;/li&gt;
+&lt;li&gt;Logging requests: as we execute commands, we store a history of them on disk (command object supports &lt;code&gt;save&lt;/code&gt; method). When a crash occurs, we reload the command objects (&lt;code&gt;reload&lt;/code&gt; method of command object) and invoke &lt;code&gt;execute&lt;/code&gt; in order. --&amp;gt; can support all-or-nothing transaction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-6-command-pattern.html</guid><pubDate>Sun, 15 Nov 2015 12:08:34 GMT</pubDate></item><item><title>Design Pattern #5: Singleton Pattern</title><link>https://xysun.github.io/posts/design-pattern-5-singleton-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
 &lt;h3&gt;Definition:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -877,29 +983,4 @@ primary  = \( exp \)
 &lt;p&gt;&lt;img alt="performance 1" src="https://xysun.github.io/regex_pic/plot_normal.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;However, when tested with those pathological inputs, Thompson's algorithm is a clear win, specifically Python will hang when &lt;code&gt;n&lt;/code&gt; is over 25. Notice the time scale is in seconds rather than in milliseconds in the previous plot. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="performance 2" src="https://xysun.github.io/regex_pic/plot_path.jpg"&gt;&lt;/p&gt;
-&lt;p&gt;Russ Cox wrote about &lt;a href="http://swtch.com/~rsc/regexp/regexp1.html"&gt;history behind regex implementation&lt;/a&gt; (last section).&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</guid><pubDate>Sun, 18 May 2014 14:26:11 GMT</pubDate></item><item><title>Install LLVM OCaml bindings (and UTop)</title><link>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;I put on a &lt;a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings"&gt;Stackoverflow answer here&lt;/a&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Build LLVM with configuration: &lt;code&gt;--with-ocaml-libdir =&lt;/code&gt;ocamlc -where``&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;To compile LLVM codes: &lt;code&gt;ocamlc -cc g++ llvm.cma test.ml -o test&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;To make UTop work: &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;create a &lt;code&gt;myutop_main.ml&lt;/code&gt; file with: &lt;code&gt;let () = UTop_main.main ()&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;create a custom &lt;code&gt;llvmutop&lt;/code&gt;: &lt;code&gt;ocamlfind ocamlmktop -o llvmutop -thread -linkpkg -package utop llvm.cma myutop_main.ml -cc g++&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;If you just want OCaml's build-in toplevel:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ocamlmktop -o llvmtop llvm.cma -cc g++&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;&lt;/div&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/install-llvm-ocaml-bindings-and-toplevel.html</guid><pubDate>Tue, 06 May 2014 15:27:24 GMT</pubDate></item></channel></rss>
+&lt;p&gt;Russ Cox wrote about &lt;a href="http://swtch.com/~rsc/regexp/regexp1.html"&gt;history behind regex implementation&lt;/a&gt; (last section).&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html</guid><pubDate>Sun, 18 May 2014 14:26:11 GMT</pubDate></item></channel></rss>

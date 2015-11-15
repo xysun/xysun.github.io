@@ -11,7 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://xysun.github.io/index.html">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-5-singleton-pattern.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-6-command-pattern.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -63,7 +63,133 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-5-singleton-pattern.html" class="u-url">Design Pattern #5: Singleton Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-6-command-pattern.html" class="u-url">Design Pattern #6: Command Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-6-command-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-11-15T20:08:34+08:00" title="2015-11-15 20:08">2015-11-15 20:08</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-6-command-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-6-command-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>These are my notes about the book Head First Design Patterns.</p>
+<h3>Example problem</h3>
+<p>Home automation remote control: on, off, undo. Supporting extensible commands.</p>
+<h3>Cook example</h3>
+<ul>
+<li>Customer &lt;--&gt; <code>Client</code>: customer create command object and call <code>setCommand</code> on invoker</li>
+<li>Order &lt;--&gt; <code>Command</code>
+</li>
+<li>Waitress &lt;--&gt; <code>Invoker</code>: can call <code>execute</code> on the command objects.</li>
+<li>Cook &lt;--&gt; <code>Receiver</code>
+</li>
+</ul>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">Order</span><span class="o">(</span><span class="n">cook</span><span class="k">:</span><span class="kt">Cook</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// hold reference to the actual "actor"</span>
+
+  <span class="k">def</span> <span class="n">orderUp</span><span class="o">()</span> <span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span> <span class="c1">// interface that encapsulates the action</span>
+    <span class="n">cook</span><span class="o">.</span><span class="n">makeBurger</span> <span class="c1">// can vary among different command objects</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3>Simple remote control with one slot</h3>
+<pre class="code literal-block"><span class="k">abstract</span> <span class="k">class</span> <span class="nc">Command</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">execute</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">LightOnCommand</span><span class="o">(</span><span class="n">light</span><span class="k">:</span><span class="kt">Light</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Command</span><span class="o">{</span> <span class="c1">// command object</span>
+  <span class="k">def</span> <span class="n">execute</span> <span class="k">=</span> <span class="n">light</span><span class="o">.</span><span class="n">on</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">RemoteControl</span><span class="o">{</span> <span class="c1">// invoker</span>
+  <span class="k">var</span> <span class="n">slot</span><span class="k">:</span><span class="kt">Command</span> <span class="o">=</span> <span class="kc">null</span>
+
+  <span class="k">def</span> <span class="n">setCommand</span><span class="o">(</span><span class="n">cmd</span><span class="k">:</span><span class="kt">Command</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">slot</span> <span class="k">=</span> <span class="n">cmd</span>
+
+  <span class="k">def</span> <span class="n">buttonPressed</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">slot</span><span class="o">.</span><span class="n">execute</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">Main</span><span class="o">{</span> <span class="c1">// client</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">control</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">RemoteControl</span>
+    <span class="n">control</span><span class="o">.</span><span class="n">setCommand</span><span class="o">(</span><span class="k">new</span> <span class="nc">LightOnCommand</span><span class="o">(</span><span class="k">new</span> <span class="nc">Light</span><span class="o">))</span>
+    <span class="n">control</span><span class="o">.</span><span class="n">buttonPressed</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Support undo:</h3>
+<p>Keep track of last command called.</p>
+<pre class="code literal-block"><span class="c1">// NOTE: these are NOT gramatically correct</span>
+
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Command</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">execute</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">undo</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">LightOnCommand</span><span class="o">(</span><span class="n">light</span><span class="k">:</span><span class="kt">Light</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Command</span><span class="o">{</span> <span class="c1">// command object</span>
+  <span class="k">def</span> <span class="n">execute</span> <span class="k">=</span> <span class="n">light</span><span class="o">.</span><span class="n">on</span>
+  <span class="k">def</span> <span class="n">undo</span> <span class="k">=</span> <span class="n">light</span><span class="o">.</span><span class="n">off</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">RemoteControl</span><span class="o">{</span> <span class="c1">// invoker</span>
+  <span class="k">val</span> <span class="n">slots</span><span class="k">:</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">Command</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Nil</span>
+
+  <span class="k">var</span> <span class="n">undoCommand</span><span class="k">:</span><span class="kt">Command</span> <span class="o">=</span> <span class="nc">NoCommand</span>
+
+  <span class="k">def</span> <span class="n">setCommand</span><span class="o">(</span><span class="n">i</span><span class="k">:</span><span class="kt">Int</span><span class="o">,</span> <span class="n">cmd</span><span class="k">:</span><span class="kt">Command</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">slots</span><span class="o">[</span><span class="kt">i</span><span class="o">]</span> <span class="k">=</span> <span class="n">cmd</span>
+
+  <span class="k">def</span> <span class="n">buttonPressed</span><span class="o">(</span><span class="n">i</span><span class="k">:</span><span class="kt">Int</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">slots</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="n">execute</span>
+    <span class="n">undoCommand</span> <span class="k">=</span> <span class="n">slots</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="c1">// keep track of last command </span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">undo</span> <span class="k">=</span> <span class="n">undoCommand</span><span class="o">.</span><span class="n">undo</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>To support a history of undos, keep a stack. </p>
+<h3>Use a macro command</h3>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">MacroCommand</span><span class="o">(</span><span class="n">commands</span><span class="k">:</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">Command</span><span class="o">])</span> <span class="k">extends</span> <span class="nc">Command</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">execute</span> <span class="k">=</span> <span class="n">commands</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">execute</span><span class="o">)</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Definition</h3>
+<ul>
+<li>Encapsulating a request as an object. Decouple the requester of an action from the object that actually performs the action.</li>
+<li>"Store them, pass them around, and invoke them when you need them"</li>
+<li>Roles:<ul>
+<li>Client: create a concrete command and set its receiver</li>
+<li>Invoker: holds a command and call its <code>execute</code> method</li>
+<li>Receiver: know how to carry out the request</li>
+<li>Command: provide <code>execute</code> (and <code>undo</code>) method. Bind together a set of actions on a specific receiver.</li>
+</ul>
+</li>
+</ul>
+<h3>Others</h3>
+<ul>
+<li>Implementing a <code>NoCommand</code> can be useful (no need to check <code>null</code> any more). aka "null object" (better handled by <code>Option</code> type in scala)</li>
+<li>More usages:<ul>
+<li>Job queues: have a group of threads sit on end of the queue, retrieve a command object, call its <code>execute</code> method.</li>
+<li>Logging requests: as we execute commands, we store a history of them on disk (command object supports <code>save</code> method). When a crash occurs, we reload the command objects (<code>reload</code> method of command object) and invoke <code>execute</code> in order. --&gt; can support all-or-nothing transaction.</li>
+</ul>
+</li>
+</ul>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-5-singleton-pattern.html" class="u-url">Design Pattern #5: Singleton Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
@@ -1107,49 +1233,6 @@ primary  = \( exp \)
 <p>However, when tested with those pathological inputs, Thompson's algorithm is a clear win, specifically Python will hang when <code>n</code> is over 25. Notice the time scale is in seconds rather than in milliseconds in the previous plot. </p>
 <p><img alt="performance 2" src="regex_pic/plot_path.jpg"></p>
 <p>Russ Cox wrote about <a href="http://swtch.com/~rsc/regexp/regexp1.html">history behind regex implementation</a> (last section).</p>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" class="u-url">Install LLVM OCaml bindings (and UTop)</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Xiayun Sun
-            </span></p>
-            <p class="dateline"><a href="posts/install-llvm-ocaml-bindings-and-toplevel.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-06T23:27:24+08:00" title="2014-05-06 23:27">2014-05-06 23:27</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/install-llvm-ocaml-bindings-and-toplevel.html#disqus_thread" data-disqus-identifier="cache/posts/install-llvm-ocaml-bindings-and-toplevel.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<p>I put on a <a href="http://stackoverflow.com/questions/20002608/llvm-ocaml-bindings">Stackoverflow answer here</a></p>
-<ol>
-<li>
-<p>Build LLVM with configuration: <code>--with-ocaml-libdir =</code>ocamlc -where``</p>
-</li>
-<li>
-<p>To compile LLVM codes: <code>ocamlc -cc g++ llvm.cma test.ml -o test</code></p>
-</li>
-<li>
-<p>To make UTop work: </p>
-<ul>
-<li>
-<p>create a <code>myutop_main.ml</code> file with: <code>let () = UTop_main.main ()</code></p>
-</li>
-<li>
-<p>create a custom <code>llvmutop</code>: <code>ocamlfind ocamlmktop -o llvmutop -thread -linkpkg -package utop llvm.cma myutop_main.ml -cc g++</code></p>
-</li>
-</ul>
-</li>
-<li>
-<p>If you just want OCaml's build-in toplevel:</p>
-<ul>
-<li><code>ocamlmktop -o llvmtop llvm.cma -cc g++</code></li>
-</ul>
-</li>
-</ol>
 </div>
     </div>
     </article>
