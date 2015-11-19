@@ -1,5 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing (Book)</title><link>https://xysun.github.io</link><description></description><atom:link rel="self" type="application/rss+xml" href="https://xysun.github.io/categories/book.xml"></atom:link><language>en</language><lastBuildDate>Sun, 15 Nov 2015 13:15:05 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #6: Command Pattern</title><link>https://xysun.github.io/posts/design-pattern-6-command-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Do Nothing (Book)</title><link>https://xysun.github.io</link><description></description><atom:link type="application/rss+xml" rel="self" href="https://xysun.github.io/categories/book.xml"></atom:link><language>en</language><lastBuildDate>Thu, 19 Nov 2015 14:53:32 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #7: Adapter and Facade Pattern</title><link>https://xysun.github.io/posts/design-pattern-7-adapter-and-facade-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
+&lt;h3&gt;Adapter pattern&lt;/h3&gt;
+&lt;p&gt;If it walks like a duck and quacks like a duck, it might be a turkey wrapped in a duck adapter.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;bstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;quack&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Turkey&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;gobble&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WildTurky&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Turkey&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;gobble&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"gobble"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"wildturkey fly"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TurkeyAdapter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;turkey&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Turkey&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// implement the interface of type adapting to,&lt;/span&gt;
+  &lt;span class="c1"&gt;// hold a reference to Turkey through constructor: "composed" with adaptee&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;turkey&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fly&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;quack&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;turkey&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gobble&lt;/span&gt; &lt;span class="c1"&gt;// translates request from target interface to adaptee interface&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Facade pattern&lt;/h3&gt;
+&lt;p&gt;Home theater example.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HomeTheaterFacade&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="c1"&gt;// access to all subsystems&lt;/span&gt;
+                       &lt;span class="nc"&gt;Amplifier&lt;/span&gt; &lt;span class="n"&gt;amp&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                        &lt;span class="nc"&gt;DvdPlayer&lt;/span&gt; &lt;span class="n"&gt;dvd&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                        &lt;span class="nc"&gt;Projector&lt;/span&gt; &lt;span class="n"&gt;projector&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                        &lt;span class="nc"&gt;Screen&lt;/span&gt; &lt;span class="n"&gt;screen&lt;/span&gt;
+                         &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;watchMovie&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;projector&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;
+    &lt;span class="n"&gt;amp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;
+    &lt;span class="n"&gt;screen&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;up&lt;/span&gt;
+    &lt;span class="n"&gt;projector&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;
+    &lt;span class="n"&gt;dvd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;on&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Definition&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Adapters: converts the interface of a class into another interface the clients expect. &lt;/li&gt;
+&lt;li&gt;Compare to decorators: decorators add new behaviors.&lt;/li&gt;
+&lt;li&gt;Facade pattern: provide a unified interface to a set of interfaces in a subsystem. Subsystem still accessible. Decouple client from subsystem.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;OO principle&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;The principle of least knowledge -- talk only to your immediate friends.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When design a system, be careful of the number of classes it interacts with. -- don't have a large number of classes coupled together.&lt;/p&gt;
+&lt;p&gt;We should only invoke methods that belong to&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the object itself&lt;/li&gt;
+&lt;li&gt;objects passed in as parameter of the method&lt;/li&gt;
+&lt;li&gt;any object the method creates &lt;/li&gt;
+&lt;li&gt;any component of the object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DO NOT&lt;/strong&gt; call method of an object returned by another call&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example: &lt;/p&gt;
+&lt;p&gt;without the principle:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="nf"&gt;getTemp&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;
+    &lt;span class="n"&gt;Thermometer&lt;/span&gt; &lt;span class="n"&gt;thermometer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;station&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getThermometer&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// DON'T: we're using an object returned by another class, we depend on both station and thermometer class&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;thermometer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getTemperature&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;with the principle:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="nf"&gt;getTemp&lt;/span&gt;&lt;span class="o"&gt;(){&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;station&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getTemperature&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// station is a component of the object, ok to call its method&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-7-adapter-and-facade-pattern.html</guid><pubDate>Thu, 19 Nov 2015 14:03:09 GMT</pubDate></item><item><title>Design Pattern #6: Command Pattern</title><link>https://xysun.github.io/posts/design-pattern-6-command-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
 &lt;h3&gt;Example problem&lt;/h3&gt;
 &lt;p&gt;Home automation remote control: on, off, undo. Supporting extensible commands.&lt;/p&gt;
 &lt;h3&gt;Cook example&lt;/h3&gt;

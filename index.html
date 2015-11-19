@@ -11,7 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://xysun.github.io/index.html">
 <link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-6-command-pattern.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-7-adapter-and-facade-pattern.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -63,7 +63,107 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-6-command-pattern.html" class="u-url">Design Pattern #6: Command Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-7-adapter-and-facade-pattern.html" class="u-url">Design Pattern #7: Adapter and Facade Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-7-adapter-and-facade-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-11-19T22:03:09+08:00" title="2015-11-19 22:03">2015-11-19 22:03</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-7-adapter-and-facade-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-7-adapter-and-facade-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>These are my notes about the book Head First Design Patterns.</p>
+<h3>Adapter pattern</h3>
+<p>If it walks like a duck and quacks like a duck, it might be a turkey wrapped in a duck adapter.</p>
+<pre class="code literal-block"><span class="n">bstract</span> <span class="k">class</span> <span class="nc">Duck</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">fly</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">quack</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Turkey</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">gobble</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">fly</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">WildTurky</span> <span class="k">extends</span> <span class="nc">Turkey</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">gobble</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"gobble"</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">fly</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"wildturkey fly"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">TurkeyAdapter</span><span class="o">(</span><span class="n">turkey</span><span class="k">:</span> <span class="kt">Turkey</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Duck</span><span class="o">{</span> <span class="c1">// implement the interface of type adapting to,</span>
+  <span class="c1">// hold a reference to Turkey through constructor: "composed" with adaptee</span>
+
+  <span class="k">def</span> <span class="n">fly</span> <span class="k">=</span> <span class="n">turkey</span><span class="o">.</span><span class="n">fly</span>
+
+  <span class="k">def</span> <span class="n">quack</span> <span class="k">=</span> <span class="n">turkey</span><span class="o">.</span><span class="n">gobble</span> <span class="c1">// translates request from target interface to adaptee interface</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3>Facade pattern</h3>
+<p>Home theater example.</p>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">HomeTheaterFacade</span><span class="o">(</span> <span class="c1">// access to all subsystems</span>
+                       <span class="nc">Amplifier</span> <span class="n">amp</span><span class="o">,</span>
+                        <span class="nc">DvdPlayer</span> <span class="n">dvd</span><span class="o">,</span>
+                        <span class="nc">Projector</span> <span class="n">projector</span><span class="o">,</span>
+                        <span class="nc">Screen</span> <span class="n">screen</span>
+                         <span class="o">)</span> <span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">watchMovie</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">projector</span><span class="o">.</span><span class="n">on</span>
+    <span class="n">amp</span><span class="o">.</span><span class="n">on</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">up</span>
+    <span class="n">projector</span><span class="o">.</span><span class="n">on</span>
+    <span class="n">dvd</span><span class="o">.</span><span class="n">on</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Definition</h3>
+<ul>
+<li>Adapters: converts the interface of a class into another interface the clients expect. </li>
+<li>Compare to decorators: decorators add new behaviors.</li>
+<li>Facade pattern: provide a unified interface to a set of interfaces in a subsystem. Subsystem still accessible. Decouple client from subsystem.</li>
+</ul>
+<h3>OO principle</h3>
+<ul>
+<li>The principle of least knowledge -- talk only to your immediate friends.</li>
+</ul>
+<p>When design a system, be careful of the number of classes it interacts with. -- don't have a large number of classes coupled together.</p>
+<p>We should only invoke methods that belong to</p>
+<ul>
+<li>the object itself</li>
+<li>objects passed in as parameter of the method</li>
+<li>any object the method creates </li>
+<li>any component of the object</li>
+<li>
+<strong>DO NOT</strong> call method of an object returned by another call</li>
+</ul>
+<p>Example: </p>
+<p>without the principle:</p>
+<pre class="code literal-block"><span class="kd">public</span> <span class="kt">float</span> <span class="nf">getTemp</span><span class="o">(){</span>
+    <span class="n">Thermometer</span> <span class="n">thermometer</span> <span class="o">=</span> <span class="n">station</span><span class="o">.</span><span class="na">getThermometer</span><span class="o">();</span> <span class="c1">// DON'T: we're using an object returned by another class, we depend on both station and thermometer class</span>
+    <span class="k">return</span> <span class="n">thermometer</span><span class="o">.</span><span class="na">getTemperature</span><span class="o">();</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>with the principle:</p>
+<pre class="code literal-block"><span class="kd">public</span> <span class="kt">float</span> <span class="nf">getTemp</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="n">station</span><span class="o">.</span><span class="na">getTemperature</span><span class="o">();</span> <span class="c1">// station is a component of the object, ok to call its method</span>
+<span class="o">}</span>
+</pre>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-6-command-pattern.html" class="u-url">Design Pattern #6: Command Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
@@ -1109,130 +1209,6 @@
 <p><code>nikola build</code>. Done.</p>
 </li>
 </ol>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/regex-parsing-thompsons-algorithm.html" class="u-url">Regex parsing: Thompson's algorithm</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Xiayun Sun
-            </span></p>
-            <p class="dateline"><a href="posts/regex-parsing-thompsons-algorithm.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-18T22:26:11+08:00" title="2014-05-18 22:26">2014-05-18 22:26</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/regex-parsing-thompsons-algorithm.html#disqus_thread" data-disqus-identifier="cache/posts/regex-parsing-thompsons-algorithm.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<p>This is a repost of my previous blog article at the old domain. </p>
-<p>Source code can be found <a href="https://github.com/xysun/regex">here</a></p>
-<h3>Theory</h3>
-<p>The central idea behind a regex engine is non-deterministic automata, NFA. While the name is scary, it is just a state machine which can transit to other state machines on certain characters or nothing (which is called an "epsilon transition")</p>
-<p>For example, below is an NFA for the simple concatenation regex <code>ab</code>: </p>
-<p><img alt="simple regex1" src="regex_pic/simple1.jpg"></p>
-<p><code>s0</code> is the start state. It can accept one character 'a' and transform to state <code>s1</code>. Similarly <code>s1</code> can only accept one character 'b' and transfer to state <code>s2</code>. <code>s2</code> is the final state, if we have exhausted the input string and the current state is a final state, the pattern matching is successful. </p>
-<p>Below is a slightly more complicated example, matching <code>a?a</code>: </p>
-<p><img alt="simple regex2" src="regex_pic/simple2.jpg"></p>
-<p>Here the transition with an epsilon means a state can transform into the next state without any input. Therefore this combined NFA matches both <code>aa</code> and <code>a</code>, i.e. <code>a?a</code>. </p>
-<p>To build a regex engine is just to build an NFA corresponding to the input regex pattern, which can be done similarly as parsing arithmetic expressions, i.e. push individual NFAs for individual characters onto a stack, upon seeing an operator, eg star/question mark/alternation/concatenation, pop NFAs from the stack, connecting the popped NFAs to form a new NFA and push back onto the stack again. </p>
-<p>I recommend these two excellent articles on NFA. <a href="http://perl.plover.com/Regex/article.html">1. How Regexes Work </a> <a href="http://swtch.com/~rsc/regexp/regexp1.html">2. Regular Expression Matching Can be Simple and Fast</a></p>
-<h3>Thompson's algorithm</h3>
-<p>The difference between Thompson's algorithm and the current backtracking implementation in Python/Ruby/... lies in the treatment for multiple transitions. Backtracking algorithm tracks only one transition at one step (always choose the greedy transition) and backtrack to another route if current route fails, while Thompson's algorithm tracks all possible transitions simultaneously. </p>
-<p>Take the above <code>a?a</code> for example, suppose we are matching an input string of <code>a</code> to this NFA. The backtracking algorithm will try the <code>a</code> transition from <code>s0</code> to <code>s1</code> first since it is greedy, but this route fails since input is exhausted at non-final state <code>s1</code>, so the algorithm backtracks to <code>s0</code> and choose the epsilon transition this time, and is able to arrive at the final state <code>s2</code> correctly. On the other hand, Thompson's algorithm will try to track both <code>a</code> and epsilon transition simultaneously. Before it reads anything, both <code>s0</code> and <code>s1</code> are considered as starting states since <code>s0</code> can transit into <code>s1</code> without any input. Now after reading the only character <code>a</code>, only <code>s1</code> will successfully transit into final state <code>s2</code>, and the matching completes. </p>
-<p>This means Thompson's algorithm will significantly perform better over some pathological input patterns such as <code>a?a?a?aaa</code> matching <code>aaa</code>, since time complexity is exponential for backtracking algorithm and only linear for Thompson's algorithm.</p>
-<h3>Code</h3>
-<p>First step is to convert an input string into post-fix tokens, and add concatenation in the right place. A simple lexer and recursive-descent parser is used for this stage, following the grammar below (for detailed lexing and parsing code please refer to the source code):</p>
-<pre class="code literal-block">Grammar for regex:
-
-regex = exp $
-
-exp      = term [|] exp      {push '|'}
-         | term
-         |                   empty?
-
-term     = factor term       chain {add \x08}  # \x08 is used as CONCAT token
-         | factor
-
-factor   = primary [*]       star {push '*'}
-         | primary [+]       plus {push '+'}
-         | primary [?]       optional {push '?'}
-         | primary
-
-primary  = \( exp \)
-         | char              literal {push char}
-</pre>
-
-
-<p>A very simple class is enough to simulate an NFA:</p>
-<pre class="code literal-block"><span class="k">class</span> <span class="nc">State</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># epsilon-closure</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span> <span class="o">=</span> <span class="p">{}</span> <span class="c"># a dictionary of char --&gt; state</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_end</span> <span class="o">=</span> <span class="bp">False</span> <span class="c"># is it the ending state?</span>
-</pre>
-
-
-<p>Next we read one token at a time, perform relevant NFA transformations and push the transformed NFA onto a stack. For example, when seeing a CONCAT token, pop two NFAs from the stack, chain these two NFAs together and create a new CONCAT NFA, and push the new NFA onto the stack again. When all the tokens are consumed, there should be only one  NFA left on the stack. Details on how to construct NFAs can be found either from the two articles cited above, or from the book <a href="http://www.amazon.com/Compilers-Principles-Techniques-Tools-Edition/dp/0321486811">Compilers: Principles Techniques and Tools</a></p>
-<p>A <code>handler</code> class is used for this step, the class has a dictionary of different handlers for each type of tokens. </p>
-<pre class="code literal-block"><span class="k">class</span> <span class="nc">Handler</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'CHAR'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_char</span><span class="p">,</span> <span class="s">'CONCAT'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_concat</span><span class="p">,</span>
-                         <span class="s">'ALT'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_alt</span><span class="p">,</span> <span class="s">'STAR'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_rep</span><span class="p">,</span>
-                         <span class="s">'PLUS'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_rep</span><span class="p">,</span> <span class="s">'QMARK'</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_qmark</span><span class="p">}</span>
-</pre>
-
-
-<p>These steps above form the exposed <code>compile</code> function, which turns an input regex string into an NFA machine. </p>
-<pre class="code literal-block"><span class="kn">from</span> <span class="nn">parse</span> <span class="kn">import</span> <span class="n">Lexer</span><span class="p">,</span> <span class="n">Parser</span><span class="p">,</span> <span class="n">Token</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">NFA</span><span class="p">,</span> <span class="n">Handler</span>
-
-<span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">debug</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
-
-    <span class="n">lexer</span> <span class="o">=</span> <span class="n">Lexer</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">(</span><span class="n">lexer</span><span class="p">)</span>
-    <span class="n">tokens</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
-
-    <span class="n">handler</span> <span class="o">=</span> <span class="n">Handler</span><span class="p">()</span>
-
-    <span class="n">nfa_stack</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-        <span class="n">handler</span><span class="o">.</span><span class="n">handlers</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">](</span><span class="n">t</span><span class="p">,</span> <span class="n">nfa_stack</span><span class="p">)</span>
-
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">nfa_stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="c"># check there is only one final NFA on the stack</span>
-    <span class="k">return</span> <span class="n">nfa_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> 
-</pre>
-
-
-<p>Next we can feed the constructed NFA a string and check whether it is accepted or not. The <code>match</code> function uses two <code>sets</code> to hold <code>current_state</code> and <code>next_state</code>, make each <code>char</code> transitions and epsilon transitions and check if any ending state is arrived:</p>
-<pre class="code literal-block"><span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
-       <span class="n">current_states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-       <span class="bp">self</span><span class="o">.</span><span class="n">addstate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">current_states</span><span class="p">)</span> <span class="c"># addstate makes epsilon transitions</span>
-
-       <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
-           <span class="n">next_states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-           <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">current_states</span><span class="p">:</span>
-               <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">transitions</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                   <span class="n">trans_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
-                   <span class="bp">self</span><span class="o">.</span><span class="n">addstate</span><span class="p">(</span><span class="n">trans_state</span><span class="p">,</span> <span class="n">next_states</span><span class="p">)</span>
-
-           <span class="n">current_states</span> <span class="o">=</span> <span class="n">next_states</span> 
-
-       <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">current_states</span><span class="p">:</span> <span class="c">#check if any ending state reached, if so, return match</span>
-           <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">is_end</span><span class="p">:</span>
-               <span class="k">return</span> <span class="bp">True</span>
-       <span class="k">return</span> <span class="bp">False</span>
-</pre>
-
-
-<h3>Performance</h3>
-<p>Benchmarking with Python's built-in <code>re</code> module, over normal inputs (from <a href="http://www2.research.att.com/~gsf/testregex/">Glenn Fowler's test suite</a>, Python performs better, which is as expected since I didn't do any optimization. But the average speed is fast for both algorithms -- less than 1ms.</p>
-<p><img alt="performance 1" src="regex_pic/plot_normal.jpg"></p>
-<p>However, when tested with those pathological inputs, Thompson's algorithm is a clear win, specifically Python will hang when <code>n</code> is over 25. Notice the time scale is in seconds rather than in milliseconds in the previous plot. </p>
-<p><img alt="performance 2" src="regex_pic/plot_path.jpg"></p>
-<p>Russ Cox wrote about <a href="http://swtch.com/~rsc/regexp/regexp1.html">history behind regex implementation</a> (last section).</p>
 </div>
     </div>
     </article>
