@@ -1,5 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link type="application/rss+xml" rel="self" href="https://xysun.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Thu, 19 Nov 2015 14:53:32 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #7: Adapter and Facade Pattern</title><link>https://xysun.github.io/posts/design-pattern-7-adapter-and-facade-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link rel="self" type="application/rss+xml" href="https://xysun.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Thu, 26 Nov 2015 15:18:30 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #8: Template Method Pattern</title><link>https://xysun.github.io/posts/design-pattern-8-template-method-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book "Headfirst Design Patterns"&lt;/p&gt;
+&lt;h3&gt;Example&lt;/h3&gt;
+&lt;p&gt;Make coffee and tea.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CaffeineBeverage&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;prepare&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;={&lt;/span&gt;
+    &lt;span class="n"&gt;boilWater&lt;/span&gt;
+    &lt;span class="n"&gt;brew&lt;/span&gt;
+    &lt;span class="n"&gt;pourInCup&lt;/span&gt;
+    &lt;span class="n"&gt;addCondiments&lt;/span&gt;
+    &lt;span class="n"&gt;hook&lt;/span&gt; &lt;span class="c1"&gt;// hook&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;boilWater&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"boil water"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;brew&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;pourInCup&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"pour in cup"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;addCondiments&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;hook&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{}&lt;/span&gt; &lt;span class="c1"&gt;// "hook": for optional part of algorithm&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Coffee&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;CaffeineBeverage&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;brew&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"brewing coffee"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;addCondiments&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"add sugar"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Tea&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;CaffeineBeverage&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;brew&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"brewing tea"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;addCondiments&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"add lemon"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Definition&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Defines the steps(aka "template") of an algorithm and allow subclass to provide the implementation of one or more steps.&lt;/li&gt;
+&lt;li&gt;Keep algorithm's structure unchanged.&lt;/li&gt;
+&lt;li&gt;Encapsulate algorithms&lt;/li&gt;
+&lt;li&gt;vs Strategy: strategy = encapsulates interchangeable behaviors and use delegation to decide which behavior to use. In strategy, the class that's composed implements the &lt;em&gt;entire&lt;/em&gt; algorithm. While in the template pattern, the algorithm is incomplete without subclass' implementation.&lt;/li&gt;
+&lt;li&gt;Great design for creating frameworks.&lt;/li&gt;
+&lt;li&gt;Factory Method pattern is a special case of Template Method Pattern.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Design principle&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Don't call us, we'll call you.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Allow low level components to hook themselves into a system, but the high level components determine when they're needed, and how.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-8-template-method-pattern.html</guid><pubDate>Thu, 26 Nov 2015 14:14:29 GMT</pubDate></item><item><title>Design Pattern #7: Adapter and Facade Pattern</title><link>https://xysun.github.io/posts/design-pattern-7-adapter-and-facade-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
 &lt;h3&gt;Adapter pattern&lt;/h3&gt;
 &lt;p&gt;If it walks like a duck and quacks like a duck, it might be a turkey wrapped in a duck adapter.&lt;/p&gt;
 &lt;pre class="code literal-block"&gt;&lt;span class="n"&gt;bstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
@@ -942,20 +994,4 @@
 &lt;/pre&gt;
 
 
-&lt;p&gt;In this way the complete test process can be kicked off by simply running &lt;code&gt;mftest &amp;lt;env&amp;gt;&lt;/code&gt; where &lt;code&gt;&amp;lt;env&amp;gt;&lt;/code&gt; can be either &lt;code&gt;demo&lt;/code&gt; or &lt;code&gt;pilot&lt;/code&gt; or &lt;code&gt;prod&lt;/code&gt;, and the program will pick up the right config.&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><category>selenium</category><guid>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</guid><pubDate>Sun, 21 Sep 2014 05:11:27 GMT</pubDate></item><item><title>How to insert images into posts in Nikola</title><link>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's &lt;a href="http://getnikola.com/handbook.html"&gt;official docs&lt;/a&gt;(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.&lt;/p&gt;
-&lt;p&gt;The simple trick is based on the fact that Nikola will automatically copy all contents under &lt;code&gt;files/&lt;/code&gt; folder to &lt;code&gt;output/&lt;/code&gt; folder when you run &lt;code&gt;nikola build&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;So here are the steps:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Create a subdirectory in &lt;code&gt;files/&lt;/code&gt;. Say &lt;code&gt;regex_pic/&lt;/code&gt; (where I put my images for the previous post on &lt;a href="http://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html"&gt;parsing regex&lt;/a&gt;) -- this is more about better practice, since I don't like to clutter my &lt;code&gt;output/&lt;/code&gt; folder. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Put your images into that folder. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;In your post, use regular markdown syntax to reference those images. For example: &lt;code&gt;![simple image1](/regex_pic/simple1.jpg)&lt;/code&gt; will insert &lt;code&gt;regex_pic/simple1.jpg&lt;/code&gt;. &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;nikola build&lt;/code&gt;. Done.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;&lt;/div&gt;</description><category>Code</category><category>Tricks</category><guid>https://xysun.github.io/posts/how-to-insert-pictures-into-posts-in-nikola.html</guid><pubDate>Sun, 18 May 2014 16:19:35 GMT</pubDate></item></channel></rss>
+&lt;p&gt;In this way the complete test process can be kicked off by simply running &lt;code&gt;mftest &amp;lt;env&amp;gt;&lt;/code&gt; where &lt;code&gt;&amp;lt;env&amp;gt;&lt;/code&gt; can be either &lt;code&gt;demo&lt;/code&gt; or &lt;code&gt;pilot&lt;/code&gt; or &lt;code&gt;prod&lt;/code&gt;, and the program will pick up the right config.&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><category>selenium</category><guid>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</guid><pubDate>Sun, 21 Sep 2014 05:11:27 GMT</pubDate></item></channel></rss>

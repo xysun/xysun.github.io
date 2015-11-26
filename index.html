@@ -10,8 +10,8 @@
 <meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://xysun.github.io/index.html">
-<link rel="next" href="index-1.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-7-adapter-and-facade-pattern.html" type="text/html">
+<link rel="next" href="index-2.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-8-template-method-pattern.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -63,7 +63,77 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-7-adapter-and-facade-pattern.html" class="u-url">Design Pattern #7: Adapter and Facade Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-8-template-method-pattern.html" class="u-url">Design Pattern #8: Template Method Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-8-template-method-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-11-26T22:14:29+08:00" title="2015-11-26 22:14">2015-11-26 22:14</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-8-template-method-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-8-template-method-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>These are my notes about the book "Headfirst Design Patterns"</p>
+<h3>Example</h3>
+<p>Make coffee and tea.</p>
+<pre class="code literal-block"><span class="k">abstract</span> <span class="k">class</span> <span class="nc">CaffeineBeverage</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">prepare</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">={</span>
+    <span class="n">boilWater</span>
+    <span class="n">brew</span>
+    <span class="n">pourInCup</span>
+    <span class="n">addCondiments</span>
+    <span class="n">hook</span> <span class="c1">// hook</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">boilWater</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"boil water"</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">brew</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">pourInCup</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"pour in cup"</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">addCondiments</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">hook</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{}</span> <span class="c1">// "hook": for optional part of algorithm</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">Coffee</span> <span class="k">extends</span> <span class="nc">CaffeineBeverage</span><span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">brew</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"brewing coffee"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">addCondiments</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"add sugar"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">Tea</span> <span class="k">extends</span> <span class="nc">CaffeineBeverage</span><span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">brew</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"brewing tea"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">addCondiments</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">"add lemon"</span><span class="o">)</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Definition</h3>
+<ul>
+<li>Defines the steps(aka "template") of an algorithm and allow subclass to provide the implementation of one or more steps.</li>
+<li>Keep algorithm's structure unchanged.</li>
+<li>Encapsulate algorithms</li>
+<li>vs Strategy: strategy = encapsulates interchangeable behaviors and use delegation to decide which behavior to use. In strategy, the class that's composed implements the <em>entire</em> algorithm. While in the template pattern, the algorithm is incomplete without subclass' implementation.</li>
+<li>Great design for creating frameworks.</li>
+<li>Factory Method pattern is a special case of Template Method Pattern.</li>
+</ul>
+<h3>Design principle</h3>
+<ul>
+<li>
+<p>Don't call us, we'll call you.</p>
+</li>
+<li>
+<p>Allow low level components to hook themselves into a system, but the high level components determine when they're needed, and how.</p>
+</li>
+</ul>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-7-adapter-and-facade-pattern.html" class="u-url">Design Pattern #7: Adapter and Facade Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
@@ -1177,46 +1247,12 @@
 <p>In this way the complete test process can be kicked off by simply running <code>mftest &lt;env&gt;</code> where <code>&lt;env&gt;</code> can be either <code>demo</code> or <code>pilot</code> or <code>prod</code>, and the program will pick up the right config.</p>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" class="u-url">How to insert images into posts in Nikola</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Xiayun Sun
-            </span></p>
-            <p class="dateline"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-19T00:19:35+08:00" title="2014-05-19 00:19">2014-05-19 00:19</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/how-to-insert-pictures-into-posts-in-nikola.html#disqus_thread" data-disqus-identifier="cache/posts/how-to-insert-pictures-into-posts-in-nikola.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<p>Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's <a href="http://getnikola.com/handbook.html">official docs</a>(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.</p>
-<p>The simple trick is based on the fact that Nikola will automatically copy all contents under <code>files/</code> folder to <code>output/</code> folder when you run <code>nikola build</code>.</p>
-<p>So here are the steps:</p>
-<ol>
-<li>
-<p>Create a subdirectory in <code>files/</code>. Say <code>regex_pic/</code> (where I put my images for the previous post on <a href="http://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">parsing regex</a>) -- this is more about better practice, since I don't like to clutter my <code>output/</code> folder. </p>
-</li>
-<li>
-<p>Put your images into that folder. </p>
-</li>
-<li>
-<p>In your post, use regular markdown syntax to reference those images. For example: <code>![simple image1](/regex_pic/simple1.jpg)</code> will insert <code>regex_pic/simple1.jpg</code>. </p>
-</li>
-<li>
-<p><code>nikola build</code>. Done.</p>
-</li>
-</ol>
-</div>
-    </div>
     </article>
 </div>
 
         <nav class="postindexpager"><ul class="pager">
 <li class="next">
-                <a href="index-1.html" rel="next">Older posts</a>
+                <a href="index-2.html" rel="next">Older posts</a>
             </li>
         </ul></nav><script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 </div>

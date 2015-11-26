@@ -2,14 +2,16 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
 <head>
 <meta charset="utf-8">
-<base href="https://xysun.github.io/archive.html">
+<base href="https://xysun.github.io/index-2.html">
 <meta name="description" content="This is a demo site for Nikola.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Archive | Do Nothing</title>
+<title>Do Nothing (old posts, page 2) | Do Nothing</title>
 <link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <meta content="#5670d4" name="theme-color">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
-<link rel="canonical" href="https://xysun.github.io/archive.html">
+<link rel="canonical" href="https://xysun.github.io/index-2.html">
+<link rel="prev" href="index.html" type="text/html">
+<link rel="next" href="index-1.html" type="text/html">
 <!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]-->
 </head>
 <body>
@@ -34,8 +36,8 @@
 <!-- /.navbar-header -->
         <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
             <ul class="nav navbar-nav">
-<li class="active">
-<a href="#">Archive <span class="sr-only">(active)</span></a>
+<li>
+<a href="archive.html">Archive</a>
                 </li>
 <li>
 <a href="stories/about.html">About</a>
@@ -60,17 +62,53 @@
         <div class="row">
             
             
-<article class="listpage"><header><h1>Archive</h1>
-    </header><ul class="postlist">
+
+<div class="postindex">
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" class="u-url">How to insert images into posts in Nikola</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" rel="bookmark"><time class="published dt-published" datetime="2014-05-19T00:19:35+08:00" title="2014-05-19 00:19">2014-05-19 00:19</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/how-to-insert-pictures-into-posts-in-nikola.html#disqus_thread" data-disqus-identifier="cache/posts/how-to-insert-pictures-into-posts-in-nikola.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>Since it took me a surprisingly long time to solve this simple problem -- it's not in Nikola's <a href="http://getnikola.com/handbook.html">official docs</a>(where they only have a section on galleries) and my Google search was unfruitful, I thought I'd write it down.</p>
+<p>The simple trick is based on the fact that Nikola will automatically copy all contents under <code>files/</code> folder to <code>output/</code> folder when you run <code>nikola build</code>.</p>
+<p>So here are the steps:</p>
+<ol>
 <li>
-<a href="2015/index.html">2015</a>
-            (8)
-        </li>
+<p>Create a subdirectory in <code>files/</code>. Say <code>regex_pic/</code> (where I put my images for the previous post on <a href="http://xysun.github.io/posts/regex-parsing-thompsons-algorithm.html">parsing regex</a>) -- this is more about better practice, since I don't like to clutter my <code>output/</code> folder. </p>
+</li>
 <li>
-<a href="2014/index.html">2014</a>
-            (13)
-    </li>
-</ul></article>
+<p>Put your images into that folder. </p>
+</li>
+<li>
+<p>In your post, use regular markdown syntax to reference those images. For example: <code>![simple image1](/regex_pic/simple1.jpg)</code> will insert <code>regex_pic/simple1.jpg</code>. </p>
+</li>
+<li>
+<p><code>nikola build</code>. Done.</p>
+</li>
+</ol>
+</div>
+    </div>
+    </article>
+</div>
+
+        <nav class="postindexpager"><ul class="pager">
+<li class="previous">
+                <a href="index.html" rel="prev">Newer posts</a>
+            </li>
+            <li class="next">
+                <a href="index-1.html" rel="next">Older posts</a>
+            </li>
+        </ul></nav><script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 </div>
         <!--End of body content-->
 
