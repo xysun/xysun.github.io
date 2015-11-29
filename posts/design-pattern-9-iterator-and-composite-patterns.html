@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="https://xysun.github.io/posts/design-pattern-9-iterator-and-composite-patterns.html">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Pattern #9: Iterator and Composite Patterns | Do Nothing</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
+<link rel="canonical" href="https://xysun.github.io/posts/design-pattern-9-iterator-and-composite-patterns.html">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]--><meta name="author" content="Xiayun Sun">
+<link rel="prev" href="design-pattern-8-template-method-pattern.html" title="Design Pattern #8: Template Method Pattern" type="text/html">
+<meta property="og:site_name" content="Do Nothing">
+<meta property="og:title" content="Design Pattern #9: Iterator and Composite Patterns">
+<meta property="og:url" content="https://xysun.github.io/posts/design-pattern-9-iterator-and-composite-patterns.html">
+<meta property="og:description" content="These are my notes about the book Head First Design Patterns.
+Starting example:
+Merge two implementation with ArrayList and Array.
+case class MenuItem (
+                 name:String,
+                 ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2015-11-29T16:24:17+08:00">
+<meta property="article:tag" content="Book">
+<meta property="article:tag" content="Code">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://xysun.github.io/">
+
+                <span id="blog-title">Do Nothing</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../archive.html">Archive</a>
+                </li>
+<li>
+<a href="../stories/about.html">About</a>
+                </li>
+<li>
+<a href="../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="design-pattern-9-iterator-and-composite-patterns.md" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Design Pattern #9: Iterator and Composite Patterns</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2015-11-29T16:24:17+08:00" itemprop="datePublished" title="2015-11-29 16:24">2015-11-29 16:24</time></a></p>
+                <p class="commentline">
+        
+    <a href="design-pattern-9-iterator-and-composite-patterns.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-9-iterator-and-composite-patterns.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="design-pattern-9-iterator-and-composite-patterns.md" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>These are my notes about the book Head First Design Patterns.</p>
+<h3>Starting example:</h3>
+<p>Merge two implementation with <code>ArrayList</code> and <code>Array</code>.</p>
+<pre class="code literal-block"><span class="k">case</span> <span class="k">class</span> <span class="nc">MenuItem</span> <span class="o">(</span>
+                 <span class="n">name</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span>
+                 <span class="n">description</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span>
+                 <span class="n">vegetarian</span><span class="k">:</span><span class="kt">Boolean</span><span class="o">,</span>
+                 <span class="n">price</span><span class="k">:</span><span class="kt">Double</span><span class="o">){</span>
+
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">DinerMenu</span><span class="o">{</span>
+  <span class="c1">// dinermenu use array</span>
+  <span class="k">var</span> <span class="n">menuItems</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">]</span> <span class="k">=</span> <span class="kc">null</span>
+  <span class="k">var</span> <span class="n">numberOfItems</span> <span class="k">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="n">addItem</span><span class="o">(</span><span class="n">item</span><span class="k">:</span> <span class="kt">MenuItem</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">menuItems</span><span class="o">(</span><span class="n">numberOfItems</span><span class="o">)</span> <span class="k">=</span> <span class="n">item</span>
+    <span class="n">numberOfItems</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">getMenu</span> <span class="k">=</span> <span class="n">menuItems</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">PancakeMenu</span><span class="o">{</span>
+  <span class="c1">// pancakeMenu use arraylist</span>
+  <span class="k">var</span> <span class="n">menuItems</span><span class="k">:</span><span class="kt">util.ArrayList</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">]</span> <span class="k">=</span> <span class="kc">null</span>
+
+  <span class="k">def</span> <span class="n">addItem</span><span class="o">(</span><span class="n">item</span><span class="k">:</span> <span class="kt">MenuItem</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">menuItems</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="n">item</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">getMenu</span> <span class="k">=</span> <span class="n">menuItems</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>We want to iterate two menus together, without specifying the data type.</p>
+<p>Solution: use <code>Iterator</code> interface, and define <code>createIterator</code> method on both classes</p>
+<pre class="code literal-block"><span class="k">abstract</span> <span class="k">class</span> <span class="nc">Iterator</span><span class="o">[</span><span class="kt">T</span><span class="o">]{</span>
+  <span class="k">def</span> <span class="n">hasNext</span><span class="k">:</span><span class="kt">Boolean</span>
+  <span class="k">def</span> <span class="n">next</span><span class="k">:</span><span class="kt">T</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">DinerMenuIterator</span><span class="o">(</span><span class="n">items</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">])</span> <span class="k">extends</span> <span class="nc">Iterator</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">]{</span>
+  <span class="k">var</span> <span class="n">i</span><span class="k">:</span><span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">def</span> <span class="n">hasNext</span> <span class="k">=</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">items</span><span class="o">.</span><span class="n">length</span>
+  <span class="k">def</span> <span class="n">next</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">menu</span><span class="k">:</span><span class="kt">MenuItem</span> <span class="o">=</span> <span class="n">items</span><span class="o">(</span><span class="n">i</span><span class="o">)</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">menu</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">PancakeMenuIterator</span><span class="o">(</span><span class="n">items</span><span class="k">:</span><span class="kt">util.ArrayList</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">])</span> <span class="k">extends</span> <span class="nc">Iterator</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">]{</span>
+  <span class="k">var</span> <span class="n">i</span><span class="k">:</span><span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">def</span> <span class="n">hasNext</span> <span class="k">=</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">items</span><span class="o">.</span><span class="n">size</span><span class="o">()</span>
+  <span class="k">def</span> <span class="n">next</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">menu</span><span class="k">:</span><span class="kt">MenuItem</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="n">i</span><span class="o">)</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">menu</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// add createIterator method:</span>
+
+<span class="k">class</span> <span class="nc">DinerMenu</span><span class="o">{</span>
+  <span class="c1">// dinermenu use array</span>
+  <span class="k">var</span> <span class="n">menuItems</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">]</span> <span class="k">=</span> <span class="kc">null</span>
+  <span class="k">var</span> <span class="n">numberOfItems</span> <span class="k">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="n">addItem</span><span class="o">(</span><span class="n">item</span><span class="k">:</span> <span class="kt">MenuItem</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">menuItems</span><span class="o">(</span><span class="n">numberOfItems</span><span class="o">)</span> <span class="k">=</span> <span class="n">item</span>
+    <span class="n">numberOfItems</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="o">}</span>
+
+  <span class="c1">// createIterator replace getMenu</span>
+  <span class="k">def</span> <span class="n">createIterator</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">DinerMenuIterator</span><span class="o">(</span><span class="n">menuItems</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">PancakeMenu</span><span class="o">{</span>
+  <span class="c1">// pancakeMenu use arraylist</span>
+  <span class="k">var</span> <span class="n">menuItems</span><span class="k">:</span><span class="kt">util.ArrayList</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">]</span> <span class="k">=</span> <span class="kc">null</span>
+
+  <span class="k">def</span> <span class="n">addItem</span><span class="o">(</span><span class="n">item</span><span class="k">:</span> <span class="kt">MenuItem</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="n">menuItems</span><span class="o">.</span><span class="n">add</span><span class="o">(</span><span class="n">item</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">createIterator</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">PancakeMenuIterator</span><span class="o">(</span><span class="n">menuItems</span><span class="o">)</span>
+<span class="o">}</span>
+</pre>
+
+
+<p>Now we can use the <code>iterator</code> interface.</p>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">Waitress</span><span class="o">(</span><span class="n">pancakeMenu</span><span class="k">:</span> <span class="kt">PancakeMenu</span><span class="o">,</span> <span class="n">dinerMenu</span><span class="k">:</span> <span class="kt">DinerMenu</span><span class="o">){</span>
+
+  <span class="k">def</span> <span class="n">printMenu</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">pancakeIterator</span> <span class="k">=</span> <span class="n">pancakeMenu</span><span class="o">.</span><span class="n">createIterator</span>
+    <span class="k">val</span> <span class="n">dinerIterator</span> <span class="k">=</span> <span class="n">dinerMenu</span><span class="o">.</span><span class="n">createIterator</span>
+    <span class="n">printMenu</span><span class="o">(</span><span class="n">pancakeIterator</span><span class="o">)</span>
+    <span class="n">printMenu</span><span class="o">(</span><span class="n">dinerIterator</span><span class="o">)</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">printMenu</span><span class="o">(</span><span class="n">iter</span><span class="k">:</span><span class="kt">Iterator</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">while</span><span class="o">(</span><span class="n">iter</span><span class="o">.</span><span class="n">hasNext</span><span class="o">){</span>
+      <span class="n">println</span><span class="o">(</span><span class="n">iter</span><span class="o">.</span><span class="n">next</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<p>However, we're still bound to two concrete menu classes --&gt; create a common interface for menu:</p>
+<pre class="code literal-block"><span class="k">abstract</span> <span class="k">class</span> <span class="nc">Menu</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">createIterator</span><span class="k">:</span><span class="kt">Iterator</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">PancakeMenu</span> <span class="k">extends</span> <span class="nc">Menu</span><span class="o">{</span>
+<span class="o">...}</span>
+
+<span class="k">class</span> <span class="nc">DinerMenu</span> <span class="k">extends</span> <span class="nc">Menu</span><span class="o">{</span>
+<span class="o">...}</span>
+
+<span class="k">class</span> <span class="nc">Waitress</span><span class="o">(</span><span class="n">menus</span><span class="k">:</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">Menu</span><span class="o">]){</span>
+
+  <span class="k">def</span> <span class="n">printMenu</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">menus</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">createIterator</span><span class="o">).</span><span class="n">foreach</span><span class="o">(</span><span class="n">printMenu</span><span class="o">(</span><span class="k">_</span><span class="o">))</span>
+  <span class="o">}</span>
+
+  <span class="k">def</span> <span class="n">printMenu</span><span class="o">(</span><span class="n">iter</span><span class="k">:</span><span class="kt">Iterator</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">while</span><span class="o">(</span><span class="n">iter</span><span class="o">.</span><span class="n">hasNext</span><span class="o">){</span>
+      <span class="n">println</span><span class="o">(</span><span class="n">iter</span><span class="o">.</span><span class="n">next</span><span class="o">)</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Composite pattern</h3>
+<p>Now what if we want to have a dessert "sub menu"? i.e menus within menus.</p>
+<pre class="code literal-block"><span class="k">abstract</span> <span class="k">class</span> <span class="nc">MenuComponent</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">isVegetarian</span><span class="k">:</span><span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">false</span>
+  <span class="k">def</span> <span class="n">print</span><span class="k">:</span><span class="kt">Unit</span>
+  <span class="k">def</span> <span class="n">getChild</span><span class="o">(</span><span class="n">i</span><span class="k">:</span><span class="kt">Int</span><span class="o">)</span><span class="k">:</span><span class="kt">MenuComponent</span> <span class="o">=</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">Exception</span><span class="o">(</span><span class="s">"unsupported"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="c1">// "Leaf"</span>
+<span class="k">class</span> <span class="nc">MenuItem</span><span class="o">(</span><span class="n">name</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span>
+                <span class="n">vegetarian</span><span class="k">:</span><span class="kt">Boolean</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">MenuComponent</span><span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">isVegetarian</span> <span class="k">=</span> <span class="n">vegetarian</span>
+  <span class="k">def</span> <span class="n">print</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">s"menu item </span><span class="si">$name</span><span class="s">"</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="c1">// "Composite"</span>
+<span class="k">class</span> <span class="nc">Menu</span><span class="o">(</span><span class="n">name</span><span class="k">:</span><span class="kt">String</span><span class="o">,</span>
+            <span class="n">menus</span><span class="k">:</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">MenuComponent</span><span class="o">])</span> <span class="k">extends</span> <span class="nc">MenuComponent</span><span class="o">{</span>
+
+  <span class="c1">// Menu holds MenuComponents --&gt; recursive</span>
+
+  <span class="k">override</span> <span class="k">def</span> <span class="n">getChild</span><span class="o">(</span><span class="n">i</span><span class="k">:</span><span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">menus</span><span class="o">(</span><span class="n">i</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">print</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">s"menu component </span><span class="si">$name</span><span class="s"> </span><span class="si">${</span><span class="n">menus</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">print</span><span class="o">)</span><span class="si">}</span><span class="s">"</span><span class="o">)</span> <span class="c1">// print all children</span>
+
+<span class="o">}</span>
+
+
+<span class="k">class</span> <span class="nc">Waitress</span><span class="o">(</span><span class="n">menuComponent</span><span class="k">:</span> <span class="kt">MenuComponent</span><span class="o">){</span>
+  <span class="k">def</span> <span class="n">print</span> <span class="k">=</span> <span class="n">menuComponent</span><span class="o">.</span><span class="n">print</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Definition</h3>
+<h4>Iterator:</h4>
+<ul>
+<li>
+<p>Encapsulate iteration</p>
+</li>
+<li>
+<p>Allow access elements of an aggregate (aka <code>Menu</code>) sequentially without exposing its underlying representation.</p>
+</li>
+<li>
+<p>Also place the task of traversal on the iterator, not on the aggregate</p>
+</li>
+</ul>
+<h4>Composite</h4>
+<ul>
+<li>
+<p>Compose objects into tree structures</p>
+</li>
+<li>
+<p>Treat individual objects and compositions uniformly --&gt; Transparency</p>
+</li>
+<li>
+<p>Class diagram: <code>Component</code> -&gt; <code>Leaf</code> or <code>Composite</code></p>
+<ul>
+<li>
+<code>Composite</code>: holds <code>Component</code>s. <code>addComponent</code>, <code>getChild</code>, <code>operation</code>
+</li>
+<li>
+<code>Leaf</code>: <code>operation</code>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Design Principle</h3>
+<ul>
+<li>A class should be given single responsibility --&gt; have only one reason to change. (eg. aggregate and iterate are two different responsibilities)</li>
+</ul>
+<h3>Others</h3>
+<ul>
+<li>Use a null iterator can be helpful. (always return false for <code>hasNext</code>)</li>
+<li>Can create an external iterator to iterate through Component, eg, find veggie menuItems. <ul>
+<li>in Scala, can use pattern matching and flatMap</li>
+</ul>
+</li>
+</ul>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">Menu</span><span class="o">(</span><span class="n">menus</span><span class="k">:</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">MenuComponent</span><span class="o">])</span> <span class="k">extends</span> <span class="nc">MenuComponent</span><span class="o">{</span>
+  <span class="o">...</span>
+
+  <span class="k">def</span> <span class="n">getVeggie</span> <span class="k">:</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">MenuItem</span><span class="o">]</span> <span class="k">=</span> <span class="n">menus</span><span class="o">.</span><span class="n">flatMap</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">m</span><span class="k">:</span> <span class="kt">MenuItem</span> <span class="o">=&gt;</span> <span class="k">if</span> <span class="o">(</span><span class="n">m</span><span class="o">.</span><span class="n">isVegetarian</span><span class="o">)</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">m</span><span class="o">)</span> <span class="k">else</span> <span class="nc">Nil</span>
+    <span class="k">case</span> <span class="n">m</span><span class="k">:</span> <span class="kt">Menu</span> <span class="o">=&gt;</span> <span class="n">m</span><span class="o">.</span><span class="n">getVeggie</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../categories/book.html" rel="tag">Book</a></li>
+            <li><a class="tag p-category" href="../categories/code.html" rel="tag">Code</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="design-pattern-8-template-method-pattern.html" rel="prev" title="Design Pattern #8: Template Method Pattern">Previous post</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comments</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="nikolademo",
+            disqus_url="https://xysun.github.io/posts/design-pattern-9-iterator-and-composite-patterns.html",
+        disqus_title="Design Pattern #9: Iterator and Composite Patterns",
+        disqus_identifier="cache/posts/design-pattern-9-iterator-and-composite-patterns.html",
+        disqus_config = function () {
+            this.language = "en";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="//disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="nikolademo";(function(){var a=document.createElement("script");a.async=true;a.src="//"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2015         <a href="mailto:xiayunsun@gmail.com">Xiayun Sun</a> - Powered by         <a href="http://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../assets/js/all-nocdn.js"></script><!-- Social buttons --><!--
+<div id="addthisbox" class="addthis_toolbox addthis_peekaboo_style addthis_default_style addthis_label_style addthis_32x32_style">
+<a class="addthis_button_more">Share</a>
+<ul><li><a class="addthis_button_facebook"></a>
+<li><a class="addthis_button_google_plusone_share"></a>
+<li><a class="addthis_button_linkedin"></a>
+<li><a class="addthis_button_twitter"></a>
+</ul>
+</div>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f7088a56bb93798"></script>
+--><!-- End of social buttons --><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

@@ -1,5 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link rel="self" type="application/rss+xml" href="https://xysun.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Thu, 26 Nov 2015 15:18:30 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #8: Template Method Pattern</title><link>https://xysun.github.io/posts/design-pattern-8-template-method-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book "Headfirst Design Patterns"&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link type="application/rss+xml" rel="self" href="https://xysun.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Sun, 29 Nov 2015 11:29:13 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #9: Iterator and Composite Patterns</title><link>https://xysun.github.io/posts/design-pattern-9-iterator-and-composite-patterns.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
+&lt;h3&gt;Starting example:&lt;/h3&gt;
+&lt;p&gt;Merge two implementation with &lt;code&gt;ArrayList&lt;/code&gt; and &lt;code&gt;Array&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MenuItem&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;
+                 &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;description&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;vegetarian&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                 &lt;span class="n"&gt;price&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Double&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DinerMenu&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// dinermenu use array&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;numberOfItems&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;addItem&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;numberOfItems&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;
+    &lt;span class="n"&gt;numberOfItems&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;getMenu&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;menuItems&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PancakeMenu&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// pancakeMenu use arraylist&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;util.ArrayList&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;addItem&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;getMenu&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;menuItems&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;We want to iterate two menus together, without specifying the data type.&lt;/p&gt;
+&lt;p&gt;Solution: use &lt;code&gt;Iterator&lt;/code&gt; interface, and define &lt;code&gt;createIterator&lt;/code&gt; method on both classes&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Iterator&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;T&lt;/span&gt;&lt;span class="o"&gt;]{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;hasNext&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Boolean&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;T&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DinerMenuIterator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Iterator&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;]{&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;hasNext&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;length&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;next&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;menu&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="n"&gt;menu&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PancakeMenuIterator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;util.ArrayList&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Iterator&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;]{&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;hasNext&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;next&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;menu&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;items&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="n"&gt;menu&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// add createIterator method:&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DinerMenu&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// dinermenu use array&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;numberOfItems&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;addItem&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;numberOfItems&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;item&lt;/span&gt;
+    &lt;span class="n"&gt;numberOfItems&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="c1"&gt;// createIterator replace getMenu&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createIterator&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;DinerMenuIterator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PancakeMenu&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// pancakeMenu use arraylist&lt;/span&gt;
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;util.ArrayList&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;addItem&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createIterator&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;PancakeMenuIterator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;menuItems&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;Now we can use the &lt;code&gt;iterator&lt;/code&gt; interface.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Waitress&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pancakeMenu&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;PancakeMenu&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dinerMenu&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;DinerMenu&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;printMenu&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;pancakeIterator&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pancakeMenu&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createIterator&lt;/span&gt;
+    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;dinerIterator&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;dinerMenu&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createIterator&lt;/span&gt;
+    &lt;span class="n"&gt;printMenu&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pancakeIterator&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;printMenu&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dinerIterator&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;printMenu&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iter&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Iterator&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hasNext&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+      &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;p&gt;However, we're still bound to two concrete menu classes --&amp;gt; create a common interface for menu:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Menu&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;createIterator&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Iterator&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PancakeMenu&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Menu&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="o"&gt;...}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DinerMenu&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Menu&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="o"&gt;...}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Waitress&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;menus&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;Menu&lt;/span&gt;&lt;span class="o"&gt;]){&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;printMenu&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;menus&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;createIterator&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="n"&gt;foreach&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;printMenu&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;printMenu&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iter&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Iterator&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hasNext&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+      &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iter&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Composite pattern&lt;/h3&gt;
+&lt;p&gt;Now what if we want to have a dessert "sub menu"? i.e menus within menus.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MenuComponent&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;isVegetarian&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Boolean&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;getChild&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;MenuComponent&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;Exception&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"unsupported"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// "Leaf"&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+                &lt;span class="n"&gt;vegetarian&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Boolean&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;MenuComponent&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;isVegetarian&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;vegetarian&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;s"menu item &lt;/span&gt;&lt;span class="si"&gt;$name&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// "Composite"&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Menu&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;menus&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuComponent&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;MenuComponent&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="c1"&gt;// Menu holds MenuComponents --&amp;gt; recursive&lt;/span&gt;
+
+  &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;getChild&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;menus&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;s"menu component &lt;/span&gt;&lt;span class="si"&gt;$name&lt;/span&gt;&lt;span class="s"&gt; &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="n"&gt;menus&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;foreach&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;_&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s"&gt;"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// print all children&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Waitress&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;menuComponent&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;MenuComponent&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;print&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;menuComponent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Definition&lt;/h3&gt;
+&lt;h4&gt;Iterator:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Encapsulate iteration&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Allow access elements of an aggregate (aka &lt;code&gt;Menu&lt;/code&gt;) sequentially without exposing its underlying representation.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Also place the task of traversal on the iterator, not on the aggregate&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Composite&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Compose objects into tree structures&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Treat individual objects and compositions uniformly --&amp;gt; Transparency&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Class diagram: &lt;code&gt;Component&lt;/code&gt; -&amp;gt; &lt;code&gt;Leaf&lt;/code&gt; or &lt;code&gt;Composite&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Composite&lt;/code&gt;: holds &lt;code&gt;Component&lt;/code&gt;s. &lt;code&gt;addComponent&lt;/code&gt;, &lt;code&gt;getChild&lt;/code&gt;, &lt;code&gt;operation&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Leaf&lt;/code&gt;: &lt;code&gt;operation&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Design Principle&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;A class should be given single responsibility --&amp;gt; have only one reason to change. (eg. aggregate and iterate are two different responsibilities)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Others&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Use a null iterator can be helpful. (always return false for &lt;code&gt;hasNext&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Can create an external iterator to iterate through Component, eg, find veggie menuItems. &lt;ul&gt;
+&lt;li&gt;in Scala, can use pattern matching and flatMap&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Menu&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;menus&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuComponent&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;MenuComponent&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="o"&gt;...&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;getVeggie&lt;/span&gt; &lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;MenuItem&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;menus&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flatMap&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;MenuItem&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;isVegetarian&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="nc"&gt;Seq&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="nc"&gt;Nil&lt;/span&gt;
+    &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Menu&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getVeggie&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-9-iterator-and-composite-patterns.html</guid><pubDate>Sun, 29 Nov 2015 08:24:17 GMT</pubDate></item><item><title>Design Pattern #8: Template Method Pattern</title><link>https://xysun.github.io/posts/design-pattern-8-template-method-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book "Headfirst Design Patterns"&lt;/p&gt;
 &lt;h3&gt;Example&lt;/h3&gt;
 &lt;p&gt;Make coffee and tea.&lt;/p&gt;
 &lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CaffeineBeverage&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
@@ -905,93 +1124,4 @@
 &lt;li&gt;NEVER blindly coerce types.&lt;/li&gt;
 &lt;li&gt;Always update tests with new features. &lt;/li&gt;
 &lt;li&gt;It's important to trace down to the root cause of a bug. &lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/1-1-1.html</guid><pubDate>Thu, 04 Dec 2014 13:36:49 GMT</pubDate></item><item><title>Running automated selenium tests on Debian server</title><link>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;In the startup I work we use &lt;a href="http://www.seleniumhq.org/"&gt;selenium&lt;/a&gt; for automated web testing. Previously the testing flow involves manually open the selenium plugin in firefox, set the environment-specific variables and click the "Play entire test suite" button. Recently I migrated the task to a Debian server which frees us from manual work and enables us to do much more, eg. test scheduling, integrating to the deployment process, etc. &lt;/p&gt;
-&lt;p&gt;Below is my notes on achieving this.&lt;/p&gt;
-&lt;h4&gt;Running selenium headless&lt;/h4&gt;
-&lt;p&gt;Selenium normally requires a display. On a Linux server, I use &lt;a href="http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml"&gt;xvfb&lt;/a&gt; to simulate the display. The command is:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;xvfb-run --server-num&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &amp;lt;python commands here&amp;gt;
-&lt;/pre&gt;
-
-
-&lt;p&gt;eg:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;xvfb-run --server-num&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; python -m unittest discover --pattern&lt;span class="o"&gt;=&lt;/span&gt;*.py
-&lt;/pre&gt;
-
-
-&lt;p&gt;I have also found out that the method &lt;code&gt;driver.find_element_by_link_text&lt;/code&gt; often fails with the message "cannot scroll into view". I have tried the fix with &lt;code&gt;maximize_window&lt;/code&gt; and &lt;code&gt;window.scrollTo(x, y)&lt;/code&gt; but with no luck. In the end I have to replace some of the clicks with &lt;code&gt;driver.get(url)&lt;/code&gt; calls. &lt;/p&gt;
-&lt;h4&gt;POST request in logged in session&lt;/h4&gt;
-&lt;p&gt;Selenium does not support POST request naturally (if it does please let me know!), this is a bit of headache when some jquery POST calls need to be tested within a logged in session. &lt;/p&gt;
-&lt;p&gt;Luckily we use cookies to verify logged in sessions and thus can have the super awesome &lt;a href="http://docs.python-requests.org/en/latest/"&gt;requests&lt;/a&gt; library to the rescue.&lt;/p&gt;
-&lt;p&gt;The tricky part(I am not sure if it is a universal case) is that when I login through POST request to our authenticate service, the returned cookie cannot be found in the &lt;code&gt;request.cookies&lt;/code&gt;, rather it is part of the &lt;code&gt;r.request.headers['Cookie']&lt;/code&gt;. &lt;/p&gt;
-&lt;p&gt;So for example to test the &lt;code&gt;like&lt;/code&gt; button in a post (something similar to the facebook &lt;code&gt;like&lt;/code&gt; button):&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;# step1 login&lt;/span&gt;
-&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;authen_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'username'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'password'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
-
-&lt;span class="c"&gt;# get cookie from headers &lt;/span&gt;
-&lt;span class="c"&gt;# note r.request.headers['Cookie'] is a comma separated string&lt;/span&gt;
-&lt;span class="c"&gt;# eg: name1=val1; name2=val2&lt;/span&gt;
-&lt;span class="n"&gt;cookie_str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;headers&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'Cookie'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;cookies&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
-&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;cookie_str&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;';'&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="n"&gt;cname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'='&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;cval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'='&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;cookies&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;cname&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cval&lt;/span&gt;
-
-&lt;span class="c"&gt;# step2 test other functions with the obtained cookie&lt;/span&gt;
-&lt;span class="c"&gt;# eg. a "like" POST function here&lt;/span&gt;
-&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'domain.com/service/likefeed'&lt;/span&gt;
-&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;'feedid'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;feedid&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;post&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cookies&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cookies&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="c"&gt;# step3 use selenium to test frontend effect, eg. a thumbs up symbol&lt;/span&gt;
-&lt;span class="c"&gt;# selenium webdriver functions here&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;h4&gt;Supporting different environments&lt;/h4&gt;
-&lt;p&gt;We have 3 sets of development environments (demo --&amp;gt; pilot --&amp;gt; production). To switch among these 3 seamlessly, I created a &lt;code&gt;config.ini&lt;/code&gt; file writing down the environment-specific variables (eg. base URL, test account login, test post contents, etc.) for each environment, and pass this config (using the excellent &lt;a href="https://pypi.python.org/pypi/configobj"&gt;configobj&lt;/a&gt; module) when initializing each test suite:&lt;/p&gt;
-&lt;p&gt;So I have a utility function like below:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;#utils.py&lt;/span&gt;
-
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;configobj&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;ConfigObj&lt;/span&gt;
-
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;read_env&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ConfigObj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'config.ini'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;'_baseurl'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;'_account'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;'_passwd'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;p&gt;Then in each test suite script I add a customized &lt;code&gt;__init__&lt;/code&gt; call that will initialize properties to respective values according to the passed environment, these values can then be used in later testing functions:&lt;/p&gt;
-&lt;p&gt;For example:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;# test_suite_1.py&lt;/span&gt;
-
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;utils&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;read_env&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;TestSuite1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TestSuite1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'test_case_1'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;base_url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;account&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;passwd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;read_env&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;en&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;p&gt;Then I have a master file controlling the complete test run:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="c"&gt;# run.py&lt;/span&gt;
-
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;test_suite_1&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TestSuite1&lt;/span&gt;
-
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;'__main__'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="n"&gt;env&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;suite&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestSuite&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-
-    &lt;span class="n"&gt;suite&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addTest&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TestSuite1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c"&gt;# initialize with specific env&lt;/span&gt;
-
-    &lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TextTestRunner&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;suite&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;p&gt;To make things easier I also add a bash alias in &lt;code&gt;.bash_aliases&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="nb"&gt;alias &lt;/span&gt;&lt;span class="nv"&gt;mftest&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'xvfb-run --server-num=10 python /path/to/tests/run.py'&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;p&gt;In this way the complete test process can be kicked off by simply running &lt;code&gt;mftest &amp;lt;env&amp;gt;&lt;/code&gt; where &lt;code&gt;&amp;lt;env&amp;gt;&lt;/code&gt; can be either &lt;code&gt;demo&lt;/code&gt; or &lt;code&gt;pilot&lt;/code&gt; or &lt;code&gt;prod&lt;/code&gt;, and the program will pick up the right config.&lt;/p&gt;&lt;/div&gt;</description><category>Code</category><category>selenium</category><guid>https://xysun.github.io/posts/selenium-auto-tests-on-server.html</guid><pubDate>Sun, 21 Sep 2014 05:11:27 GMT</pubDate></item></channel></rss>
+&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/1-1-1.html</guid><pubDate>Thu, 04 Dec 2014 13:36:49 GMT</pubDate></item></channel></rss>

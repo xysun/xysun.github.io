@@ -64,7 +64,114 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" class="u-url">How to insert images into posts in Nikola</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/selenium-auto-tests-on-server.html" class="u-url">Running automated selenium tests on Debian server</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/selenium-auto-tests-on-server.html" rel="bookmark"><time class="published dt-published" datetime="2014-09-21T13:11:27+08:00" title="2014-09-21 13:11">2014-09-21 13:11</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/selenium-auto-tests-on-server.html#disqus_thread" data-disqus-identifier="cache/posts/selenium-auto-tests-on-server.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>In the startup I work we use <a href="http://www.seleniumhq.org/">selenium</a> for automated web testing. Previously the testing flow involves manually open the selenium plugin in firefox, set the environment-specific variables and click the "Play entire test suite" button. Recently I migrated the task to a Debian server which frees us from manual work and enables us to do much more, eg. test scheduling, integrating to the deployment process, etc. </p>
+<p>Below is my notes on achieving this.</p>
+<h4>Running selenium headless</h4>
+<p>Selenium normally requires a display. On a Linux server, I use <a href="http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml">xvfb</a> to simulate the display. The command is:</p>
+<pre class="code literal-block">xvfb-run --server-num<span class="o">=</span><span class="m">10</span> &lt;python commands here&gt;
+</pre>
+
+
+<p>eg:</p>
+<pre class="code literal-block">xvfb-run --server-num<span class="o">=</span><span class="m">10</span> python -m unittest discover --pattern<span class="o">=</span>*.py
+</pre>
+
+
+<p>I have also found out that the method <code>driver.find_element_by_link_text</code> often fails with the message "cannot scroll into view". I have tried the fix with <code>maximize_window</code> and <code>window.scrollTo(x, y)</code> but with no luck. In the end I have to replace some of the clicks with <code>driver.get(url)</code> calls. </p>
+<h4>POST request in logged in session</h4>
+<p>Selenium does not support POST request naturally (if it does please let me know!), this is a bit of headache when some jquery POST calls need to be tested within a logged in session. </p>
+<p>Luckily we use cookies to verify logged in sessions and thus can have the super awesome <a href="http://docs.python-requests.org/en/latest/">requests</a> library to the rescue.</p>
+<p>The tricky part(I am not sure if it is a universal case) is that when I login through POST request to our authenticate service, the returned cookie cannot be found in the <code>request.cookies</code>, rather it is part of the <code>r.request.headers['Cookie']</code>. </p>
+<p>So for example to test the <code>like</code> button in a post (something similar to the facebook <code>like</code> button):</p>
+<pre class="code literal-block"><span class="c"># step1 login</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">authen_url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s">'username'</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s">'password'</span><span class="p">:</span> <span class="n">password</span><span class="p">})</span>
+
+<span class="c"># get cookie from headers </span>
+<span class="c"># note r.request.headers['Cookie'] is a comma separated string</span>
+<span class="c"># eg: name1=val1; name2=val2</span>
+<span class="n">cookie_str</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">'Cookie'</span><span class="p">]</span>
+<span class="n">cookies</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cookie_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">';'</span><span class="p">):</span>
+    <span class="n">cname</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'='</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">cval</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'='</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cookies</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span> <span class="o">=</span> <span class="n">cval</span>
+
+<span class="c"># step2 test other functions with the obtained cookie</span>
+<span class="c"># eg. a "like" POST function here</span>
+<span class="n">u</span> <span class="o">=</span> <span class="s">'domain.com/service/likefeed'</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'feedid'</span><span class="p">:</span><span class="n">feedid</span><span class="p">}</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="p">,</span> <span class="n">cookies</span> <span class="o">=</span> <span class="n">cookies</span><span class="p">)</span>
+
+<span class="c"># step3 use selenium to test frontend effect, eg. a thumbs up symbol</span>
+<span class="c"># selenium webdriver functions here</span>
+</pre>
+
+
+<h4>Supporting different environments</h4>
+<p>We have 3 sets of development environments (demo --&gt; pilot --&gt; production). To switch among these 3 seamlessly, I created a <code>config.ini</code> file writing down the environment-specific variables (eg. base URL, test account login, test post contents, etc.) for each environment, and pass this config (using the excellent <a href="https://pypi.python.org/pypi/configobj">configobj</a> module) when initializing each test suite:</p>
+<p>So I have a utility function like below:</p>
+<pre class="code literal-block"><span class="c">#utils.py</span>
+
+<span class="kn">from</span> <span class="nn">configobj</span> <span class="kn">import</span> <span class="n">ConfigObj</span>
+
+<span class="k">def</span> <span class="nf">read_env</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="s">'config.ini'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">env</span><span class="p">,</span> <span class="n">c</span><span class="p">[</span><span class="n">env</span> <span class="o">+</span> <span class="s">'_baseurl'</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">env</span> <span class="o">+</span> <span class="s">'_account'</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">env</span> <span class="o">+</span> <span class="s">'_passwd'</span><span class="p">]</span>
+</pre>
+
+
+<p>Then in each test suite script I add a customized <code>__init__</code> call that will initialize properties to respective values according to the passed environment, these values can then be used in later testing functions:</p>
+<p>For example:</p>
+<pre class="code literal-block"><span class="c"># test_suite_1.py</span>
+
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">read_env</span>
+
+<span class="k">class</span> <span class="nc">TestSuite1</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TestSuite1</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="s">'test_case_1'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">passwd</span> <span class="o">=</span> <span class="n">read_env</span><span class="p">(</span><span class="n">en</span><span class="p">)</span>
+</pre>
+
+
+<p>Then I have a master file controlling the complete test run:</p>
+<pre class="code literal-block"><span class="c"># run.py</span>
+
+<span class="kn">from</span> <span class="nn">test_suite_1</span> <span class="kn">import</span> <span class="n">TestSuite1</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">suite</span> <span class="o">=</span> <span class="n">unittest</span><span class="o">.</span><span class="n">TestSuite</span><span class="p">()</span>
+
+    <span class="n">suite</span><span class="o">.</span><span class="n">addTest</span><span class="p">(</span><span class="n">TestSuite1</span><span class="p">(</span><span class="n">env</span><span class="p">))</span> <span class="c"># initialize with specific env</span>
+
+    <span class="n">unittest</span><span class="o">.</span><span class="n">TextTestRunner</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">suite</span><span class="p">)</span>
+</pre>
+
+
+<p>To make things easier I also add a bash alias in <code>.bash_aliases</code>:</p>
+<pre class="code literal-block"><span class="nb">alias </span><span class="nv">mftest</span> <span class="o">=</span> <span class="s1">'xvfb-run --server-num=10 python /path/to/tests/run.py'</span>
+</pre>
+
+
+<p>In this way the complete test process can be kicked off by simply running <code>mftest &lt;env&gt;</code> where <code>&lt;env&gt;</code> can be either <code>demo</code> or <code>pilot</code> or <code>prod</code>, and the program will pick up the right config.</p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/how-to-insert-pictures-into-posts-in-nikola.html" class="u-url">How to insert images into posts in Nikola</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
