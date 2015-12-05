@@ -64,7 +64,59 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/selenium-auto-tests-on-server.html" class="u-url">Running automated selenium tests on Debian server</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/1-1-1.html" class="u-url">1 * '1' = '1'</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/1-1-1.html" rel="bookmark"><time class="published dt-published" datetime="2014-12-04T21:36:49+08:00" title="2014-12-04 21:36">2014-12-04 21:36</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/1-1-1.html#disqus_thread" data-disqus-identifier="cache/posts/1-1-1.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>There are some days I wish Python is strongly typed. And today is one of them. </p>
+<h4>Background</h4>
+<p>I work on an algorithm trading desk. Our algorithm trading engine is in Python. For a few days my team has been working on a new feature which can assign a "weight" to each trading strategy, so for example if a strategy has a weight of 2, then each trading order it sends will automatically has its size doubled up. </p>
+<p>Last night the development work was done. I run the tests, merged back to development branch, and deployed to our simulation environment. </p>
+<p>This morning when I came into office, I was greeted by an error: basically it was shouting at me that the volume field in an order should be a number, not a string. </p>
+<p>This has never happened before. </p>
+<h4>What happened</h4>
+<p>My first instinct is I could just add a simple <code>int()</code> wrapper around the volume field and back to my breakfast. Luckily I didn't and instead sat down to find the bug. </p>
+<p>It turns out as we're reading the weights from a config file, but without properly converting it into an integer, so the weight stays as a string and everytime it's applied to order volume, Python won't complain about type mismatch, instead something like below happens:</p>
+<pre class="code literal-block"><span class="mi">1</span> <span class="o">*</span> <span class="s">'1'</span> <span class="o">=</span> <span class="s">'1'</span>
+</pre>
+
+
+<p>And an order with size '1', not number 1 is sent. </p>
+<h4>Why didn't my tests fail?</h4>
+<p>We have both unit tests and integration tests (where a dummy strategy will run throught the whole market data --&gt; trading signal --&gt; trading execution process). </p>
+<p>In this case I didn't update the integration tests to include the weight. And in our code the default weight is 1 (NOTE: not '1'), so the tests happily passed. </p>
+<h4>Remediation</h4>
+<p>Just add an <code>int()</code> coersion when reading the weight from the config file. </p>
+<p>I also included the weight field in my tests. </p>
+<h4>The real danger</h4>
+<p>It only occurred to me in the afternoon that if this has not been properly fixed, real disaster could happen: </p>
+<p>Imagine a strategy with weight = 1 emits a trading signal with size = 3: </p>
+<pre class="code literal-block"><span class="mi">3</span> <span class="o">*</span> <span class="s">'1'</span> <span class="o">=</span> <span class="s">'111'</span>
+<span class="nb">int</span><span class="p">(</span><span class="s">'111'</span><span class="p">)</span> <span class="o">=</span> <span class="mi">111</span>  <span class="c">#ahhhh fat finger</span>
+</pre>
+
+
+<p>Now I don't even want to think about what <code>5 * '1'</code> would turn out. </p>
+<h4>Takeaways</h4>
+<ul>
+<li>NEVER blindly coerce types.</li>
+<li>Always update tests with new features. </li>
+<li>It's important to trace down to the root cause of a bug. </li>
+</ul>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/selenium-auto-tests-on-server.html" class="u-url">Running automated selenium tests on Debian server</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun

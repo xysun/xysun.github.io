@@ -1,5 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link type="application/rss+xml" rel="self" href="https://xysun.github.io/rss.xml"></atom:link><language>en</language><lastBuildDate>Sun, 29 Nov 2015 11:29:13 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #9: Iterator and Composite Patterns</title><link>https://xysun.github.io/posts/design-pattern-9-iterator-and-composite-patterns.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sat, 05 Dec 2015 15:31:04 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #10: State Pattern</title><link>https://xysun.github.io/posts/design-pattern-10-state-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes for the book Headfirst Design Patterns.&lt;/p&gt;
+&lt;h3&gt;Example&lt;/h3&gt;
+&lt;p&gt;Gumball machine.&lt;/p&gt;
+&lt;h4&gt;Implementation 101: focus on action&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Define states: No quarter; Has quarter; Out of gumballs; Gumballs sold&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Use instance variable to hold state&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;  &lt;span class="k"&gt;final&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="nc"&gt;SOLD_OUT&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+  &lt;span class="k"&gt;final&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="nc"&gt;NO_QUARTER&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+  &lt;span class="k"&gt;final&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="nc"&gt;HAS_QUARTER&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+  &lt;span class="k"&gt;final&lt;/span&gt; &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="nc"&gt;SOLD&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Int&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;SOLD_OUT&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Define actions: insert quarter; eject quarter, turn crack, dispense&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;For each action, create a method using conditional statements to determine which behavior is appropriate in each state.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;insertQuarter&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt; &lt;span class="k"&gt;match&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="c1"&gt;// go through every state&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nc"&gt;HAS_QUARTER&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nc"&gt;SOLD_OUT&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nc"&gt;SOLD&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"can't insert quarter now"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+      &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nc"&gt;NO_QUARTER&lt;/span&gt; &lt;span class="k"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;HAS_QUARTER&lt;/span&gt;&lt;span class="o"&gt;;}&lt;/span&gt; &lt;span class="c1"&gt;// change state&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Not very flexible for adding new states&lt;/li&gt;
+&lt;li&gt;State transitions are not explicit --&amp;gt; buried in &lt;code&gt;if&lt;/code&gt; statements.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Implementation 201: focus on state&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Localize behavior for each state: each state implements its own actions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Define a &lt;code&gt;State&lt;/code&gt; interface that contains a method for every action.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;State&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;insertQuarter&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;ejectQuarter&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;turnCrank&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;dispense&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Implement a &lt;code&gt;State&lt;/code&gt; class for every state.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;NoQuarterState&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;machine&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;GumballMachine&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;State&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+  &lt;span class="c1"&gt;// compose with the machine&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;insertQuarter&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;machine&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setState&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;machine&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hasQuarterState&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// change machine's state&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;ejectQuarter&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"cannot eject quarter"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;turnCrank&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"no quarter"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;dispense&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"no quarter"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Delegate to the state class in parent object.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;GumballMachine&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+  &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;hasQuarterState&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;HasQuarterState&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+  &lt;span class="k"&gt;var&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;State&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;NoQuarterState&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// start with no quarter&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;setState&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nc"&gt;_state&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;State&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="nc"&gt;_state&lt;/span&gt;
+
+  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;insertQuarter&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insertQuarter&lt;/span&gt; &lt;span class="c1"&gt;// delegate&lt;/span&gt;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;
+
+
+&lt;h3&gt;Definition&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Allows an object to alter its behavior when its internal state changes.&lt;/li&gt;
+&lt;li&gt;Similar to strategy pattern: &lt;ul&gt;
+&lt;li&gt;strategy pattern: client specifies the strategy that is composed&lt;/li&gt;
+&lt;li&gt;state pattern: client usually knows very little about internal state&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><guid>https://xysun.github.io/posts/design-pattern-10-state-pattern.html</guid><pubDate>Sat, 05 Dec 2015 14:14:02 GMT</pubDate></item><item><title>Design Pattern #9: Iterator and Composite Patterns</title><link>https://xysun.github.io/posts/design-pattern-9-iterator-and-composite-patterns.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Head First Design Patterns.&lt;/p&gt;
 &lt;h3&gt;Starting example:&lt;/h3&gt;
 &lt;p&gt;Merge two implementation with &lt;code&gt;ArrayList&lt;/code&gt; and &lt;code&gt;Array&lt;/code&gt;.&lt;/p&gt;
 &lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MenuItem&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;
@@ -1090,38 +1191,4 @@
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RubberDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
   &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"rubber duck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-1-strategy-pattern.html</guid><pubDate>Fri, 23 Oct 2015 10:30:45 GMT</pubDate></item><item><title>1 * '1' = '1'</title><link>https://xysun.github.io/posts/1-1-1.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;There are some days I wish Python is strongly typed. And today is one of them. &lt;/p&gt;
-&lt;h4&gt;Background&lt;/h4&gt;
-&lt;p&gt;I work on an algorithm trading desk. Our algorithm trading engine is in Python. For a few days my team has been working on a new feature which can assign a "weight" to each trading strategy, so for example if a strategy has a weight of 2, then each trading order it sends will automatically has its size doubled up. &lt;/p&gt;
-&lt;p&gt;Last night the development work was done. I run the tests, merged back to development branch, and deployed to our simulation environment. &lt;/p&gt;
-&lt;p&gt;This morning when I came into office, I was greeted by an error: basically it was shouting at me that the volume field in an order should be a number, not a string. &lt;/p&gt;
-&lt;p&gt;This has never happened before. &lt;/p&gt;
-&lt;h4&gt;What happened&lt;/h4&gt;
-&lt;p&gt;My first instinct is I could just add a simple &lt;code&gt;int()&lt;/code&gt; wrapper around the volume field and back to my breakfast. Luckily I didn't and instead sat down to find the bug. &lt;/p&gt;
-&lt;p&gt;It turns out as we're reading the weights from a config file, but without properly converting it into an integer, so the weight stays as a string and everytime it's applied to order volume, Python won't complain about type mismatch, instead something like below happens:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="s"&gt;'1'&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'1'&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;p&gt;And an order with size '1', not number 1 is sent. &lt;/p&gt;
-&lt;h4&gt;Why didn't my tests fail?&lt;/h4&gt;
-&lt;p&gt;We have both unit tests and integration tests (where a dummy strategy will run throught the whole market data --&amp;gt; trading signal --&amp;gt; trading execution process). &lt;/p&gt;
-&lt;p&gt;In this case I didn't update the integration tests to include the weight. And in our code the default weight is 1 (NOTE: not '1'), so the tests happily passed. &lt;/p&gt;
-&lt;h4&gt;Remediation&lt;/h4&gt;
-&lt;p&gt;Just add an &lt;code&gt;int()&lt;/code&gt; coersion when reading the weight from the config file. &lt;/p&gt;
-&lt;p&gt;I also included the weight field in my tests. &lt;/p&gt;
-&lt;h4&gt;The real danger&lt;/h4&gt;
-&lt;p&gt;It only occurred to me in the afternoon that if this has not been properly fixed, real disaster could happen: &lt;/p&gt;
-&lt;p&gt;Imagine a strategy with weight = 1 emits a trading signal with size = 3: &lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="s"&gt;'1'&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;'111'&lt;/span&gt;
-&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'111'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;111&lt;/span&gt;  &lt;span class="c"&gt;#ahhhh fat finger&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;p&gt;Now I don't even want to think about what &lt;code&gt;5 * '1'&lt;/code&gt; would turn out. &lt;/p&gt;
-&lt;h4&gt;Takeaways&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;NEVER blindly coerce types.&lt;/li&gt;
-&lt;li&gt;Always update tests with new features. &lt;/li&gt;
-&lt;li&gt;It's important to trace down to the root cause of a bug. &lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Code</category><guid>https://xysun.github.io/posts/1-1-1.html</guid><pubDate>Thu, 04 Dec 2014 13:36:49 GMT</pubDate></item></channel></rss>
+&lt;/pre&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-1-strategy-pattern.html</guid><pubDate>Fri, 23 Oct 2015 10:30:45 GMT</pubDate></item></channel></rss>
