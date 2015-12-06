@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Sat, 05 Dec 2015 15:31:04 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #10: State Pattern</title><link>https://xysun.github.io/posts/design-pattern-10-state-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes for the book Headfirst Design Patterns.&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link rel="self" href="https://xysun.github.io/rss.xml" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Sun, 06 Dec 2015 15:00:19 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #11: The Proxy Pattern</title><link>https://xysun.github.io/posts/design-pattern-11-the-proxy-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes for the book Headfirst Design Patterns.&lt;/p&gt;
+&lt;h3&gt;Example&lt;/h3&gt;
+&lt;p&gt;Monitor gumball machine remotely.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Java's RMI: &lt;ul&gt;
+&lt;li&gt;client object --&amp;gt; client helper (proxy, "stub") --&amp;gt; service helper ("skeleton") --&amp;gt; service object&lt;/li&gt;
+&lt;li&gt;RMI: build client helper + service helper&lt;/li&gt;
+&lt;li&gt;steps:&lt;ul&gt;
+&lt;li&gt;make a remote interface: defines available remote methods&lt;/li&gt;
+&lt;li&gt;make a remote implementation (aka remote service)&lt;/li&gt;
+&lt;li&gt;create stub and skeleton using rmic (both proxy and real object use same interface)&lt;/li&gt;
+&lt;li&gt;start rmi registry&lt;/li&gt;
+&lt;li&gt;start remote service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;client: does a lookup on RMI registry, RMI registry deserialize and return the stub object. (client must have the stub class, although it always uses the remote interface)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Definition&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Provides a surrogate or placeholder for another object to control access to it. Maybe remote, expensive to create (virtual proxy) or in need of securing.&lt;/li&gt;
+&lt;li&gt;Control and manage access&lt;/li&gt;
+&lt;li&gt;Remote proxy: acts as a local representative to a remote object.&lt;/li&gt;
+&lt;li&gt;Virtual proxy: delegate requests directly to object after it is created.&lt;/li&gt;
+&lt;li&gt;Protection proxy: &lt;code&gt;invocationHandler&lt;/code&gt; decides what method to call on actual object.&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;</description><guid>https://xysun.github.io/posts/design-pattern-11-the-proxy-pattern.html</guid><pubDate>Sun, 06 Dec 2015 13:15:17 GMT</pubDate></item><item><title>Design Pattern #10: State Pattern</title><link>https://xysun.github.io/posts/design-pattern-10-state-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes for the book Headfirst Design Patterns.&lt;/p&gt;
 &lt;h3&gt;Example&lt;/h3&gt;
 &lt;p&gt;Gumball machine.&lt;/p&gt;
 &lt;h4&gt;Implementation 101: focus on action&lt;/h4&gt;
@@ -1076,119 +1102,4 @@
 &lt;li&gt;&lt;code&gt;push&lt;/code&gt; and &lt;code&gt;pull&lt;/code&gt; style &lt;/li&gt;
 &lt;li&gt;&lt;code&gt;java.util.Observer&lt;/code&gt; also has a &lt;code&gt;setChanged()&lt;/code&gt; method to control notifications.&lt;/li&gt;
 &lt;li&gt;Never depend on a specific notification order.&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-2-observer-pattern.html</guid><pubDate>Mon, 26 Oct 2015 12:55:32 GMT</pubDate></item><item><title>Design pattern #1: Strategy Pattern</title><link>https://xysun.github.io/posts/design-pattern-1-strategy-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;This is my notes about the book &lt;a href="http://shop.oreilly.com/product/9780596007126.do"&gt;Head first design patterns&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Overview&lt;/h3&gt;
-&lt;p&gt;Strategy pattern: encapsulating behaviors / algorithms.&lt;/p&gt;
-&lt;h3&gt;Starting example&lt;/h3&gt;
-&lt;p&gt;We start with a duck base class and several concrete duck classes: &lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;quack&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"quack"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
-
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RedDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"RedDuck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RubberDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"rubber duck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;p&gt;Now we want to add fly behavior, but &lt;strong&gt;&lt;em&gt;only to some of the ducks&lt;/em&gt;&lt;/strong&gt;. &lt;/p&gt;
-&lt;p&gt;Inheritance is not the right solution, because it'll add &lt;code&gt;fly&lt;/code&gt; to all subclasses. &lt;/p&gt;
-&lt;h3&gt;General problem:&lt;/h3&gt;
-&lt;p&gt;Duck behavior keeps changing across subclasses, and it's not appropriate for &lt;em&gt;all&lt;/em&gt; subclasses to have those behaviors&lt;/p&gt;
-&lt;h3&gt;Book's solution:&lt;/h3&gt;
-&lt;p&gt;Encapsulate &lt;strong&gt;&lt;em&gt;behavior&lt;/em&gt;&lt;/strong&gt; in classes. And assign behavior to the instances of Duck, and able to change dynamically.&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;trait&lt;/span&gt; &lt;span class="nc"&gt;FlyBehavior&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FlyWithWings&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;FlyBehavior&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"fly with wings"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FlyNoWay&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;FlyBehavior&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="c1"&gt;// do nothing&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-
-&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt;
-&lt;span class="o"&gt;{&lt;/span&gt;
-
-  &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;flyBehavior&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;FlyBehavior&lt;/span&gt; &lt;span class="c1"&gt;// use super type here,&lt;/span&gt;
-
-  &lt;span class="c1"&gt;// NOTE: we can also use var for flyBehavior and a setter method to change behavior in runtime&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;performFly&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;flyBehavior&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="c1"&gt;// delegate to behavior class&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
-
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RedDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-
-  &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;flyBehavior&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;FlyWithWings&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"RedDuck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RubberDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-
-  &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;flyBehavior&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;FlyNoWay&lt;/span&gt; &lt;span class="c1"&gt;// rubber duck cannot fly&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"rubber duck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;Main&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;={&lt;/span&gt;
-    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;redDuck&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;RedDuck&lt;/span&gt;
-    &lt;span class="n"&gt;redDuck&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;performFly&lt;/span&gt;
-  &lt;span class="o"&gt;}&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;h3&gt;Design principle:&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Identify the aspects of your application that vary and separate them from what stays the same. (In this case, behavior is what varies)&lt;/li&gt;
-&lt;li&gt;Program to an interface/supertype, not an implementation. (Use interface for behaviors)&lt;/li&gt;
-&lt;li&gt;Favor composition over inheritance: "HAS-A" rather than "IS-A"&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Pattern definition:&lt;/h3&gt;
-&lt;p&gt;Strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. Strategy lets the algorithm vary independently from clients that use it. &lt;/p&gt;
-&lt;p&gt;In our example, behavior is our "algorithm"&lt;/p&gt;
-&lt;h3&gt;Other notes:&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;The importance of having a shared vocabulary&lt;/li&gt;
-&lt;li&gt;OO basics: abstraction; encapsulation; polymorphism; inheritance&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;How about using traits?&lt;/h3&gt;
-&lt;p&gt;Unlike interface in Java, traits in scala can have concrete implementations, so we have code reuse. &lt;/p&gt;
-&lt;p&gt;Compared to book's solution, however, I'm unable to update the behavior in runtime. &lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;quack&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"quack"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt;
-
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;trait&lt;/span&gt; &lt;span class="nc"&gt;FlyableDuck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;fly&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"flying!"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RedDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nc"&gt;FlyableDuck&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"RedDuck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;RubberDuck&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Duck&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"rubber duck"&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-1-strategy-pattern.html</guid><pubDate>Fri, 23 Oct 2015 10:30:45 GMT</pubDate></item></channel></rss>
+&lt;/ul&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-2-observer-pattern.html</guid><pubDate>Mon, 26 Oct 2015 12:55:32 GMT</pubDate></item></channel></rss>
