@@ -2,7 +2,7 @@
 .. title: Design Pattern #11: The Proxy Pattern
 .. slug: design-pattern-11-the-proxy-pattern
 .. date: 2015-12-06 21:15:17 UTC+08:00
-.. tags: 
+.. tags: Book, Code
 .. category: 
 .. link: 
 .. description: 

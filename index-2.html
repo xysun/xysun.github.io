@@ -64,7 +64,179 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-1-strategy-pattern.html" class="u-url">Design pattern #1: Strategy Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-2-observer-pattern.html" class="u-url">Design Pattern #2: Observer Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-2-observer-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-10-26T20:55:32+08:00" title="2015-10-26 20:55">2015-10-26 20:55</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-2-observer-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-2-observer-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<h3>Overview</h3>
+<p>observer pattern = publisher + subscriber</p>
+<h3>Pattern definition:</h3>
+<p>The observer pattern defines a one-to-many dependency between objects so that when one object changes stats, all of its dependents are notified and updated automatically.</p>
+<h3>Starting example: weather monitoring application</h3>
+<pre class="code literal-block"><span class="k">class</span> <span class="nc">WeatherStation</span> <span class="o">{</span>
+
+  <span class="k">def</span> <span class="n">measurementsChanged</span><span class="o">()</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">temp</span> <span class="k">=</span> <span class="n">getTemperature</span>
+    <span class="k">val</span> <span class="n">humidity</span> <span class="k">=</span> <span class="n">getHumidity</span>
+    <span class="k">val</span> <span class="n">pressure</span> <span class="k">=</span> <span class="n">getPressure</span>
+
+    <span class="c1">// we want to make the displays extensible (i.e. decouple them), also maybe subscribe/unsubscribe during runtime</span>
+    <span class="n">currentConditionsDisplay</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="o">,</span> <span class="n">humidity</span><span class="o">,</span> <span class="n">pressure</span><span class="o">)</span>
+    <span class="n">statisticsDisplay</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="o">,</span> <span class="n">humidity</span><span class="o">,</span> <span class="n">pressure</span><span class="o">)</span>
+    <span class="n">forecastDisplay</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="o">,</span> <span class="n">humidity</span><span class="o">,</span> <span class="n">pressure</span><span class="o">)</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3>Solution round 1: bad data encapsulation</h3>
+<p>Note the Double temperature is passed everywhere!</p>
+<pre class="code literal-block"><span class="k">trait</span> <span class="nc">DisplayElement</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">display</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">trait</span> <span class="nc">Observer</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">trait</span> <span class="nc">Subject</span> <span class="o">{</span>
+
+  <span class="k">val</span> <span class="n">observers</span><span class="k">:</span><span class="kt">ListBuffer</span><span class="o">[</span><span class="kt">Observer</span><span class="o">]</span> <span class="k">=</span> <span class="nc">ListBuffer</span><span class="o">[</span><span class="kt">Observer</span><span class="o">]()</span>
+
+  <span class="k">def</span> <span class="n">registerObserver</span><span class="o">(</span><span class="n">observer</span><span class="k">:</span> <span class="kt">Observer</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span> <span class="o">+=</span> <span class="n">observer</span>
+
+  <span class="k">def</span> <span class="n">removeObserver</span><span class="o">(</span><span class="n">observer</span><span class="k">:</span> <span class="kt">Observer</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">remove</span><span class="o">(</span><span class="n">observers</span><span class="o">.</span><span class="n">indexOf</span><span class="o">(</span><span class="n">observer</span><span class="o">))</span>
+
+  <span class="k">def</span> <span class="n">notifyObservers</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">WeatherStation</span> <span class="k">extends</span> <span class="nc">Subject</span><span class="o">{</span>
+
+  <span class="k">var</span> <span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="k">def</span> <span class="n">notifyObservers</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="o">))</span>
+
+  <span class="k">def</span> <span class="n">setMeasurement</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">temp</span>
+    <span class="n">notifyObservers</span><span class="o">(</span><span class="n">temp</span><span class="o">)</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+
+<span class="k">class</span> <span class="nc">CurrentConditionDisplay</span><span class="o">(</span><span class="n">subject</span><span class="k">:</span> <span class="kt">Subject</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Observer</span> <span class="k">with</span> <span class="nc">DisplayElement</span><span class="o">{</span>
+  <span class="c1">// we're passing the subject in constructor so that we can call its register methods and other methods for pull</span>
+
+  <span class="n">subject</span><span class="o">.</span><span class="n">registerObserver</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+
+  <span class="k">var</span> <span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="k">def</span> <span class="n">display</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">s"current condition display, temperature: </span><span class="si">$temperature</span><span class="s">"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">temp</span>
+    <span class="n">display</span>
+  <span class="o">}</span>
+
+  <span class="c1">// NOTE: if using the pull model, would be something like this: </span>
+
+  <span class="k">def</span> <span class="n">update</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">subject</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">WeatherStation</span><span class="o">].</span><span class="n">temperature</span>
+    <span class="n">display</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">Main</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">station</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">WeatherStation</span>
+    <span class="k">val</span> <span class="n">display</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">CurrentConditionDisplay</span><span class="o">(</span><span class="n">station</span><span class="o">)</span>
+
+    <span class="n">station</span><span class="o">.</span><span class="n">setMeasurement</span><span class="o">(</span><span class="mf">10.0</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Solution round 2: better data encapsulation</h3>
+<p>The <code>java.util.Observer</code> use <code>Object</code> type to pass data around: <code>update(Observable o, Object arg)</code></p>
+<p>All the others the same, but we encapsulate data: </p>
+<p>Note: scala's trait proves superior again as you can have concrete implementation but still can compose (as opposed to in Java, it uses a class for <code>Observable</code>, thus limiting its reuse potential)</p>
+<pre class="code literal-block"><span class="c1">// DisplayElement and Main stays the same</span>
+
+<span class="k">trait</span> <span class="nc">Data</span>
+
+<span class="k">trait</span> <span class="nc">Observer</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">subject</span><span class="k">:</span> <span class="kt">Subject</span><span class="o">,</span> <span class="n">data</span><span class="k">:</span> <span class="kt">Data</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="c1">// note we pass both subject (so that observers can also use pull model) and data here</span>
+<span class="o">}</span>
+
+<span class="k">trait</span> <span class="nc">Subject</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">observers</span><span class="k">:</span><span class="kt">ListBuffer</span><span class="o">[</span><span class="kt">Observer</span><span class="o">]</span> <span class="k">=</span> <span class="nc">ListBuffer</span><span class="o">[</span><span class="kt">Observer</span><span class="o">]()</span>
+
+  <span class="k">def</span> <span class="n">registerObserver</span><span class="o">(</span><span class="n">observer</span><span class="k">:</span> <span class="kt">Observer</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span> <span class="o">+=</span> <span class="n">observer</span>
+
+  <span class="k">def</span> <span class="n">removeObserver</span><span class="o">(</span><span class="n">observer</span><span class="k">:</span> <span class="kt">Observer</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">remove</span><span class="o">(</span><span class="n">observers</span><span class="o">.</span><span class="n">indexOf</span><span class="o">(</span><span class="n">observer</span><span class="o">))</span>
+
+ <span class="k">def</span> <span class="n">notifyObservers</span><span class="o">(</span><span class="n">data</span><span class="k">:</span> <span class="kt">Data</span><span class="o">)</span><span class="k">:</span><span class="kt">Unit</span> <span class="c1">// we pass data to all observers</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="k">class</span> <span class="nc">WeatherData</span> <span class="o">(</span><span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Data</span>
+
+<span class="k">class</span> <span class="nc">WeatherStation</span> <span class="k">extends</span> <span class="nc">Subject</span><span class="o">{</span>
+
+  <span class="k">var</span> <span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="k">def</span> <span class="n">notifyObservers</span><span class="o">(</span><span class="n">data</span><span class="k">:</span> <span class="kt">Data</span><span class="o">)</span> <span class="k">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">update</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">data</span><span class="o">))</span> 
+
+  <span class="k">def</span> <span class="n">setMeasurement</span><span class="o">(</span><span class="n">temp</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">temp</span>
+    <span class="n">notifyObservers</span><span class="o">(</span><span class="nc">WeatherData</span><span class="o">(</span><span class="n">temp</span><span class="o">))</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">CurrentConditionDisplay</span><span class="o">(</span><span class="n">subject</span><span class="k">:</span> <span class="kt">Subject</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Observer</span> <span class="k">with</span> <span class="nc">DisplayElement</span><span class="o">{</span>
+
+  <span class="n">subject</span><span class="o">.</span><span class="n">registerObserver</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+
+  <span class="k">var</span> <span class="n">temperature</span><span class="k">:</span><span class="kt">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="k">def</span> <span class="n">display</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">s"current condition display, temperature: </span><span class="si">$temperature</span><span class="s">"</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">subject</span><span class="k">:</span> <span class="kt">Subject</span><span class="o">,</span> <span class="n">data</span><span class="k">:</span> <span class="kt">Data</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="n">temperature</span> <span class="k">=</span> <span class="n">data</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">WeatherData</span><span class="o">].</span><span class="n">temperature</span> <span class="c1">// we need to cast to WeatherData</span>
+    <span class="n">display</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+</pre>
+
+
+<h3>Design Principle</h3>
+<p>Strive for loosely coupled designs between objects that interact. </p>
+<h3>Others</h3>
+<ul>
+<li>
+<code>push</code> and <code>pull</code> style </li>
+<li>
+<code>java.util.Observer</code> also has a <code>setChanged()</code> method to control notifications.</li>
+<li>Never depend on a specific notification order.</li>
+</ul>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-1-strategy-pattern.html" class="u-url">Design pattern #1: Strategy Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun

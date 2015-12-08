@@ -2,7 +2,7 @@
 .. title: Design Pattern #10: State Pattern
 .. slug: design-pattern-10-state-pattern
 .. date: 2015-12-05 22:14:02 UTC+08:00
-.. tags: 
+.. tags: Book, Code
 .. category: 
 .. link: 
 .. description: 
