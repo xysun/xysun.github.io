@@ -11,7 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 <link rel="canonical" href="https://xysun.github.io/index.html">
 <link rel="next" href="index-2.html" type="text/html">
-<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/design-pattern-12-composite-pattern.html" type="text/html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/ray-tracer.html" type="text/html">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
@@ -63,7 +63,36 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-12-composite-pattern.html" class="u-url">Design Pattern #12: Composite Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/ray-tracer.html" class="u-url">ray tracer</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/ray-tracer.html" rel="bookmark"><time class="published dt-published" datetime="2015-12-15T00:54:34+08:00" title="2015-12-15 00:54">2015-12-15 00:54</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/ray-tracer.html#disqus_thread" data-disqus-identifier="cache/posts/ray-tracer.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>I spent last two months following UCSD's computer graphics <a href="https://courses.edx.org/courses/course-v1%3AUCSDx%2BCSE167x%2B3T2015/">course at Coursera</a>, and spent the last month completing the final assignment: writing a ray tracer from scratch. </p>
+<p>My code can be found <a href="https://github.com/xysun/raytracer">here</a>.</p>
+<p>This is also my first not-hello-world project of C++. </p>
+<p>The project was very fun to do (I've always been interested in computer graphics, it being the combination of CS, physics, and basically the whole world). It also gave me many frustrating late nights... </p>
+<p>Coming from a scala background, it took me some time to get used to the memory allocation and management. </p>
+<p>For unit test, I used <a href="https://github.com/google/googletest">googletest</a> for unit test. This project also proves Xcode can be a pleasant enough IDE even with pure C++ projects. </p>
+<p>The current ray tracer is not very efficient, by my calculation it takes several days to render the stanford dragon. I intended to implement some optimization as mentioned by the course, for example, using grids, but was not successful. I have pushed relevant code onto another branch ("cube") and may work on this in the future. </p>
+<p>Below are some images rendered by the ray tracer:</p>
+<p>A thousand spheres: </p>
+<p><img alt="A thousand spheres" src="raytracer/scene5.png"></p>
+<p>Cornell box: I used <code>maxdepth=5</code> for recursive ray tracing. We should be able to get higher image quality if <code>maxdepth</code> is set higher.</p>
+<p><img alt="Cornell box" src="raytracer/scene6.png"></p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-12-composite-pattern.html" class="u-url">Design Pattern #12: Composite Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
@@ -1110,116 +1139,6 @@
 <li><a href="http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory">http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory</a></li>
 <li><a href="http://corey.quickshiftconsulting.com/blog/first-post">http://corey.quickshiftconsulting.com/blog/first-post</a></li>
 </ul>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-3-decorator-pattern.html" class="u-url">Design Pattern #3: Decorator Pattern</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Xiayun Sun
-            </span></p>
-            <p class="dateline"><a href="posts/design-pattern-3-decorator-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-11-07T15:48:40+08:00" title="2015-11-07 15:48">2015-11-07 15:48</time></a></p>
-                <p class="commentline">
-        
-    <a href="posts/design-pattern-3-decorator-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-3-decorator-pattern.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<p>These are my notes for the book Head first design patterns. </p>
-<h3>Overview</h3>
-<ul>
-<li>Give objects new responsibilities without making any code changes to the underlying class, even at runtime.</li>
-</ul>
-<h3>Example problem</h3>
-<ul>
-<li>
-<p>Starbuzz's <code>cost()</code> function for beverage + condiments combinations</p>
-</li>
-<li>
-<p>Solution: </p>
-</li>
-</ul>
-<pre class="code literal-block"><span class="cm">/**</span>
-<span class="cm"> * Created by jsun on 11/7/2015 AD.</span>
-<span class="cm"> */</span>
-<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Beverage</span> <span class="o">{</span> <span class="c1">// abstract component</span>
-  <span class="k">def</span> <span class="n">cost</span><span class="k">:</span><span class="kt">Double</span>
-<span class="o">}</span>
-
-<span class="k">class</span> <span class="nc">DarkRoast</span> <span class="k">extends</span> <span class="nc">Beverage</span><span class="o">{</span> <span class="c1">// concrete component</span>
-  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">2.00</span>
-<span class="o">}</span>
-
-<span class="c1">// we pass in the decorated object in constructor; decorator object is like a wrapper</span>
-<span class="c1">// decorator object mirror the types of decorated object (both extends Beverage here)</span>
-<span class="c1">// a class for condiments only --&gt; not really necessary? </span>
-<span class="k">abstract</span> <span class="k">class</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Beverage</span> <span class="c1">// abstract decorator</span>
-
-<span class="k">class</span> <span class="nc">Mocha</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="o">){</span>
-  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span> <span class="c1">// "composing" behaviors</span>
-<span class="o">}</span>
-
-<span class="k">class</span> <span class="nc">Whip</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="o">){</span>
-  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span>
-<span class="o">}</span>
-
-<span class="k">object</span> <span class="nc">Main</span><span class="o">{</span>
-  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
-    <span class="k">val</span> <span class="n">drink</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Whip</span><span class="o">(</span><span class="k">new</span> <span class="nc">Mocha</span><span class="o">(</span><span class="k">new</span> <span class="nc">DarkRoast</span><span class="o">))</span>
-    <span class="n">println</span><span class="o">(</span><span class="n">drink</span><span class="o">.</span><span class="n">cost</span><span class="o">)</span> <span class="c1">// 2 + 0.5 + 0.2 = 2.7</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</pre>
-
-
-<h3>Decorator Pattern</h3>
-<ul>
-<li>
-<p>The Decorator Pattern attached additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.</p>
-</li>
-<li>
-<p>Decorators have the same supertype as decorated.</p>
-</li>
-<li>
-<p>Each decorator HAS-A a component, i.e the decorator has an instance variable that holds a reference to a component</p>
-</li>
-<li>
-<p>Decorators are typically created by using other patterns like Factory and Builder.</p>
-</li>
-<li>
-<p>Downside: often result in a large number of small classes that can be overwhelming; can increase component instantiation complexity (can be mitigated by Factory/Builder pattern)</p>
-</li>
-<li>
-<p>Basically "wrappers"</p>
-</li>
-</ul>
-<h3>Design Principle</h3>
-<ul>
-<li>Classes should be open for extension, but closed for modification. Concentrate on areas that are most likely to change in the future.</li>
-</ul>
-<h3>Example in real life: <code>java.io</code> package</h3>
-<ul>
-<li>all decorators: eg. <code>LineNumberInputStream</code> -&gt; <code>BufferedInputStream</code> -&gt; <code>FileInputStream</code>
-</li>
-<li>abstract component: <code>InpustStream</code>
-</li>
-<li>concrete component: <code>FileInputStream</code>, <code>StringBufferInputStream</code>, etc</li>
-<li>abstract decorator: <code>FilterInputStream</code>
-</li>
-<li>concrete decorator: <code>BufferedInputStream</code>, <code>LineNumberInputStream</code>, etc.</li>
-</ul>
-<h3>Scala</h3>
-<ul>
-<li>Use <code>implicits</code> to add behavior without changing original class code (not runtime though)</li>
-</ul>
-<pre class="code literal-block"><span class="k">object</span> <span class="nc">ExtendedModels</span><span class="o">{</span>
-  <span class="k">implicit</span> <span class="k">class</span> <span class="nc">ExtendedBeverage</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">){</span>
-    <span class="k">def</span> <span class="n">costWithMilk</span> <span class="k">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span> <span class="c1">// Beverage now has a costWithMilk() method, not the best example</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</pre>
 </div>
     </div>
     </article>

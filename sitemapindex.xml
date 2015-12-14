@@ -10,6 +10,10 @@
   <lastmod>2015-12-08T14:42:00Z</lastmod>
  </sitemap>
  <sitemap>
+  <loc>https://xysun.github.io/categories/cat_code.xml</loc>
+  <lastmod>2015-12-14T17:05:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://xysun.github.io/categories/chinese.xml</loc>
   <lastmod>2015-09-30T15:47:00Z</lastmod>
  </sitemap>
@@ -47,10 +51,10 @@
  </sitemap>
  <sitemap>
   <loc>https://xysun.github.io/rss.xml</loc>
-  <lastmod>2015-12-08T14:42:00Z</lastmod>
+  <lastmod>2015-12-14T17:05:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://xysun.github.io/sitemap.xml</loc>
-  <lastmod>2015-12-08T14:42:00Z</lastmod>
+  <lastmod>2015-12-14T17:05:00Z</lastmod>
  </sitemap>
 </sitemapindex>

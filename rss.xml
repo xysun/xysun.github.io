@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link href="https://xysun.github.io/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>en</language><lastBuildDate>Tue, 08 Dec 2015 14:42:29 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Design Pattern #12: Composite Pattern</title><link>https://xysun.github.io/posts/design-pattern-12-composite-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Headfirst Design Patterns. &lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Do Nothing</title><link>https://xysun.github.io</link><description>This is a demo site for Nikola.</description><atom:link href="https://xysun.github.io/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>en</language><lastBuildDate>Mon, 14 Dec 2015 17:05:29 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>ray tracer</title><link>https://xysun.github.io/posts/ray-tracer.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;I spent last two months following UCSD's computer graphics &lt;a href="https://courses.edx.org/courses/course-v1%3AUCSDx%2BCSE167x%2B3T2015/"&gt;course at Coursera&lt;/a&gt;, and spent the last month completing the final assignment: writing a ray tracer from scratch. &lt;/p&gt;
+&lt;p&gt;My code can be found &lt;a href="https://github.com/xysun/raytracer"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This is also my first not-hello-world project of C++. &lt;/p&gt;
+&lt;p&gt;The project was very fun to do (I've always been interested in computer graphics, it being the combination of CS, physics, and basically the whole world). It also gave me many frustrating late nights... &lt;/p&gt;
+&lt;p&gt;Coming from a scala background, it took me some time to get used to the memory allocation and management. &lt;/p&gt;
+&lt;p&gt;For unit test, I used &lt;a href="https://github.com/google/googletest"&gt;googletest&lt;/a&gt; for unit test. This project also proves Xcode can be a pleasant enough IDE even with pure C++ projects. &lt;/p&gt;
+&lt;p&gt;The current ray tracer is not very efficient, by my calculation it takes several days to render the stanford dragon. I intended to implement some optimization as mentioned by the course, for example, using grids, but was not successful. I have pushed relevant code onto another branch ("cube") and may work on this in the future. &lt;/p&gt;
+&lt;p&gt;Below are some images rendered by the ray tracer:&lt;/p&gt;
+&lt;p&gt;A thousand spheres: &lt;/p&gt;
+&lt;p&gt;&lt;img alt="A thousand spheres" src="https://xysun.github.io/raytracer/scene5.png"&gt;&lt;/p&gt;
+&lt;p&gt;Cornell box: I used &lt;code&gt;maxdepth=5&lt;/code&gt; for recursive ray tracing. We should be able to get higher image quality if &lt;code&gt;maxdepth&lt;/code&gt; is set higher.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Cornell box" src="https://xysun.github.io/raytracer/scene6.png"&gt;&lt;/p&gt;&lt;/div&gt;</description><guid>https://xysun.github.io/posts/ray-tracer.html</guid><pubDate>Mon, 14 Dec 2015 16:54:34 GMT</pubDate></item><item><title>Design Pattern #12: Composite Pattern</title><link>https://xysun.github.io/posts/design-pattern-12-composite-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes about the book Headfirst Design Patterns. &lt;/p&gt;
 &lt;p&gt;The last chapter, finally!&lt;/p&gt;
 &lt;h3&gt;MVC&lt;/h3&gt;
 &lt;ul&gt;
@@ -878,93 +889,4 @@
 &lt;li&gt;&lt;a href="https://web.cs.dal.ca/~jin/3132/lectures/dp-07.pdf"&gt;https://web.cs.dal.ca/~jin/3132/lectures/dp-07.pdf&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory"&gt;http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://corey.quickshiftconsulting.com/blog/first-post"&gt;http://corey.quickshiftconsulting.com/blog/first-post&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-4-factory-pattern.html</guid><pubDate>Tue, 10 Nov 2015 13:43:45 GMT</pubDate></item><item><title>Design Pattern #3: Decorator Pattern</title><link>https://xysun.github.io/posts/design-pattern-3-decorator-pattern.html</link><dc:creator>Xiayun Sun</dc:creator><description>&lt;div&gt;&lt;p&gt;These are my notes for the book Head first design patterns. &lt;/p&gt;
-&lt;h3&gt;Overview&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Give objects new responsibilities without making any code changes to the underlying class, even at runtime.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Example problem&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Starbuzz's &lt;code&gt;cost()&lt;/code&gt; function for beverage + condiments combinations&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Solution: &lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="cm"&gt;/**&lt;/span&gt;
-&lt;span class="cm"&gt; * Created by jsun on 11/7/2015 AD.&lt;/span&gt;
-&lt;span class="cm"&gt; */&lt;/span&gt;
-&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Beverage&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// abstract component&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cost&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Double&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DarkRoast&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// concrete component&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;2.00&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="c1"&gt;// we pass in the decorated object in constructor; decorator object is like a wrapper&lt;/span&gt;
-&lt;span class="c1"&gt;// decorator object mirror the types of decorated object (both extends Beverage here)&lt;/span&gt;
-&lt;span class="c1"&gt;// a class for condiments only --&amp;gt; not really necessary? &lt;/span&gt;
-&lt;span class="k"&gt;abstract&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CondimentDecorator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;Beverage&lt;/span&gt; &lt;span class="c1"&gt;// abstract decorator&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Mocha&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;CondimentDecorator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="c1"&gt;// "composing" behaviors&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Whip&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="nc"&gt;CondimentDecorator&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.2&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cost&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-
-&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;Main&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Array&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="kt"&gt;String&lt;/span&gt;&lt;span class="o"&gt;])&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;Unit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;val&lt;/span&gt; &lt;span class="n"&gt;drink&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;Whip&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;Mocha&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nc"&gt;DarkRoast&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
-    &lt;span class="n"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;drink&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cost&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;// 2 + 0.5 + 0.2 = 2.7&lt;/span&gt;
-  &lt;span class="o"&gt;}&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;
-
-
-&lt;h3&gt;Decorator Pattern&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;The Decorator Pattern attached additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Decorators have the same supertype as decorated.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Each decorator HAS-A a component, i.e the decorator has an instance variable that holds a reference to a component&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Decorators are typically created by using other patterns like Factory and Builder.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Downside: often result in a large number of small classes that can be overwhelming; can increase component instantiation complexity (can be mitigated by Factory/Builder pattern)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Basically "wrappers"&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Design Principle&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Classes should be open for extension, but closed for modification. Concentrate on areas that are most likely to change in the future.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Example in real life: &lt;code&gt;java.io&lt;/code&gt; package&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;all decorators: eg. &lt;code&gt;LineNumberInputStream&lt;/code&gt; -&amp;gt; &lt;code&gt;BufferedInputStream&lt;/code&gt; -&amp;gt; &lt;code&gt;FileInputStream&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;abstract component: &lt;code&gt;InpustStream&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;concrete component: &lt;code&gt;FileInputStream&lt;/code&gt;, &lt;code&gt;StringBufferInputStream&lt;/code&gt;, etc&lt;/li&gt;
-&lt;li&gt;abstract decorator: &lt;code&gt;FilterInputStream&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;concrete decorator: &lt;code&gt;BufferedInputStream&lt;/code&gt;, &lt;code&gt;LineNumberInputStream&lt;/code&gt;, etc.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Scala&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Use &lt;code&gt;implicits&lt;/code&gt; to add behavior without changing original class code (not runtime though)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class="code literal-block"&gt;&lt;span class="k"&gt;object&lt;/span&gt; &lt;span class="nc"&gt;ExtendedModels&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-  &lt;span class="k"&gt;implicit&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ExtendedBeverage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="k"&gt;:&lt;/span&gt; &lt;span class="kt"&gt;Beverage&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="n"&gt;costWithMilk&lt;/span&gt; &lt;span class="k"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.2&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;beverage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cost&lt;/span&gt; &lt;span class="c1"&gt;// Beverage now has a costWithMilk() method, not the best example&lt;/span&gt;
-  &lt;span class="o"&gt;}&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-3-decorator-pattern.html</guid><pubDate>Sat, 07 Nov 2015 07:48:40 GMT</pubDate></item></channel></rss>
+&lt;/ul&gt;&lt;/div&gt;</description><category>Book</category><category>Code</category><guid>https://xysun.github.io/posts/design-pattern-4-factory-pattern.html</guid><pubDate>Tue, 10 Nov 2015 13:43:45 GMT</pubDate></item></channel></rss>

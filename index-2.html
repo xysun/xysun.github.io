@@ -64,7 +64,117 @@
             
 
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-2-observer-pattern.html" class="u-url">Design Pattern #2: Observer Pattern</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-3-decorator-pattern.html" class="u-url">Design Pattern #3: Decorator Pattern</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Xiayun Sun
+            </span></p>
+            <p class="dateline"><a href="posts/design-pattern-3-decorator-pattern.html" rel="bookmark"><time class="published dt-published" datetime="2015-11-07T15:48:40+08:00" title="2015-11-07 15:48">2015-11-07 15:48</time></a></p>
+                <p class="commentline">
+        
+    <a href="posts/design-pattern-3-decorator-pattern.html#disqus_thread" data-disqus-identifier="cache/posts/design-pattern-3-decorator-pattern.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>These are my notes for the book Head first design patterns. </p>
+<h3>Overview</h3>
+<ul>
+<li>Give objects new responsibilities without making any code changes to the underlying class, even at runtime.</li>
+</ul>
+<h3>Example problem</h3>
+<ul>
+<li>
+<p>Starbuzz's <code>cost()</code> function for beverage + condiments combinations</p>
+</li>
+<li>
+<p>Solution: </p>
+</li>
+</ul>
+<pre class="code literal-block"><span class="cm">/**</span>
+<span class="cm"> * Created by jsun on 11/7/2015 AD.</span>
+<span class="cm"> */</span>
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">Beverage</span> <span class="o">{</span> <span class="c1">// abstract component</span>
+  <span class="k">def</span> <span class="n">cost</span><span class="k">:</span><span class="kt">Double</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">DarkRoast</span> <span class="k">extends</span> <span class="nc">Beverage</span><span class="o">{</span> <span class="c1">// concrete component</span>
+  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">2.00</span>
+<span class="o">}</span>
+
+<span class="c1">// we pass in the decorated object in constructor; decorator object is like a wrapper</span>
+<span class="c1">// decorator object mirror the types of decorated object (both extends Beverage here)</span>
+<span class="c1">// a class for condiments only --&gt; not really necessary? </span>
+<span class="k">abstract</span> <span class="k">class</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Beverage</span> <span class="c1">// abstract decorator</span>
+
+<span class="k">class</span> <span class="nc">Mocha</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="o">){</span>
+  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span> <span class="c1">// "composing" behaviors</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">Whip</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">CondimentDecorator</span><span class="o">(</span><span class="n">beverage</span><span class="o">){</span>
+  <span class="k">def</span> <span class="n">cost</span> <span class="k">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">Main</span><span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span><span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span><span class="k">:</span><span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">drink</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Whip</span><span class="o">(</span><span class="k">new</span> <span class="nc">Mocha</span><span class="o">(</span><span class="k">new</span> <span class="nc">DarkRoast</span><span class="o">))</span>
+    <span class="n">println</span><span class="o">(</span><span class="n">drink</span><span class="o">.</span><span class="n">cost</span><span class="o">)</span> <span class="c1">// 2 + 0.5 + 0.2 = 2.7</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+
+<h3>Decorator Pattern</h3>
+<ul>
+<li>
+<p>The Decorator Pattern attached additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.</p>
+</li>
+<li>
+<p>Decorators have the same supertype as decorated.</p>
+</li>
+<li>
+<p>Each decorator HAS-A a component, i.e the decorator has an instance variable that holds a reference to a component</p>
+</li>
+<li>
+<p>Decorators are typically created by using other patterns like Factory and Builder.</p>
+</li>
+<li>
+<p>Downside: often result in a large number of small classes that can be overwhelming; can increase component instantiation complexity (can be mitigated by Factory/Builder pattern)</p>
+</li>
+<li>
+<p>Basically "wrappers"</p>
+</li>
+</ul>
+<h3>Design Principle</h3>
+<ul>
+<li>Classes should be open for extension, but closed for modification. Concentrate on areas that are most likely to change in the future.</li>
+</ul>
+<h3>Example in real life: <code>java.io</code> package</h3>
+<ul>
+<li>all decorators: eg. <code>LineNumberInputStream</code> -&gt; <code>BufferedInputStream</code> -&gt; <code>FileInputStream</code>
+</li>
+<li>abstract component: <code>InpustStream</code>
+</li>
+<li>concrete component: <code>FileInputStream</code>, <code>StringBufferInputStream</code>, etc</li>
+<li>abstract decorator: <code>FilterInputStream</code>
+</li>
+<li>concrete decorator: <code>BufferedInputStream</code>, <code>LineNumberInputStream</code>, etc.</li>
+</ul>
+<h3>Scala</h3>
+<ul>
+<li>Use <code>implicits</code> to add behavior without changing original class code (not runtime though)</li>
+</ul>
+<pre class="code literal-block"><span class="k">object</span> <span class="nc">ExtendedModels</span><span class="o">{</span>
+  <span class="k">implicit</span> <span class="k">class</span> <span class="nc">ExtendedBeverage</span><span class="o">(</span><span class="n">beverage</span><span class="k">:</span> <span class="kt">Beverage</span><span class="o">){</span>
+    <span class="k">def</span> <span class="n">costWithMilk</span> <span class="k">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="n">beverage</span><span class="o">.</span><span class="n">cost</span> <span class="c1">// Beverage now has a costWithMilk() method, not the best example</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/design-pattern-2-observer-pattern.html" class="u-url">Design Pattern #2: Observer Pattern</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Xiayun Sun
